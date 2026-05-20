@@ -20,6 +20,7 @@ const WARN_HIGH = 75;
 const ARC_THRESHOLD = 7;
 const AFFINITY_MIN = -10;
 const AFFINITY_MAX = 10;
+const REIGN_LENGTH = 25;
 const FADE_MS = 150;
 const INTRO_FADE_MS = 300;
 
@@ -36,10 +37,10 @@ const state = {
   arcFired: Object.fromEntries(CHARACTER_KEYS.map((k) => [k, false])),
   arcEligible: Object.fromEntries(CHARACTER_KEYS.map((k) => [k, null])),
   cardsPlayed: 0,
-  currentCard: 0,
   pendingCrisis: null,
   activeCard: null,
   reignStarted: false,
+  deck: [],
 };
 
 const els = {
@@ -77,6 +78,22 @@ function renderStats() {
   els.cardsPlayed.textContent = state.cardsPlayed;
 }
 
+function shuffle(source) {
+  const out = source.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+function drawFromDeck() {
+  if (state.deck.length === 0) {
+    state.deck = shuffle(cards);
+  }
+  return state.deck.shift();
+}
+
 function pickArcCard() {
   for (const character of CHARACTER_KEYS) {
     const direction = state.arcEligible[character];
@@ -101,7 +118,7 @@ function nextCard() {
   }
   const arc = pickArcCard();
   if (arc) return arc;
-  return cards[state.currentCard % cards.length];
+  return drawFromDeck();
 }
 
 function renderCardImmediate(card) {
@@ -126,11 +143,72 @@ function renderCardImmediate(card) {
   renderStats();
 }
 
+function checkEnding() {
+  for (const stat of STAT_NAMES) {
+    const value = state.stats[stat];
+    if (value <= 0) return { type: "collapse", stat };
+    if (value >= 100) return { type: "overflow", stat };
+  }
+  if (state.cardsPlayed >= REIGN_LENGTH) return { type: "longevity" };
+  return null;
+}
+
+function endingScenario(ending) {
+  if (ending.type === "longevity") {
+    return "Twenty-five years on the throne. Shirvan endures, and so does your name in the chronicles.";
+  }
+  if (ending.type === "collapse") {
+    return `Your ${ending.stat} has fallen to nothing. The court empties; the reign is over.`;
+  }
+  return `Your ${ending.stat} has overflowed past what the kingdom can carry. The reign ends here.`;
+}
+
+function resetReign() {
+  for (const stat of STAT_NAMES) state.stats[stat] = 50;
+  for (const character of CHARACTER_KEYS) {
+    state.affinity[character] = 0;
+    state.arcFired[character] = false;
+    state.arcEligible[character] = null;
+  }
+  for (const stat of STAT_NAMES) state.crisisFired[stat] = false;
+  state.cardsPlayed = 0;
+  state.pendingCrisis = null;
+  state.activeCard = null;
+  state.deck = [];
+}
+
+function renderEndingImmediate(ending) {
+  state.activeCard = null;
+  els.speaker.textContent = "End of Reign";
+  els.speaker.dataset.speakerType = "ending";
+  els.scenario.textContent = endingScenario(ending);
+  els.explanation.hidden = true;
+  els.explanation.textContent = "";
+
+  els.options.innerHTML = "";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.dataset.continue = "true";
+  btn.innerHTML = `<span class="option-label"></span><span class="key-hint key-hint-continue" aria-hidden="true">&#x21B5;</span>`;
+  btn.querySelector(".option-label").textContent = "Begin a New Reign";
+  btn.addEventListener("click", () => {
+    resetReign();
+    renderStats();
+    renderCard();
+  });
+  els.options.appendChild(btn);
+  btn.focus();
+
+  renderStats();
+}
+
 function renderCard() {
-  const card = nextCard();
+  const ending = checkEnding();
+  const next = ending ? null : nextCard();
   els.card.classList.add("fading");
   setTimeout(() => {
-    renderCardImmediate(card);
+    if (ending) renderEndingImmediate(ending);
+    else renderCardImmediate(next);
     requestAnimationFrame(() => els.card.classList.remove("fading"));
   }, FADE_MS);
 }
@@ -152,10 +230,6 @@ function chooseOption(index) {
   if (!card) return;
   const option = card.options[index];
   if (!option) return;
-
-  const isCrisis = card.triggerStat !== undefined;
-  const isArc = card.character !== undefined;
-  const isNormal = !isCrisis && !isArc;
 
   for (const [stat, delta] of Object.entries(option.effects ?? {})) {
     if (!(stat in state.stats)) continue;
@@ -179,7 +253,6 @@ function chooseOption(index) {
   }
 
   state.cardsPlayed += 1;
-  if (isNormal) state.currentCard += 1;
 
   for (const stat of STAT_NAMES) {
     if (state.crisisFired[stat]) continue;
