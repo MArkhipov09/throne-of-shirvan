@@ -131,6 +131,8 @@ export const cards = [
       },
     ],
     tags: ["geopolitics", "opportunity-cost", "tribute"],
+  },
+  {
     id: "village-mulberry",
     speaker: "A village headman from the Shamakhi hinterland",
     speakerType: "one-off",

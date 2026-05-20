@@ -1,17 +1,27 @@
 import { cards } from "../content/cards.js";
+import { crises } from "../content/crises.js";
+import { arcs } from "../content/arcs.js";
 
 const STAT_NAMES = ["treasury", "people", "military", "faith", "naphtha"];
+const CHARACTER_KEYS = ["vizier", "qadi", "tahmina", "general", "envoy"];
 
-function buildStatBars() {
-  els.stats.innerHTML = STAT_NAMES.map(
-    (name) => `
-      <li class="stat" data-stat="${name}">
-        <span class="stat-name">${name}</span>
-        <div class="stat-track"><div class="stat-fill"></div></div>
-        <span class="stat-value">0</span>
-      </li>`
-  ).join("");
-}
+const STAT_DESCRIPTIONS = {
+  treasury: "Your dinars and trade revenue.",
+  people: "Welfare and loyalty.",
+  military: "Garrison and walls.",
+  faith: "Clerical favour and religious balance.",
+  naphtha: "The Absheron oil reserves, your wildcard resource.",
+};
+
+const CRISIS_LOW = 15;
+const CRISIS_HIGH = 85;
+const WARN_LOW = 25;
+const WARN_HIGH = 75;
+const ARC_THRESHOLD = 7;
+const AFFINITY_MIN = -10;
+const AFFINITY_MAX = 10;
+const FADE_MS = 150;
+const INTRO_FADE_MS = 300;
 
 const state = {
   stats: {
@@ -21,18 +31,40 @@ const state = {
     faith: 50,
     naphtha: 50,
   },
+  affinity: Object.fromEntries(CHARACTER_KEYS.map((k) => [k, 0])),
+  crisisFired: Object.fromEntries(STAT_NAMES.map((s) => [s, false])),
+  arcFired: Object.fromEntries(CHARACTER_KEYS.map((k) => [k, false])),
+  arcEligible: Object.fromEntries(CHARACTER_KEYS.map((k) => [k, null])),
   cardsPlayed: 0,
   currentCard: 0,
+  pendingCrisis: null,
+  activeCard: null,
+  reignStarted: false,
 };
 
 const els = {
   stats: document.getElementById("stats"),
   cardsPlayed: document.getElementById("cards-played"),
+  card: document.getElementById("card"),
   speaker: document.getElementById("speaker"),
   scenario: document.getElementById("scenario"),
   explanation: document.getElementById("explanation"),
   options: document.getElementById("options"),
+  intro: document.getElementById("intro"),
+  introBegin: document.getElementById("intro-begin"),
+  aboutLink: document.getElementById("about-link"),
 };
+
+function buildStatBars() {
+  els.stats.innerHTML = STAT_NAMES.map(
+    (name) => `
+      <li class="stat" data-stat="${name}" data-tooltip="${STAT_DESCRIPTIONS[name]}">
+        <span class="stat-name">${name}</span>
+        <div class="stat-track"><div class="stat-fill"></div></div>
+        <span class="stat-value">0</span>
+      </li>`
+  ).join("");
+}
 
 function renderStats() {
   for (const name of STAT_NAMES) {
@@ -40,16 +72,40 @@ function renderStats() {
     const row = els.stats.querySelector(`[data-stat="${name}"]`);
     row.querySelector(".stat-fill").style.width = `${value}%`;
     row.querySelector(".stat-value").textContent = value;
+    row.classList.toggle("warning", value < WARN_LOW || value > WARN_HIGH);
   }
   els.cardsPlayed.textContent = state.cardsPlayed;
 }
 
-function currentCard() {
+function pickArcCard() {
+  for (const character of CHARACTER_KEYS) {
+    const direction = state.arcEligible[character];
+    if (!direction || state.arcFired[character]) continue;
+    const arc = arcs.find(
+      (a) => a.character === character && a.affinityDirection === direction
+    );
+    if (arc) {
+      state.arcFired[character] = true;
+      state.arcEligible[character] = null;
+      return arc;
+    }
+  }
+  return null;
+}
+
+function nextCard() {
+  if (state.pendingCrisis) {
+    const crisis = state.pendingCrisis;
+    state.pendingCrisis = null;
+    return crisis;
+  }
+  const arc = pickArcCard();
+  if (arc) return arc;
   return cards[state.currentCard % cards.length];
 }
 
-function renderCard() {
-  const card = currentCard();
+function renderCardImmediate(card) {
+  state.activeCard = card;
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   els.scenario.textContent = card.scenario;
@@ -60,7 +116,9 @@ function renderCard() {
   card.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = option.label;
+    button.dataset.optionIndex = String(index);
+    button.innerHTML = `<span class="key-hint" aria-hidden="true">${index + 1}</span><span class="option-label"></span>`;
+    button.querySelector(".option-label").textContent = option.label;
     button.addEventListener("click", () => chooseOption(index));
     els.options.appendChild(button);
   });
@@ -68,31 +126,166 @@ function renderCard() {
   renderStats();
 }
 
-function chooseOption(index) {
-  const card = currentCard();
-  const option = card.options[index];
+function renderCard() {
+  const card = nextCard();
+  els.card.classList.add("fading");
+  setTimeout(() => {
+    renderCardImmediate(card);
+    requestAnimationFrame(() => els.card.classList.remove("fading"));
+  }, FADE_MS);
+}
 
-  for (const [stat, delta] of Object.entries(option.effects)) {
-    if (stat in state.stats) {
-      state.stats[stat] = Math.max(0, Math.min(100, state.stats[stat] + delta));
+function animateDelta(stat, delta) {
+  if (delta === 0) return;
+  const row = els.stats.querySelector(`[data-stat="${stat}"]`);
+  if (!row) return;
+  const node = document.createElement("span");
+  node.className = `stat-delta ${delta > 0 ? "positive" : "negative"}`;
+  const sign = delta > 0 ? "+" : "−";
+  node.textContent = `${sign}${Math.abs(delta)}`;
+  row.appendChild(node);
+  node.addEventListener("animationend", () => node.remove(), { once: true });
+}
+
+function chooseOption(index) {
+  const card = state.activeCard;
+  if (!card) return;
+  const option = card.options[index];
+  if (!option) return;
+
+  const isCrisis = card.triggerStat !== undefined;
+  const isArc = card.character !== undefined;
+  const isNormal = !isCrisis && !isArc;
+
+  for (const [stat, delta] of Object.entries(option.effects ?? {})) {
+    if (!(stat in state.stats)) continue;
+    const oldValue = state.stats[stat];
+    const newValue = Math.max(0, Math.min(100, oldValue + delta));
+    state.stats[stat] = newValue;
+    animateDelta(stat, newValue - oldValue);
+  }
+
+  if (option.affinityEffects) {
+    for (const [character, delta] of Object.entries(option.affinityEffects)) {
+      if (!(character in state.affinity)) continue;
+      const oldValue = state.affinity[character];
+      const newValue = Math.max(AFFINITY_MIN, Math.min(AFFINITY_MAX, oldValue + delta));
+      state.affinity[character] = newValue;
+      if (!state.arcFired[character] && !state.arcEligible[character]) {
+        if (newValue >= ARC_THRESHOLD) state.arcEligible[character] = "positive";
+        else if (newValue <= -ARC_THRESHOLD) state.arcEligible[character] = "negative";
+      }
     }
   }
 
   state.cardsPlayed += 1;
-  state.currentCard += 1;
+  if (isNormal) state.currentCard += 1;
 
-  els.explanation.textContent = option.explanation;
+  for (const stat of STAT_NAMES) {
+    if (state.crisisFired[stat]) continue;
+    const value = state.stats[stat];
+    let direction = null;
+    if (value < CRISIS_LOW) direction = "low";
+    else if (value > CRISIS_HIGH) direction = "high";
+    if (!direction) continue;
+    const crisis = crises.find(
+      (c) => c.triggerStat === stat && c.triggerDirection === direction
+    );
+    if (crisis) {
+      state.crisisFired[stat] = true;
+      state.pendingCrisis = crisis;
+      break;
+    }
+  }
+
+  els.explanation.textContent = option.explanation ?? "";
   els.explanation.hidden = false;
   els.options.innerHTML = "";
 
   const next = document.createElement("button");
   next.type = "button";
-  next.textContent = "Continue";
+  next.dataset.continue = "true";
+  next.innerHTML = `<span class="option-label"></span><span class="key-hint key-hint-continue" aria-hidden="true">&#x21B5;</span>`;
+  next.querySelector(".option-label").textContent = "Continue";
   next.addEventListener("click", renderCard);
   els.options.appendChild(next);
+  next.focus();
 
   renderStats();
 }
 
-buildStatBars();
-renderCard();
+let introHideTimer = null;
+
+function showIntro({ firstBoot }) {
+  if (introHideTimer) {
+    clearTimeout(introHideTimer);
+    introHideTimer = null;
+  }
+  els.intro.hidden = false;
+  els.intro.classList.remove("fading-out");
+  els.intro.setAttribute("aria-hidden", "false");
+  els.introBegin.textContent = firstBoot ? "Begin Reign" : "Return to Throne";
+  els.introBegin.focus();
+}
+
+function hideIntro({ startReign }) {
+  if (introHideTimer) {
+    clearTimeout(introHideTimer);
+    introHideTimer = null;
+  }
+  if (startReign && !state.reignStarted) {
+    state.reignStarted = true;
+    renderCardImmediate(nextCard());
+  }
+  els.intro.classList.add("fading-out");
+  els.intro.setAttribute("aria-hidden", "true");
+  introHideTimer = setTimeout(() => {
+    introHideTimer = null;
+    els.intro.hidden = true;
+  }, INTRO_FADE_MS);
+}
+
+function onKeydown(event) {
+  if (!els.intro.hidden) {
+    if (event.key === "Enter" || event.key === " ") {
+      if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
+      event.preventDefault();
+      els.introBegin.click();
+    }
+    return;
+  }
+  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+  if (event.key === "1" || event.key === "2") {
+    const btn = els.options.querySelector(`button[data-option-index="${Number(event.key) - 1}"]`);
+    if (btn) {
+      event.preventDefault();
+      btn.click();
+    }
+    return;
+  }
+  if (event.key === "Enter" || event.key === " ") {
+    if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
+    const btn = els.options.querySelector('button[data-continue="true"]');
+    if (btn) {
+      event.preventDefault();
+      btn.click();
+    }
+  }
+}
+
+function init() {
+  buildStatBars();
+  renderStats();
+
+  els.introBegin.addEventListener("click", () => {
+    hideIntro({ startReign: !state.reignStarted });
+  });
+  els.aboutLink.addEventListener("click", () => {
+    showIntro({ firstBoot: !state.reignStarted });
+  });
+  document.addEventListener("keydown", onKeydown);
+
+  showIntro({ firstBoot: true });
+}
+
+init();
