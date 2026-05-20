@@ -34,9 +34,14 @@ function renderStats() {
   els.cardsPlayed.textContent = state.cardsPlayed;
 }
 
+function currentCard() {
+  return cards[state.currentCard % cards.length];
+}
+
 function renderCard() {
-  const card = cards[state.currentCard % cards.length];
+  const card = currentCard();
   els.speaker.textContent = card.speaker;
+  els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   els.scenario.textContent = card.scenario;
   els.explanation.hidden = true;
   els.explanation.textContent = "";
@@ -54,7 +59,7 @@ function renderCard() {
 }
 
 function chooseOption(index) {
-  const card = cards[state.currentCard % cards.length];
+  const card = currentCard();
   const option = card.options[index];
 
   for (const [stat, delta] of Object.entries(option.effects)) {
