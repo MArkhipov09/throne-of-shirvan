@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant+SC:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
@@ -16,6 +16,7 @@
     <main id="app">
       <header class="hud">
         <h1>Throne of Shirvan</h1>
+        <button type="button" class="about-link" id="about-link">About / How to play</button>
         <ul class="stats" id="stats"></ul>
         <p class="reign">Cards played: <span id="cards-played">0</span></p>
       </header>
@@ -27,6 +28,30 @@
         <div class="options" id="options"></div>
       </section>
     </main>
+
+    <section class="intro" id="intro" aria-hidden="false">
+      <div class="intro-content">
+        <h1 class="intro-title">Throne of Shirvan</h1>
+        <p class="intro-subtitle">A medieval Caspian economics game, c. 1100&ndash;1500</p>
+        <p class="intro-premise">
+          You are the Shirvanshah, ruler of a Caspian-coast kingdom astride the Silk Road.
+          For twenty-five years petitioners will reach your throne. Each will ask for something.
+          Each decision will shift the kingdom. Keep five things in balance &mdash;
+          your Treasury, your People, your Military, your Faith, your Naphtha &mdash;
+          and your reign endures.
+        </p>
+        <ul class="intro-stat-key">
+          <li><span class="key-stat">Treasury</span> &mdash; your dinars and trade revenue.</li>
+          <li><span class="key-stat">People</span> &mdash; welfare and loyalty.</li>
+          <li><span class="key-stat">Military</span> &mdash; garrison and walls.</li>
+          <li><span class="key-stat">Faith</span> &mdash; clerical favour and religious balance.</li>
+          <li><span class="key-stat">Naphtha</span> &mdash; the Absheron oil reserves, your wildcard resource.</li>
+        </ul>
+        <div class="intro-actions">
+          <button class="intro-begin" type="button" id="intro-begin">Begin Reign</button>
+        </div>
+      </div>
+    </section>
 
     <script type="module" src="src/game.js" defer></script>
   </body>

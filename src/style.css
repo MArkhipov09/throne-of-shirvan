@@ -5,6 +5,8 @@
   --saffron: #c89b3c;
   --naphtha: #2c1810;
   --stone: #e6dcc4;
+  --moss: #4a6741;
+  --brick: #7a2f2a;
 }
 
 * {
@@ -38,10 +40,33 @@ h3,
 }
 
 .hud {
+  position: relative;
   border-bottom: 1px solid var(--naphtha);
   padding-bottom: 1rem;
   margin-bottom: 2rem;
   text-align: center;
+}
+
+.about-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: var(--naphtha);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  padding: 0.25rem 0.4rem;
+}
+
+.about-link:hover,
+.about-link:focus-visible {
+  color: var(--caspian);
+  outline: none;
 }
 
 .stats {
@@ -57,6 +82,7 @@ h3,
 }
 
 .stat {
+  position: relative;
   display: grid;
   grid-template-columns: 5.5rem 1fr 2.25rem;
   align-items: center;
@@ -68,12 +94,14 @@ h3,
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   color: var(--naphtha);
+  transition: color 200ms ease;
 }
 
 .stat-track {
   height: 0.6rem;
   background: var(--parchment);
   border: 1px solid var(--naphtha);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .stat-fill {
@@ -92,10 +120,66 @@ h3,
 }
 
 .stat[data-stat="treasury"] { --stat-color: var(--saffron); }
-.stat[data-stat="people"]   { --stat-color: #4a6741; }
-.stat[data-stat="military"] { --stat-color: #7a2f2a; }
+.stat[data-stat="people"]   { --stat-color: var(--moss); }
+.stat[data-stat="military"] { --stat-color: var(--brick); }
 .stat[data-stat="faith"]    { --stat-color: var(--caspian); }
 .stat[data-stat="naphtha"]  { --stat-color: var(--naphtha); }
+
+.stat.warning .stat-track {
+  border-color: var(--saffron);
+  box-shadow: inset 0 0 0 1px var(--saffron);
+}
+
+.stat.warning .stat-name {
+  color: var(--saffron);
+}
+
+.stat[data-tooltip] {
+  cursor: help;
+}
+
+.stat[data-tooltip]:hover::after,
+.stat[data-tooltip]:focus-within::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  max-width: 22rem;
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  letter-spacing: normal;
+  text-transform: none;
+  padding: 0.4rem 0.7rem;
+  white-space: normal;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.stat-delta {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  z-index: 30;
+  animation: float-delta 1500ms ease-out forwards;
+}
+
+.stat-delta.positive { color: var(--moss); }
+.stat-delta.negative { color: var(--brick); }
+
+@keyframes float-delta {
+  0%   { opacity: 0; transform: translate(0, 0.2rem); }
+  15%  { opacity: 1; transform: translate(0, 0); }
+  100% { opacity: 0; transform: translate(0, -1.6rem); }
+}
 
 .reign {
   margin: 0;
@@ -107,6 +191,11 @@ h3,
   background: var(--stone);
   border: 1px solid var(--naphtha);
   padding: 1.5rem;
+  transition: opacity 150ms ease;
+}
+
+.card.fading {
+  opacity: 0;
 }
 
 .speaker {
@@ -127,6 +216,7 @@ h3,
   padding-left: 0.75rem;
   margin: 0 0 1.5rem;
   color: var(--naphtha);
+  white-space: pre-wrap;
 }
 
 .options {
@@ -141,11 +231,150 @@ h3,
   background: var(--parchment);
   color: var(--ink);
   border: 1px solid var(--naphtha);
-  padding: 0.75rem 1rem;
+  border-radius: 0;
+  padding: 0.7rem 0.9rem;
   cursor: pointer;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.options button .option-label {
+  flex: 1;
 }
 
 .options button:hover {
-  background: var(--saffron);
+  background: var(--stone);
+  box-shadow: inset 0 0 0 1px var(--naphtha);
+}
+
+.options button:focus-visible {
+  background: var(--stone);
+  box-shadow: inset 0 0 0 2px var(--naphtha);
+  outline: none;
+}
+
+.key-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  padding: 0.05rem 0.35rem;
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--naphtha);
+  background: var(--stone);
+  border: 1px solid var(--naphtha);
+}
+
+.options button:hover .key-hint,
+.options button:focus-visible .key-hint {
+  background: var(--parchment);
+}
+
+.key-hint-continue {
+  font-size: 0.95rem;
+  letter-spacing: 0;
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  background: var(--parchment);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  z-index: 200;
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+
+.intro[hidden] {
+  display: none;
+}
+
+.intro.fading-out {
+  opacity: 0;
+}
+
+.intro-content {
+  max-width: 36rem;
+  width: 100%;
+  text-align: center;
+}
+
+.intro-title {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: 2.6rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.4rem;
+  color: var(--ink);
+}
+
+.intro-subtitle {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--naphtha);
+  margin: 0 0 2rem;
+}
+
+.intro-premise {
+  text-align: left;
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.intro-stat-key {
+  list-style: none;
+  text-align: left;
+  background: var(--stone);
+  border: 1px solid var(--naphtha);
+  padding: 0.9rem 1.1rem;
+  margin: 0 0 2rem;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.intro-stat-key li {
+  margin: 0.15rem 0;
+}
+
+.intro-stat-key .key-stat {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--caspian);
+}
+
+.intro-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.intro-begin {
+  font-family: inherit;
+  font-size: 1.1rem;
+  background: var(--parchment);
+  color: var(--ink);
+  border: 1px solid var(--naphtha);
+  border-radius: 0;
+  padding: 0.7rem 1.6rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.intro-begin:hover,
+.intro-begin:focus-visible {
+  background: var(--stone);
+  box-shadow: inset 0 0 0 1px var(--naphtha);
+  outline: none;
 }
