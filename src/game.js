@@ -2,6 +2,17 @@ import { cards } from "../content/cards.js";
 
 const STAT_NAMES = ["treasury", "people", "military", "faith", "naphtha"];
 
+function buildStatBars() {
+  els.stats.innerHTML = STAT_NAMES.map(
+    (name) => `
+      <li class="stat" data-stat="${name}">
+        <span class="stat-name">${name}</span>
+        <div class="stat-track"><div class="stat-fill"></div></div>
+        <span class="stat-value">0</span>
+      </li>`
+  ).join("");
+}
+
 const state = {
   stats: {
     treasury: 50,
@@ -24,13 +35,12 @@ const els = {
 };
 
 function renderStats() {
-  els.stats.innerHTML = STAT_NAMES.map(
-    (name) => `
-      <li>
-        <span class="stat-name">${name}</span>
-        <span class="stat-value">${state.stats[name]}</span>
-      </li>`
-  ).join("");
+  for (const name of STAT_NAMES) {
+    const value = state.stats[name];
+    const row = els.stats.querySelector(`[data-stat="${name}"]`);
+    row.querySelector(".stat-fill").style.width = `${value}%`;
+    row.querySelector(".stat-value").textContent = value;
+  }
   els.cardsPlayed.textContent = state.cardsPlayed;
 }
 
@@ -84,4 +94,5 @@ function chooseOption(index) {
   renderStats();
 }
 
+buildStatBars();
 renderCard();

@@ -47,33 +47,55 @@ h3,
 .stats {
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0;
-  margin: 1rem 0 0.5rem;
-  font-size: 0.95rem;
-}
-
-.stats li {
-  flex: 1;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 0.9rem;
+  margin: 1rem 0 0.75rem;
   background: var(--stone);
-  padding: 0.4rem 0.25rem;
   border: 1px solid var(--naphtha);
+  text-align: left;
 }
 
-.stats .stat-name {
-  display: block;
-  font-family: "Cormorant SC", serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+.stat {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 2.25rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.stat-name {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
   color: var(--naphtha);
 }
 
-.stats .stat-value {
-  display: block;
-  font-size: 1.25rem;
-  color: var(--caspian);
+.stat-track {
+  height: 0.6rem;
+  background: var(--parchment);
+  border: 1px solid var(--naphtha);
 }
+
+.stat-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--stat-color, var(--naphtha));
+  transition: width 400ms ease-out;
+}
+
+.stat-value {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--caspian);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat[data-stat="treasury"] { --stat-color: var(--saffron); }
+.stat[data-stat="people"]   { --stat-color: #4a6741; }
+.stat[data-stat="military"] { --stat-color: #7a2f2a; }
+.stat[data-stat="faith"]    { --stat-color: var(--caspian); }
+.stat[data-stat="naphtha"]  { --stat-color: var(--naphtha); }
 
 .reign {
   margin: 0;
