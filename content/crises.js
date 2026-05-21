@@ -81,4 +81,28 @@ export const crises = [
     ],
     tags: ["crisis", "naphtha-fire", "industrial"],
   },
+  {
+    id: "crisis-treasury-raid",
+    speaker: "A breathless rider from the western watchtowers",
+    speakerType: "one-off",
+    triggerStat: "treasury",
+    triggerDirection: "high",
+    scenario:
+      "Shah, a confederation of Daghestani mountain chiefs has crossed the passes in force. They know exactly how full your vaults are. Three thousand horse and as many foot, marching on Shamakhi within the week. They come for the coin, not the kingdom.",
+    options: [
+      {
+        label: "Pay them off. Save the kingdom the war.",
+        effects: { treasury: -22, military: 2, people: 4, faith: -3 },
+        explanation:
+          "Paying a raid party to leave is a transaction in concentrated risk. The economic concept is what insurance theorists call risk transfer: you convert an uncertain catastrophic loss — a sacked city, dead defenders, burned warehouses — into a smaller certain loss. The trade is rational when the expected damage exceeds the ransom. The mountain chiefs know this and price their threat accordingly. The price they ask is high precisely because they have read your treasury correctly.\n\nVisible wealth in medieval Shirvan attracted exactly this pressure. A Rus detachment struck the coast in 1030 and Shirvanshah Manuchihr I had to fight them near Baku. In 1066 Kara-Tegin's Turks captured Shamakhi and then Baku in sequence, and the period chronicles frame the assault as targeted specifically at the rich urban centres. Baku's role as a major Caspian port exporting oil, silk, and salt meant that foreign raiders, in the period phrase, 'always fixed their eyes' on the city. Wealth without proportional fortification is an invitation that pre-modern raiders consistently accepted.\n\nThe modern Azerbaijani parallel runs through the strategic-vulnerability literature on resource-rich small states. Concentrated wealth in a single corridor — the Baku-Absheron oil and gas infrastructure — creates a security problem that the state pays to manage continuously through defence spending, diplomatic alignment with larger powers, and infrastructure redundancy. The 2020 Karabakh war and the 2023 operation in Karabakh both showed the state's willingness to spend treasury on military capacity precisely because resource concentration without security is the classic raider's target. Paying off the chiefs today buys you the year. Next year they will be back, knowing what you paid.",
+      },
+      {
+        label: "Fight them. Empty the garrison and ride out.",
+        effects: { treasury: -8, military: -12, people: -6, faith: 4 },
+        explanation:
+          "Choosing battle preserves the principle that the treasury is not for sale and risks the army. The economic logic is reputational: a kingdom that pays off raiders teaches other raiders to come. A kingdom that fights teaches them to choose other targets. The cost is a real military engagement with an unpredictable outcome, dead men, and damage to the agricultural hinterland whichever side wins.\n\nThe Shirvanshah record on direct defence is mixed. Manuchihr I fought the 1030 Rus raid successfully near Baku, but the 1066 Kara-Tegin Turkic assault took both Shamakhi and Baku before being driven out, and the urban damage took a generation to repair. The pattern across the dynasty was that the Shirvanshahs maintained substantial garrisons and walls — the 12th-century defensive walls of Icheri Sheher, preserved at 8 to 10 metres height and 3.5 metres width, are evidence of that investment — but the geography of the western passes meant that mountain confederations could mass faster than the kingdom could intercept. Pitched battle outside the walls was usually the wrong shape of fight.\n\nThe modern reading is that absolute deterrence is rarely the right strategy for small states facing larger or more mobile threats. The Azerbaijani military doctrine across the long Karabakh conflict deliberately avoided open engagement on unfavourable terms, accepting strategic patience until the operational window opened in 2020. The instinct to fight the raid head-on is honourable. It is also how Manuchihr I won and how the 1066 defenders lost. The Qadi will admire your refusal to pay. The General will say nothing and ride.",
+      },
+    ],
+    tags: ["crisis", "raid", "treasury-high"],
+  },
 ];

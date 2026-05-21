@@ -748,4 +748,108 @@ export const cards = [
     ],
     tags: ["arc", "succession", "coup"],
   },
+  {
+    id: "arc-tahmina-rayis",
+    speaker: "Tahmina of Shamakhi",
+    speakerType: "tahmina",
+    arcCharacter: "tahmina",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, the urban council of Shamakhi has met without a leading merchant voice for three reigns. I propose the title of *rayis* — head of the city's commercial guilds, with formal standing in your court. I sit at the council. I bring you the merchants' position before it becomes the merchants' complaint. The cost is recognising us as a body, not as supplicants.",
+    options: [
+      {
+        label: "Create the office. Appoint her rayis.",
+        effects: { treasury: 6, people: 5, faith: -3, military: -1 },
+        affinityEffects: { tahmina: 3, qadi: -2, vizier: 1 },
+        explanation:
+          "Formalising merchant representation converts an informal lobby into an institutional voice. The economic concept is sometimes called intermediation: a body that aggregates merchant positions and presents them to the ruler reduces the transaction cost of governing commerce, because the ruler now negotiates with one organised counterparty instead of with every merchant individually. It also reduces the cost of dissent — disputes get raised through a formal channel before they reach the street.\n\nThe medieval institutional record on this is mixed but real. The urban hierarchies of Baku and Shamakhi included a layer of major merchants within the urban aristocracy, with *rayises* heading guilds and workshops and an urban council with the *rayis ar-ruasa* at its civic apex. That is documented formal standing — not full court rank, but genuine institutional presence inside the city. The Geniza materials from the Cairo merchant world show parallel structures across the medieval Islamic economy: trader councils, formal *ortaq* associations, and urban notable status that gave commercial elites real political weight without making them sovereigns.\n\nThe modern Azerbaijani parallel runs through the country's chambers of commerce, industry associations, and the formal advisory councils that link the state to the energy and logistics sectors. The structure looks different from the medieval rayis system, but the logic is unchanged: the state benefits from an organised counterparty in commerce, and the commercial elite benefits from formal recognition that converts wealth into voice. The Qadi distrusts the move because it expands secular authority. The Vizier quietly approves because the new office reduces his own load. Tahmina has just become the most powerful merchant in Shirvan with a formal title to prove it.",
+      },
+      {
+        label: "Refuse. Merchants speak through merchants, not through office.",
+        effects: { treasury: -2, people: -2, faith: 3, military: 0 },
+        affinityEffects: { tahmina: -3, qadi: 2 },
+        explanation:
+          "Refusing the office preserves the existing structure in which merchants approach the throne individually and through informal patronage. The cost is the continued transaction overhead of governing commerce one merchant at a time, with no body that can be held accountable for collective positions. The benefit is that no single merchant house gains a permanent institutional foothold inside the court, which preserves the ruler's freedom to favour and punish at the level of individual families rather than at the level of a recognised commercial estate.\n\nThe Shirvanshah record on formal merchant integration is thin in the sources, which is itself the answer: the dynasty preserved its prerogative by not creating offices that institutionalised commercial power. The closest documented case is the urban council layer in Baku and Shamakhi, which existed but operated below the level of royal court. The fuller integration of merchant houses into court structures — as happened in the Mamluk regulation of supply chains, or in the Ilkhanid *ortaq* relationship between Mongol nobility and trading partners — was a step the Shirvanshahs largely avoided.\n\nThe modern analogue is the long debate in resource-rich states over whether private wealth should formally enter political institutions or be kept at the level of influence without office. Several Gulf monarchies have actively resisted formal merchant representation precisely because the long-run effect is constitutional. Azerbaijani institutional development has preserved a relatively centralised executive structure with private commercial influence flowing through advisory and consultative channels rather than through formal elected merchant bodies. Tahmina hears your refusal and adjusts her register. The next conversation will be different.",
+      },
+    ],
+    tags: ["arc", "merchant-politics", "institutions"],
+  },
+  {
+    id: "arc-general-hereditary",
+    speaker: "General Farrukhzad",
+    speakerType: "general",
+    arcCharacter: "general",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, the army is professional now. My captains are men I trained. My sons train under those captains. Make the office of *amir* hereditary in my line. Continuity buys you a standing force. The alternative is a new general every generation, learning what I already know.",
+    options: [
+      {
+        label: "Grant the hereditary office.",
+        effects: { treasury: -4, military: 9, people: -3, faith: -3 },
+        affinityEffects: { general: 4, vizier: -2 },
+        explanation:
+          "Making a military office hereditary is the institutional move that converts state capacity into a stable but rigid asset. The economic concept is sometimes called specific human capital: the General has accumulated knowledge — relationships with captains, drilled tactics, knowledge of terrain and supply lines — that does not transfer cleanly to a successor. Hereditary office attempts to keep that capital inside the family across generations. The trade-off is that the next generation may inherit the office without inheriting the competence, and the kingdom has bound itself contractually to whoever the General's grandson turns out to be.\n\nThe medieval Islamic record on hereditary military office is rich. The *iqta* system across the Seljuk and Ayyubid worlds awarded soldiers and officers the right to collect taxes from particular lands, sometimes for life, sometimes hereditary. The Mamluk transition went further: military office became sovereign power. Cambridge histories of the period note that military reach in this world rarely matched centralised administration, and that strong commanders steadily grew their political influence under still-reigning monarchs without necessarily replacing them. In the Shirvanshah orbit, the documented pattern shows emirs sitting below the shah in the feudal hierarchy alongside clergy and municipal officers, without the formal hereditary military rank that the General is now proposing.\n\nThe modern reading is the long literature on military professionalisation in small states. Stable military leadership is genuinely an asset; entrenched military leadership is a constitutional risk. Azerbaijan's modern military development has emphasised professionalisation through merit, training, and selective procurement rather than through hereditary office, partly because the institutional history of the region — Mamluk, Janissary, Ottoman — provides extensive cautionary material on what happens when military lineages become permanent. The Vizier hears your decision and quietly recalibrates. The General's grandson, who is currently a boy of nine, has just become important.",
+      },
+      {
+        label: "Refuse. The office stays at the throne's gift.",
+        effects: { treasury: 2, military: -5, people: 2, faith: 3 },
+        affinityEffects: { general: -4 },
+        explanation:
+          "Refusing preserves the throne's prerogative to appoint and remove. The cost is the loss of the General's accumulated capital when he eventually retires or dies, and the resentment of a man who has just been told that his thirty years of service do not earn his son a place. The benefit is structural: no lineage outside the dynasty itself acquires permanent state office, which is the institutional guarantee against the slow erosion that eventually consumed several of the dynasties that did make such grants.\n\nThe Shirvanshah survival pattern is consistent on this point. The dynasty maintained continuity across four centuries partly by keeping the high offices revocable. Emirs served, were replaced, served again. The Vizier ranked highly but was not a hereditary office. The Qadi was a religious appointment with its own logic. When Sheikh Ibrahim Darbandi navigated the pressure of Timur and Toqtamish in the 1380s and 1390s, his flexibility came from not being bound to a fixed military leadership that owned its position. The Mamluk warning is the contrasting case: a system that began as professionalised military service and ended with the soldiers as the dynasty.\n\nThe modern parallel runs through every state's choice about how military leadership succeeds. Civilian control of the military in modern democracies, and the careful management of military appointments in modern presidential systems, both rest on the principle the General is asking you to abandon: that military office should not be heritable property. The General accepts your refusal with no visible reaction. He is fifty-eight years old. He has time to consider whether to bring it up again.",
+      },
+    ],
+    tags: ["arc", "military-institutions", "hereditary-office"],
+  },
+  {
+    id: "arc-envoy-integration",
+    speaker: "Envoy Toghan",
+    speakerType: "envoy",
+    arcCharacter: "envoy",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shirvanshah, the Ilkhan offers you Baku as his winter residence. Two months a year. His court rides in, your court hosts. The customs revenue triples in those months. The price is the city's eastern quarter set aside for Mongol use, and tribute reclassified as 'maintenance.' The relationship moves from vassal to partner.",
+    options: [
+      {
+        label: "Accept. Welcome the Ilkhan to Baku.",
+        effects: { treasury: 10, military: -3, people: -2, faith: -5 },
+        affinityEffects: { envoy: 4, qadi: -3 },
+        explanation:
+          "Hosting the suzerain converts external pressure into formal integration. The economic concept is similar to a long-term contract that locks in advantageous terms in exchange for surrendering optionality: the relationship with the Ilkhanate becomes structurally stable, the tribute becomes predictable, the threat of punitive campaigns recedes. The cost is constitutional. Mongol presence inside the capital is no longer a temporary diplomatic event but an annual fixture, and the Mongol quarter of the city becomes a permanent foreign enclave.\n\nThis is exactly what happened. Baku served as a wintering place for Ilkhanid rulers, and Ghazan came to Baku in 1297 to winter there, in a relationship that went well beyond simple tribute. The integration was deep enough that the Shirvanshahs had to navigate not just suzerain demands but ongoing institutional presence inside their own capital. Later, when the Ilkhanate had fragmented and Kara Yusuf rose, Shirvanshah Ibrahim I recognised formal vassalage in 1413 — a reminder that the choice between resistance and integration ran throughout the dynasty's history, and that integration was sometimes the survival strategy that worked.\n\nThe modern analogue runs through the structure of small-state alignment with larger powers. Basing rights, transit corridors, customs unions, and the various negotiated forms of asymmetric integration are the modern form of welcoming the Ilkhan to Baku. Azerbaijan's transit relationships with Russia, Turkey, and the EU each involve some version of this trade: deeper integration in exchange for formal recognition and resource flow, balanced against constraints on independent action. The Qadi resists because the religious cost is real; the Mongol court is not Muslim in the way Shirvan understands the term. The Envoy is, for once, smiling.",
+      },
+      {
+        label: "Refuse the residency. Keep Baku Shirvanshah ground.",
+        effects: { treasury: -4, military: 3, people: 3, faith: 6 },
+        affinityEffects: { envoy: -3, qadi: 3 },
+        explanation:
+          "Refusing preserves the integrity of the capital and forgoes the integration premium. The relationship with the Ilkhanate stays at the level of formal vassalage rather than ongoing residency, which means continued annual tribute, continued risk of punitive campaigns, and continued exposure to the Ilkhan's other priorities. The benefit is that Baku remains Shirvanshah territory in a way that integration would have ended. The Qadi can continue to preach in mosques that no Mongol prince currently uses.\n\nThe Shirvanshah dynastic strategy across the 13th and 14th centuries was a careful balancing act between the autonomy of refusal and the security of integration, and different rulers chose differently. The 1235–1236 Mongol subjugation of the Caucasus set up indirect rule that allowed local rulers to retain office in exchange for tribute and acceptance of overarching authority. Punitive campaigns against vassals who tested those limits were a real and documented threat: the Ilkhanate used hostage-taking, raids, confiscation, and replacement of rulers as the standard menu of coercion when vassals stepped outside acceptable bounds. The 1280s through the 1330s in the Caucasus were a period in which several local rulers paid the price of overreach.\n\nThe modern reading is the case for strategic autonomy under conditions of asymmetric power. Switzerland's centuries-long neutrality, Singapore's careful non-alignment, and several small-state diplomatic traditions are built around the same logic the Qadi is voicing: deeper integration may buy peace today but reduces the optionality the small state will need tomorrow. Azerbaijan's multi-vector foreign policy since independence reflects this learning at scale. The Envoy returns to his Ilkhan with the refusal. There will be a response. There is always a response.",
+      },
+    ],
+    tags: ["arc", "integration", "vassalage"],
+  },
+  {
+    id: "arc-envoy-punishment",
+    speaker: "A wounded captain of the western garrison",
+    speakerType: "one-off",
+    arcCharacter: "envoy",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shah, the Ilkhan has sent a punitive *tumen*. Ten thousand horse, crossing the western passes now. They burned Ganja on the way through. The Envoy you turned away last spring rides at the front. Shamakhi has perhaps four days. Your decision in the next hour shapes what happens next.",
+    options: [
+      {
+        label: "Empty the treasury. Send envoys with everything you have.",
+        effects: { treasury: -25, military: -2, people: 2, faith: -4 },
+        affinityEffects: { envoy: 4 },
+        explanation:
+          "Last-minute submission attempts to convert an imminent punitive campaign into a renegotiated vassalage. The economic concept is the price of a credible commitment in extremis: at the gate of disaster, the throne offers everything it has in exchange for the campaign halting before it reaches the city. The Ilkhan's commanders know exactly how badly you need the halt. The price will reflect that.\n\nThe Ilkhanid punitive system was designed for exactly this moment. Cambridge histories of the period note that the Mongols subdued the Caucasus in 1235 to 1236 and then relied on local aristocracies under indirect rule, which set up a structure in which defiance could be punished proportionally without full annexation. The punitive menu was extensive: hostage-taking, raids, confiscation, replacement of rulers, the threat of direct occupation. Submission was almost always accepted if the price was high enough, because the Ilkhanate preferred negotiated tribute to occupied territory. Ibrahim I's later submission to Timur — the famous 'I am myself the ninth' moment in 1394 — is the dramatic version of exactly this pattern, with Ibrahim paying both gold and personal humiliation to preserve the dynasty.\n\nThe modern parallel is the long literature on coercive diplomacy and the cost of escalation. Sanctions, border closures, selective support for rival elites, and the threat of direct military action are the contemporary forms of the punitive *tumen*. Small states that misread the larger power's tolerance pay the price either in concessions or in territory. Azerbaijan's careful navigation of post-Soviet space has involved repeated calibration of when to accept reduced terms and when to risk the punitive response, with the 2020 and 2023 operations representing the inverse moment when the smaller state had the leverage. Today is not that moment. The treasury empties. The campaign halts ten miles short of Shamakhi.",
+      },
+      {
+        label: "Stand. Defend the walls.",
+        effects: { treasury: -3, military: -10, people: -8, faith: 5 },
+        affinityEffects: { envoy: -6 },
+        explanation:
+          "Standing accepts the punitive campaign and gambles on the walls. The economic logic is that submission has its own catastrophic cost — emptied treasury, lost prestige, the precedent that the Ilkhan can mount a *tumen* whenever he is displeased and be paid for it — and that resistance may produce a settled outcome at a different price. The cost is that 12th-century Caucasus city walls, however thick, were not built to withstand a sustained Mongol-trained siege army. The 1066 capture of both Shamakhi and Baku by Kara-Tegin's Turks is the warning.\n\nThe historical record on standing against Ilkhanid punitive campaigns is harsh. The cities that resisted typically fell. The cities that fell were typically subjected to the full menu of punishment — population reduction, replacement of ruling families, confiscation of treasury and inventory, conscription of artisans. Ganja, which the messenger reports the *tumen* has just burned on the way through, is the proximate cautionary example. The dynastic strategy that worked across the Shirvanshah period was almost never head-on resistance to a major punitive force; it was the careful management of relationships before the *tumen* was dispatched, and emergency submission once it had been.\n\nThe modern reading runs through the strategic literature on deterrence failure and the cost of misjudging escalation. Small states that resist when submission was the rational move tend to end up smaller. Small states that submit when resistance was viable tend to end up dependent. The line between the two is hard to see in advance and ruinous to mistake. The Envoy you turned away last spring is at the head of the column. He remembers your refusal with great clarity. The Qadi prepares to die on the walls. He may get his wish.",
+      },
+    ],
+    tags: ["arc", "punitive-campaign", "geopolitics"],
+  },
 ];
