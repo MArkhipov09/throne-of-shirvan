@@ -592,4 +592,160 @@ export const cards = [
     ],
     tags: ["human-capital", "research", "long-run-growth"],
   },
+  {
+    id: "arc-vizier-reform",
+    speaker: "Vizier Farrukh",
+    speakerType: "vizier",
+    arcCharacter: "vizier",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, after these years of trust I will speak plainly. Our administration leaks. Tax-farmers skim a third before the silver reaches Shamakhi. I have drawn up a reform — paid officials, kept books, regular audits. The merchants will resist. The Qadi will call it innovation. The yield in ten years will repay it twice over.",
+    options: [
+      {
+        label: "Back the reform. Sign the papers.",
+        effects: { treasury: -8, people: 4, military: 2, faith: -4 },
+        affinityEffects: { vizier: 2, qadi: -3, tahmina: -2 },
+        explanation:
+          "Institutional reform is the highest-return and slowest-paying investment a state can make. The economic concept is sometimes called administrative capacity or state capacity, and Daron Acemoglu and James Robinson's work over the past two decades has converged on the finding that inclusive, rule-bound institutions outperform extractive ones across centuries. The catch is that the transition is painful, takes longer than any single ruler's reign, and produces concentrated short-term costs for groups who benefited from the old system.\n\nThe Ilkhanate's clearest attempt at this kind of reform was Ghazan Khan's *yarligh* of around 1300, which tried to give security of tenure to landowners, regularise taxation, and curb the worst excesses of tax-farming. The reform partially worked — Ghazan's reign is generally read by historians as the peak of Ilkhanate administrative capacity — but the gains were not durable past his successors, who reverted to short-term extraction. Vizier Rashid al-Din, who helped draft the reforms and chronicled the period, was eventually executed in 1318 when the politics turned against him. Reform is fragile precisely because the people it dispossesses do not forget.\n\nThe modern Azerbaijani analogue runs through the country's State Tax Service modernisation in the late 2000s, the Asan Khidmat one-stop government service centres launched in 2012, and the ongoing tension between formalisation of the economy and the informal networks that resist it. The general direction is the same as your Vizier proposes: regularise, audit, professionalise. The cost is paid by the people who were profiting from opacity. The Vizier's affinity is at its peak. You have a window to do this; it will close.",
+      },
+      {
+        label: "Decline. The current system works.",
+        effects: { treasury: 3, people: -2, military: -1, faith: 2 },
+        affinityEffects: { vizier: -4, qadi: 1, tahmina: 2 },
+        explanation:
+          "Declining preserves the existing arrangement and the relationships that depend on it. The Qadi is reassured. Tahmina is reassured. The tax-farmers continue to skim a third, but they also continue to deliver the remaining two-thirds reliably, which is what they have always done. The kingdom does not change.\n\nThe medieval pattern of governance was overwhelmingly this one. Most rulers, including most Shirvanshahs, governed within inherited institutions and modified at the margins. The cost is a permanent ceiling on what the state can do: it can fight defensive wars, fund occasional infrastructure, maintain the court and the army, but it cannot mobilise the kingdom's full economic potential because the administrative apparatus is structurally constrained. Acemoglu and Robinson would call this an extractive equilibrium. The kingdom survives. It does not grow.\n\nThe modern parallel is every state that has chosen administrative continuity over reform when reform was available. The Resource Curse literature documents this pattern repeatedly: oil-rich states that did not modernise their administrative capacity during the boom years discovered, when oil prices fell, that their institutions were not strong enough to manage the adjustment. Azerbaijan's deliberate institutional investment during the 2000s and 2010s was a hedge against the same outcome. Your refusal today is defensible. Your Vizier loses years of accumulated trust in a single conversation. He will continue to serve. He will not propose anything ambitious again.",
+      },
+    ],
+    tags: ["institutional-reform", "state-capacity", "arc"],
+  },
+  {
+    id: "arc-vizier-removal",
+    speaker: "A delegation of three nobles",
+    speakerType: "one-off",
+    arcCharacter: "vizier",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shah, your Vizier moves against you. He has held meetings with the Qadi and with merchants of Shamakhi. We have witnesses. We can name names. Move first, before he does, or stand trial in your own court within the month.",
+    options: [
+      {
+        label: "Arrest the Vizier. Confiscate his estates.",
+        effects: { treasury: 8, military: 3, people: -6, faith: -3 },
+        affinityEffects: { vizier: -10, qadi: -2 },
+        explanation:
+          "Acting first against a suspected rival has the appeal of decisiveness and the cost of every relationship that depended on the rival continuing to function. The Vizier's estate transfers to the treasury. The nobles who informed on him are rewarded with positions and patronage. The Qadi, who may or may not have actually conspired, recalculates his own exposure and either flees, submits, or begins planning his own move. The kingdom acquires a reputation for arbitrary aristocratic justice that will cost it the loyalty of every future official who hopes to serve and survive.\n\nThe Ilkhanate record is full of these episodes. Shams al-Din Juvayni, Hulagu's vizier, accumulated enormous estates under one ruler and was executed under the next in 1284 on charges that included poisoning the previous Ilkhan; his estates were seized as *inju* lands and the kingdom's administrative continuity took a measurable hit in the years following. Rashid al-Din, who succeeded the Juvaynis as the dominant administrative figure, was executed in 1318 on similar charges. Each removal solved an immediate political problem and weakened the institutional capacity the state depended on.\n\nThe modern parallel runs through every leadership consolidation in resource-rich states. The economic cost shows up not in the year of the removal but in the years afterward, as competent officials calculate that visible competence is now a risk factor. Azerbaijani institutional development has worked, where it has worked, partly by keeping the rules visible enough that competence is not punished as ambition. Your nobles are pleased with the arrests. The next generation of vizier-candidates is now reading the wind.",
+      },
+      {
+        label: "Refuse. Hear the Vizier yourself first.",
+        effects: { treasury: -2, military: -2, people: 3, faith: 4 },
+        affinityEffects: { vizier: 4, qadi: 1 },
+        explanation:
+          "Refusing to act on the nobles' word alone preserves the procedural norm that accusations must be tested before being acted on. The Vizier is summoned and questioned. The witnesses are examined. The accusations may or may not have substance; what matters institutionally is that the test happened. If the Vizier is innocent, you have preserved a working relationship after a near-miss. If guilty, you have evidence that will survive any successor's scrutiny. Either outcome strengthens the rule-of-law character of your court.\n\nMedieval Islamic governance had a developed theoretical position on this — the Sharia courts and the *mazalim* tribunals of complaint that ran above them were specifically intended to test accusations before punishment. The institution worked unevenly in practice. Ghazan Khan's reforms tried to strengthen exactly this principle. Where the reforms held, capacity grew; where they failed, the state reverted to arbitrary action and lost capacity in proportion.\n\nThe modern Azerbaijani analogue is the ongoing development of judicial independence and the courts' relationship to executive power. The work is unfinished in most modern states; it was certainly unfinished in medieval Shirvan. What matters is the direction of travel. Your refusal to act on the delegation's word alone is a vote for procedure over expedience. The nobles leave disappointed. The Vizier's affinity recovers part of its loss. Whether he was actually plotting will be discovered in time.",
+      },
+    ],
+    tags: ["arc", "succession", "institutional-capacity"],
+  },
+  {
+    id: "arc-qadi-council",
+    speaker: "Qadi Mahmud",
+    speakerType: "qadi",
+    arcCharacter: "qadi",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, the ulama of Tabriz, Shamakhi, and Baku ask leave to convene a council in the great mosque. They wish to issue rulings on the lawful and the forbidden in commerce — usury, weights, the wine trade, the dhimmi taxes. Your patronage gives the council authority. Withhold it, and they meet anyway, with less.",
+    options: [
+      {
+        label: "Patronise the council. Open it yourself.",
+        effects: { treasury: -3, faith: 8, people: 4, military: -2 },
+        affinityEffects: { qadi: 3, vizier: -1, tahmina: -2 },
+        explanation:
+          "Patronising the religious establishment converts religious legitimacy into political legitimacy. The economic concept is closer to political economy than to standard microeconomics: the ruler trades resources and access for the legitimating capacity of the clergy, who in turn use the ruler's patronage to settle internal disputes about doctrine and practice. The classical Islamic political theory, from al-Mawardi onward, expected exactly this relationship and the institutions developed around it.\n\nThe Shirvanshahs took this seriously. The Palace of the Shirvanshahs complex includes the Palace Mosque, completed in 1441–42 under Khalilullah I, and the tomb of Seyid Yahya Bakuvi — a Sufi scholar and astrologer whose status at the court was part religious authority and part intellectual capacity. The architectural investment in religious legitimacy was deliberate and expensive. Khalilullah I's funding of the Sangachal caravanserai and his broader patronage network worked because the religious establishment was inside the system rather than outside it.\n\nThe modern Azerbaijani parallel is the country's distinctive arrangement between a secular state structure and a state-recognised religious authority — the Caucasus Muslim Office, headed by the Sheikh-ul-Islam. The arrangement is unusual in the Muslim world and is the direct institutional descendant of the medieval model: religious authority operating with state recognition and within state-defined boundaries. Your patronage today sets the precedent for that relationship. The Vizier and Tahmina both notice that the council's rulings on commerce will narrow some of their options. The Qadi notices that you have honoured him.",
+      },
+      {
+        label: "Withhold patronage. Let them meet without it.",
+        effects: { treasury: 2, faith: -4, people: -2, military: 1 },
+        affinityEffects: { qadi: -3, tahmina: 1 },
+        explanation:
+          "Withholding patronage signals that the kingdom does not depend on religious legitimation. The council meets anyway, in a smaller hall, with less formal authority and a sharper edge. Its rulings are read by the faithful and disregarded by the merchants. The clergy notes the absence and adjusts its assessment of where the court stands relative to the *ummah*.\n\nThe long-run cost is hard to see in any single year. Most rulers who declined to fund religious institutions did not face immediate consequences. The consequences accumulated. The Ilkhanate's pre-Ghazan rulers, several of whom were not Muslim and one of whom (Arghun) was openly hostile, governed for decades without serious religious challenge — but the Ilkhanate state's reach into Muslim society was constrained for those same decades, and the eventual Islamisation under Ghazan Khan in 1295 was partly a recognition that the lack of religious legitimacy had become a structural constraint on state action.\n\nThe modern parallel is the long debate in Muslim-majority states over the relationship between secular authority and religious institutions. Different countries have settled at different points on the spectrum, with corresponding trade-offs. Azerbaijan's settlement — secular state structure, recognised religious authority, state oversight of religious appointments — was the outcome of a long political process and was not the obvious choice when independence came in 1991. Your refusal today is a vote for state autonomy from clerical influence. The Qadi will remember it. Tahmina is quietly pleased; her commerce was about to be regulated.",
+      },
+    ],
+    tags: ["arc", "legitimacy", "religious-economy"],
+  },
+  {
+    id: "arc-qadi-fatwa",
+    speaker: "A messenger from the great mosque",
+    speakerType: "one-off",
+    arcCharacter: "qadi",
+    arcAffinityDirection: "low",
+    scenario:
+      "The Qadi has issued a *fatwa*, Shah. Your debasement of the coin, your tolerance of the wine houses, your dealings with the Genoese — all are pronounced contrary to the law. The faithful are instructed to consider their loyalty. He preaches at noon prayers tomorrow.",
+    options: [
+      {
+        label: "Have him removed. Replace him with a compliant Qadi.",
+        effects: { treasury: -2, faith: -8, people: -7, military: 2 },
+        affinityEffects: { qadi: -10 },
+        explanation:
+          "Removing a sitting Qadi over a *fatwa* is a step few medieval Islamic rulers took lightly. The institutional cost is the perceived legitimacy of every future Qadi the kingdom appoints: if Qadis serve at the ruler's pleasure and are removed for inconvenient rulings, their authority collapses to that of any other royal official. The faithful note who left office and why. The replacement, however eminent, governs in the shadow of the removal. The legitimating function of the religious establishment, which is precisely what the ruler benefits from when relations are good, is degraded.\n\nThe Ilkhanate did this and paid the price. Several Ilkhans, particularly before Ghazan Khan's conversion in 1295, treated religious officials as employees and rotated them aggressively. The resulting weakness of the religious establishment was one of the structural problems Ghazan tried to repair; the *yarligh* reforms restored some autonomy to clerical institutions specifically to rebuild the legitimating function the previous generation had hollowed out. The cost of weakening religious institutions is paid for decades after the weakening.\n\nThe modern parallel runs through every state that has tried to subordinate religious authority entirely to political authority. The results have been mixed and rarely as the rulers hoped. The Caucasus Muslim Office in modern Azerbaijan operates within state-defined limits but retains substantive religious authority precisely because complete subordination would defeat the purpose. Your removal of the Qadi today is the medieval version of the same mistake. The replacement preaches what you require. No one listens with the same weight.",
+      },
+      {
+        label: "Hear him out. Negotiate a settlement.",
+        effects: { treasury: -4, faith: 3, people: 2, military: -1 },
+        affinityEffects: { qadi: 3, vizier: -1 },
+        explanation:
+          "Negotiating with the Qadi acknowledges that religious authority has a real basis the throne cannot simply override. The *fatwa* may be modified, withdrawn, or narrowed in exchange for concessions — closing the worst of the wine houses, reforming a specific debasement, regularising the dhimmi taxes. The negotiation is humiliating but the alternative — a public preaching against your rule at noon prayers in the great mosque — is much worse.\n\nThe medieval evidence supports negotiation over confrontation in this kind of dispute. Mehmed II and the Ottoman *ulama*, Akbar and the Mughal religious establishment, the Safavid shahs and the Twelver clergy — each of these relationships involved repeated negotiations and concessions in both directions, with the rulers who handled them best generally being the ones who recognised that religious authority operated on a different basis from political authority and could not be coerced into submission without permanent damage to the legitimating function. Outright confrontation produced short-term victories and long-term institutional weakness.\n\nThe modern Azerbaijani equivalent is the ongoing calibration between the state's secular structure and the religious establishment's substantive authority on matters of personal status, family law, and religious practice. The settlement is not fixed; it is renegotiated continuously through small adjustments. Your negotiation with the Qadi today is the medieval version of the same continuous adjustment. He withdraws the *fatwa* in exchange for visible concessions. His affinity recovers partly. The kingdom continues without the rupture.",
+      },
+    ],
+    tags: ["arc", "religious-authority", "legitimacy"],
+  },
+  {
+    id: "arc-tahmina-redirect",
+    speaker: "Tahmina of Shamakhi",
+    speakerType: "tahmina",
+    arcCharacter: "tahmina",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shirvanshah, this has become tedious. I have been taxed, refused, lectured by your Qadi, and accused twice by your Vizier. My caravans will go north next season. The Astrakhan route is open. I have already paid the bribes. Stop me with a better offer or watch the silk leave Shamakhi.",
+    options: [
+      {
+        label: "Make the offer. Tax remission and a privileged status.",
+        effects: { treasury: -10, people: 2, faith: -3, military: 1 },
+        affinityEffects: { tahmina: 4, qadi: -2 },
+        explanation:
+          "Buying Tahmina back is a hostage negotiation. Her threat to redirect to the Astrakhan route is credible — the northern Volga-Caspian route was a real and active alternative throughout the medieval period, used by Russian and English merchants in the later centuries and by Genoese vessels operating through Astrakhan from the 14th century onward. If she goes, the customs revenue from her caravans goes with her, plus the wider network effect of the merchants who would have followed her trade through Shamakhi. The lost revenue over years is much larger than the cost of the concessions you're being asked for.\n\nThe medieval pattern of merchant retention shows up clearly in the documentary record. The 1562 Antony Jenkinson decree from the Shirvan governor Abdulla Khan Ustajlu, granting the Muscovy Company specific customs exemptions, is exactly the kind of negotiated privilege that retained foreign trade. The Genoese and Venetian colonies on the Caspian shore from the 12th century onward operated on similar grants. Rulers who refused to bargain saw merchants reroute; rulers who bargained kept the trade and accepted the smaller per-caravan revenue.\n\nThe modern Azerbaijani parallel is the country's deliberate use of tax incentives and customs facilitation to attract Middle Corridor transit traffic. Container traffic on the Trans-Caspian International Transport Route grew from 1.5 million tons in 2022 to 3.2 million tons in 2024, partly because the state actively bargained with shippers and offered terms that competing routes did not match. Your offer to Tahmina is the medieval scale-model of the same logic: accept lower margins per caravan to keep the caravans coming through. The Qadi notes the cost. The Vizier privately admires the manoeuvre.",
+      },
+      {
+        label: "Let her go. Trade will find another route.",
+        effects: { treasury: -6, people: -3, military: -1, faith: 2 },
+        affinityEffects: { tahmina: -6 },
+        explanation:
+          "Letting Tahmina go saves the immediate concessions and costs the long-run trade flow. Her caravans redirect to Astrakhan. The customs revenue from her share of the Shamakhi trade disappears from the rolls. The smaller merchants who used her network for protection and credit lose those services and either follow her north, find other patrons, or shrink their operations. The Shamakhi market thins measurably within two seasons.\n\nThe historical record on lost trade is heavy with cases of cities that overplayed their hand. Routes are sticky for a generation and then suddenly shift. Once shifted they rarely return on the same scale. The Volga-Caspian route, Astrakhan, and the northern alternatives gained durably whenever the southern Caspian routes raised their effective transaction costs through tariffs, instability, or unfriendly courts. The Shirvanshah period was not immune from this and the Shirvanshahs who survived longest were the ones who recognised the dynamic.\n\nThe modern analogue is the recurring threat of cargo diversion that Azerbaijan faces from the alternative northern route through Russia and the southern route through Iran. The state's competitive position on the Middle Corridor is not given; it is actively maintained through pricing, infrastructure investment, and diplomatic capacity. Letting a major shipper redirect because the state refused a marginal concession is rarely a winning trade. Tahmina is gone. Her warehouse stands empty for a season and then is sold. The next major merchant who considers basing operations in Shamakhi notes what happened to her.",
+      },
+    ],
+    tags: ["arc", "merchant-retention", "trade-routes"],
+  },
+  {
+    id: "arc-general-throne",
+    speaker: "A captain of the household guard",
+    speakerType: "one-off",
+    arcCharacter: "general",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shah, General Farrukhzad has marched two regiments to the palace gate. He claims a tribute owed and demands you receive him. His standard is raised. The garrison commander asks whether to bar the gate or open it. Your answer in the next hour shapes whether you are still on the throne by sundown.",
+    options: [
+      {
+        label: "Open the gate. Hear what he demands.",
+        effects: { treasury: -12, military: 6, people: -3, faith: -2 },
+        affinityEffects: { general: 5 },
+        explanation:
+          "Opening the gate accepts the General's coercive leverage and negotiates from a position of weakness. Whatever he demands — back pay for his troops, a confiscated estate restored, a marriage alliance, a removal of the Vizier — will cost the kingdom in proportion to how much you fear him. The economic concept is the price of an implicit threat: an army at the gate is worth the difference between what you would have paid voluntarily and what you will pay under duress. The number is rarely small.\n\nMedieval succession crises are full of these moments. The Ilkhanate's transition from Arghun to Gaykhatu in 1291, the Shirvanshah ransom of Ibrahim I from Qara Yusuf — each involved direct payment in exchange for the avoidance of worse outcomes. The Ibrahim ransom is particularly instructive: he paid a large sum in coin to recover his freedom and his throne, and the payment was understood as the price of resumption rather than a defeat. The kingdom survived because the payment was made. The longer-run cost was that the precedent existed.\n\nThe modern equivalent is the dilemma every state faces when a powerful subordinate institution — a military, an oligarchic faction, a regional governor — begins to act semi-autonomously. Azerbaijani institutional development has, over decades, increasingly subordinated regional and military authorities to central control, but the process was not smooth and there were moments in the 1990s when it could have gone otherwise. Your decision to open the gate is the medieval version of accepting a costly compromise to preserve continuity. The General gets what he wants. His affinity recovers. The captain of the household guard updates his estimate of who really commands.",
+      },
+      {
+        label: "Bar the gate. Summon loyal forces.",
+        effects: { treasury: -3, military: -8, people: 4, faith: 3 },
+        affinityEffects: { general: -3 },
+        explanation:
+          "Barring the gate refuses the coercive demand and forces the General to either back down, retreat, or attempt an actual assault on the palace. The economic cost is whatever the resulting battle costs in men, structures, and the loyalties of those forced to choose a side. The political cost is the public spectacle of a kingdom whose military commander has marched on its capital. The benefit, if you survive, is that the precedent of coercive demands is broken.\n\nThe historical pattern of successful resistance to military coups is real but specific. It tends to require the existence of a counter-force — household troops, loyal nobles, allied foreign powers — and the appearance of legitimate authority on the side that resists. Sheikh Ibrahim Darbandi of Shirvan navigated several such moments by maintaining alliances that constrained any single subordinate's ability to act independently. The Ilkhanate's repeated successions, by contrast, often went the other way precisely because no counter-force existed strong enough to bar the gate.\n\nThe modern analogue runs through every successful and unsuccessful coup attempt in modern history, and the pattern that emerges is that institutional resistance succeeds when the institutions resisting are themselves substantively legitimate. Azerbaijani state development through the 2000s and 2010s built precisely this kind of institutional resilience, partly in conscious response to the instability of the early independence period. Your decision to resist is a vote for institutional integrity over personal continuity. The General either backs down, dies in the assault, or wins. If the gate holds, the kingdom changes. If it falls, the kingdom changes more.",
+      },
+    ],
+    tags: ["arc", "succession", "coup"],
+  },
 ];

@@ -1,6 +1,7 @@
 import { cards } from "../content/cards.js";
 import { crises } from "../content/crises.js";
-import { arcs } from "../content/arcs.js";
+
+const decisionCards = cards.filter((c) => !c.arcCharacter);
 
 const STAT_NAMES = ["treasury", "people", "military", "faith", "naphtha"];
 const CHARACTER_KEYS = ["vizier", "qadi", "tahmina", "general", "envoy"];
@@ -89,7 +90,7 @@ function shuffle(source) {
 
 function drawFromDeck() {
   if (state.deck.length === 0) {
-    state.deck = shuffle(cards);
+    state.deck = shuffle(decisionCards);
   }
   return state.deck.shift();
 }
@@ -98,8 +99,8 @@ function pickArcCard() {
   for (const character of CHARACTER_KEYS) {
     const direction = state.arcEligible[character];
     if (!direction || state.arcFired[character]) continue;
-    const arc = arcs.find(
-      (a) => a.character === character && a.affinityDirection === direction
+    const arc = cards.find(
+      (c) => c.arcCharacter === character && c.arcAffinityDirection === direction
     );
     if (arc) {
       state.arcFired[character] = true;
@@ -246,13 +247,13 @@ function chooseOption(index) {
       const newValue = Math.max(AFFINITY_MIN, Math.min(AFFINITY_MAX, oldValue + delta));
       state.affinity[character] = newValue;
       if (!state.arcFired[character] && !state.arcEligible[character]) {
-        if (newValue >= ARC_THRESHOLD) state.arcEligible[character] = "positive";
-        else if (newValue <= -ARC_THRESHOLD) state.arcEligible[character] = "negative";
+        if (newValue >= ARC_THRESHOLD) state.arcEligible[character] = "high";
+        else if (newValue <= -ARC_THRESHOLD) state.arcEligible[character] = "low";
       }
     }
   }
 
-  state.cardsPlayed += 1;
+  if (card.triggerStat === undefined) state.cardsPlayed += 1;
 
   for (const stat of STAT_NAMES) {
     if (state.crisisFired[stat]) continue;
