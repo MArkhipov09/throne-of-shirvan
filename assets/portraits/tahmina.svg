@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Tahmina of Shamakhi">
+  <rect width="256" height="256" fill="#e6dcc4"/>
+
+  <!-- Robe: caspian -->
+  <path d="M 28 256 L 28 224 Q 56 188 128 184 Q 200 188 228 224 L 228 256 Z" fill="#1e3a5f"/>
+  <!-- Inner robe (saffron, costly) -->
+  <path d="M 100 188 L 128 222 L 156 188 L 156 256 L 100 256 Z" fill="#c89b3c"/>
+  <!-- Embroidery on saffron panel -->
+  <g fill="none" stroke="#2c1810" stroke-width="0.6">
+    <path d="M 110 200 L 146 200"/>
+    <path d="M 110 210 L 146 210"/>
+    <path d="M 110 220 L 146 220"/>
+    <path d="M 110 232 L 146 232"/>
+    <path d="M 110 244 L 146 244"/>
+    <path d="M 128 196 L 128 254"/>
+  </g>
+
+  <!-- Neck -->
+  <path d="M 118 168 L 118 196 L 138 196 L 138 168 Z" fill="#f3ebd9"/>
+  <line x1="118" y1="172" x2="118" y2="194" stroke="#2c1810" stroke-width="1"/>
+  <line x1="138" y1="172" x2="138" y2="194" stroke="#2c1810" stroke-width="1"/>
+
+  <!-- Necklace: saffron pendant on caspian -->
+  <path d="M 102 196 Q 128 218 154 196" fill="none" stroke="#c89b3c" stroke-width="1.5"/>
+  <circle cx="128" cy="214" r="4" fill="#c89b3c" stroke="#2c1810" stroke-width="0.6"/>
+
+  <!-- Face -->
+  <path d="M 96 100 Q 96 78 128 76 Q 160 78 160 100 L 160 156 Q 158 174 128 178 Q 98 174 96 156 Z" fill="#f3ebd9" stroke="#2c1810" stroke-width="1.4"/>
+
+  <!-- Eyebrow (long, arched) -->
+  <path d="M 108 112 Q 122 104 136 112" fill="none" stroke="#2c1810" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- Almond eye, slightly larger -->
+  <path d="M 110 126 Q 122 120 134 126 Q 122 130 110 126 Z" fill="#2c1810"/>
+  <!-- Lash hint -->
+  <path d="M 110 126 L 108 124" stroke="#2c1810" stroke-width="0.8"/>
+
+  <!-- Nose line (delicate) -->
+  <path d="M 128 128 Q 132 146 130 154 L 124 156" fill="none" stroke="#2c1810" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Lips (small bow) -->
+  <path d="M 120 164 Q 124 162 128 164 Q 132 162 136 164" fill="none" stroke="#2c1810" stroke-width="1.2"/>
+  <path d="M 121 168 Q 128 172 135 168" fill="#7a2f2a" stroke="#2c1810" stroke-width="0.5"/>
+
+  <!-- Cheek mark (small saffron beauty mark / makeup) -->
+  <circle cx="148" cy="148" r="1.8" fill="#7a2f2a"/>
+
+  <!-- Hair peeking under headcover -->
+  <path d="M 96 100 Q 92 116 100 132" fill="#2c1810"/>
+  <path d="M 160 100 Q 164 116 156 132" fill="#2c1810"/>
+
+  <!-- Head covering: crimson with saffron embroidery -->
+  <path d="M 68 108 Q 56 38 128 30 Q 200 38 188 108 L 188 124 Q 186 110 180 100 Q 156 78 128 78 Q 100 78 76 100 Q 70 110 68 124 Z" fill="#7a2f2a" stroke="#2c1810" stroke-width="1.2"/>
+  <!-- Headcover side panels falling down -->
+  <path d="M 68 108 Q 60 140 64 180 Q 66 196 78 200 L 88 196 Q 76 190 76 174 Q 76 138 82 110 Z" fill="#7a2f2a" stroke="#2c1810" stroke-width="1"/>
+  <path d="M 188 108 Q 196 140 192 180 Q 190 196 178 200 L 168 196 Q 180 190 180 174 Q 180 138 174 110 Z" fill="#7a2f2a" stroke="#2c1810" stroke-width="1"/>
+
+  <!-- Saffron embroidered band along front edge -->
+  <path d="M 68 108 Q 128 90 188 108" fill="none" stroke="#c89b3c" stroke-width="4"/>
+  <path d="M 68 108 Q 128 90 188 108" fill="none" stroke="#2c1810" stroke-width="0.4"/>
+
+  <!-- Embroidery dot pattern on headcover -->
+  <g fill="#c89b3c">
+    <circle cx="92" cy="60" r="2"/>
+    <circle cx="108" cy="48" r="2"/>
+    <circle cx="128" cy="44" r="2.5"/>
+    <circle cx="148" cy="48" r="2"/>
+    <circle cx="164" cy="60" r="2"/>
+    <circle cx="78" cy="78" r="2"/>
+    <circle cx="178" cy="78" r="2"/>
+  </g>
+  <!-- Central forehead jewel -->
+  <path d="M 128 96 l 4 4 l -4 6 l -4 -6 z" fill="#c89b3c" stroke="#2c1810" stroke-width="0.6"/>
+
+  <!-- Hanging jewel chains beside face -->
+  <g stroke="#2c1810" stroke-width="0.5" fill="none">
+    <path d="M 78 110 L 80 156"/>
+    <path d="M 178 110 L 176 156"/>
+  </g>
+  <g fill="#c89b3c" stroke="#2c1810" stroke-width="0.4">
+    <circle cx="78" cy="122" r="2.5"/>
+    <circle cx="79" cy="138" r="2.5"/>
+    <circle cx="80" cy="156" r="3"/>
+    <circle cx="178" cy="122" r="2.5"/>
+    <circle cx="177" cy="138" r="2.5"/>
+    <circle cx="176" cy="156" r="3"/>
+  </g>
+
+  <!-- Frame -->
+  <g fill="none" stroke="#c89b3c">
+    <rect x="6" y="6" width="244" height="244" stroke-width="1.5"/>
+    <rect x="14" y="14" width="228" height="228" stroke-width="0.5"/>
+  </g>
+  <g fill="#c89b3c">
+    <path d="M 22 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 22 234 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 234 l 4 4 l -4 4 l -4 -4 z"/>
+  </g>
+</svg>

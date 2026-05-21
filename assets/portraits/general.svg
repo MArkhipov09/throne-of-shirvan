@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="General Farrukhzad">
+  <rect width="256" height="256" fill="#e6dcc4"/>
+
+  <!-- Shoulders: scale armor on stone tunic -->
+  <path d="M 24 256 L 24 220 Q 52 196 128 192 Q 204 196 232 220 L 232 256 Z" fill="#e6dcc4"/>
+  <path d="M 24 256 L 24 220 Q 52 196 128 192 Q 204 196 232 220 L 232 256 Z" fill="none" stroke="#2c1810" stroke-width="1.2"/>
+
+  <!-- Lamellar / scale plates on shoulders -->
+  <g fill="none" stroke="#2c1810" stroke-width="0.8">
+    <!-- Left shoulder scales -->
+    <path d="M 36 224 a 8 8 0 0 1 16 0"/>
+    <path d="M 50 220 a 8 8 0 0 1 16 0"/>
+    <path d="M 64 218 a 8 8 0 0 1 16 0"/>
+    <path d="M 78 214 a 8 8 0 0 1 16 0"/>
+    <path d="M 32 236 a 8 8 0 0 1 16 0"/>
+    <path d="M 46 232 a 8 8 0 0 1 16 0"/>
+    <path d="M 60 228 a 8 8 0 0 1 16 0"/>
+    <path d="M 74 226 a 8 8 0 0 1 16 0"/>
+    <path d="M 88 222 a 8 8 0 0 1 16 0"/>
+    <!-- Right shoulder scales -->
+    <path d="M 204 224 a 8 8 0 0 1 16 0"/>
+    <path d="M 190 220 a 8 8 0 0 1 16 0"/>
+    <path d="M 176 218 a 8 8 0 0 1 16 0"/>
+    <path d="M 162 214 a 8 8 0 0 1 16 0"/>
+    <path d="M 208 236 a 8 8 0 0 1 16 0"/>
+    <path d="M 194 232 a 8 8 0 0 1 16 0"/>
+    <path d="M 180 228 a 8 8 0 0 1 16 0"/>
+    <path d="M 166 226 a 8 8 0 0 1 16 0"/>
+    <path d="M 152 222 a 8 8 0 0 1 16 0"/>
+  </g>
+
+  <!-- Central plate / breastplate edge (caspian) -->
+  <path d="M 100 196 L 128 222 L 156 196 L 156 256 L 100 256 Z" fill="#1e3a5f"/>
+  <!-- Saffron rivets down the central plate -->
+  <g fill="#c89b3c">
+    <circle cx="128" cy="226" r="2.5"/>
+    <circle cx="128" cy="238" r="2.5"/>
+    <circle cx="128" cy="250" r="2.5"/>
+  </g>
+
+  <!-- Mail aventail (chain coif) hanging from helmet -->
+  <path d="M 78 110 Q 70 150 84 178 L 96 180 Q 90 152 92 120 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="1"/>
+  <path d="M 178 110 Q 186 150 172 178 L 160 180 Q 166 152 164 120 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="1"/>
+  <!-- Mail dot texture (suggests rings) -->
+  <g fill="#2c1810">
+    <circle cx="80" cy="124" r="1"/><circle cx="86" cy="128" r="1"/><circle cx="92" cy="124" r="1"/>
+    <circle cx="80" cy="140" r="1"/><circle cx="86" cy="144" r="1"/><circle cx="92" cy="140" r="1"/>
+    <circle cx="82" cy="156" r="1"/><circle cx="88" cy="160" r="1"/><circle cx="92" cy="156" r="1"/>
+    <circle cx="84" cy="170" r="1"/><circle cx="90" cy="174" r="1"/>
+    <circle cx="176" cy="124" r="1"/><circle cx="170" cy="128" r="1"/><circle cx="164" cy="124" r="1"/>
+    <circle cx="176" cy="140" r="1"/><circle cx="170" cy="144" r="1"/><circle cx="164" cy="140" r="1"/>
+    <circle cx="174" cy="156" r="1"/><circle cx="168" cy="160" r="1"/><circle cx="164" cy="156" r="1"/>
+    <circle cx="172" cy="170" r="1"/><circle cx="166" cy="174" r="1"/>
+  </g>
+
+  <!-- Neck (less visible behind aventail) -->
+  <path d="M 116 168 L 116 196 L 140 196 L 140 168 Z" fill="#f3ebd9"/>
+
+  <!-- Shorter rugged beard -->
+  <path d="M 106 156 Q 108 184 128 196 Q 148 184 150 156 Q 144 178 134 184 Q 128 188 122 184 Q 112 178 106 156 Z" fill="#2c1810"/>
+
+  <!-- Face (weathered) -->
+  <path d="M 100 110 Q 100 92 128 90 Q 156 92 156 110 L 156 158 Q 154 174 128 178 Q 102 174 100 158 Z" fill="#f3ebd9" stroke="#2c1810" stroke-width="1.5"/>
+  <!-- Weather line under eye -->
+  <path d="M 114 138 Q 122 140 130 138" fill="none" stroke="#2c1810" stroke-width="0.6"/>
+  <!-- Scar across cheek -->
+  <path d="M 142 138 L 148 152" stroke="#2c1810" stroke-width="1.2" fill="none"/>
+
+  <!-- Heavy eyebrow, severe -->
+  <path d="M 108 122 Q 122 116 134 122" fill="none" stroke="#2c1810" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Almond eye -->
+  <path d="M 112 132 Q 122 128 132 132 Q 122 135 112 132 Z" fill="#2c1810"/>
+
+  <!-- Strong nose -->
+  <path d="M 128 134 Q 136 154 132 162 L 124 162" fill="none" stroke="#2c1810" stroke-width="1.4" stroke-linecap="round"/>
+
+  <!-- Mustache -->
+  <path d="M 110 168 Q 120 174 128 172 Q 136 174 146 168" fill="#2c1810"/>
+
+  <!-- Helmet: pointed kulah-khud, caspian -->
+  <path d="M 78 110 Q 78 78 128 38 Q 178 78 178 110 L 168 110 Q 164 86 128 60 Q 92 86 88 110 Z" fill="#1e3a5f" stroke="#2c1810" stroke-width="1.4"/>
+  <!-- Helmet body dome -->
+  <path d="M 88 110 Q 88 78 128 50 Q 168 78 168 110 Z" fill="#1e3a5f" stroke="#2c1810" stroke-width="1.2"/>
+  <!-- Helmet ridge -->
+  <path d="M 128 50 L 128 110" stroke="#2c1810" stroke-width="0.6"/>
+  <!-- Spike on top -->
+  <path d="M 124 50 L 128 24 L 132 50 Z" fill="#1e3a5f" stroke="#2c1810" stroke-width="1"/>
+  <!-- Saffron rim band -->
+  <path d="M 84 108 Q 128 96 172 108 L 172 116 Q 128 104 84 116 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="0.7"/>
+  <!-- Nasal guard -->
+  <path d="M 124 110 L 124 134 L 132 134 L 132 110 Z" fill="#1e3a5f" stroke="#2c1810" stroke-width="1"/>
+
+  <!-- Frame -->
+  <g fill="none" stroke="#c89b3c">
+    <rect x="6" y="6" width="244" height="244" stroke-width="1.5"/>
+    <rect x="14" y="14" width="228" height="228" stroke-width="0.5"/>
+  </g>
+  <g fill="#c89b3c">
+    <path d="M 22 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 22 234 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 234 l 4 4 l -4 4 l -4 -4 z"/>
+  </g>
+</svg>
