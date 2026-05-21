@@ -14,6 +14,57 @@ const STAT_DESCRIPTIONS = {
   naphtha: "The Absheron oil reserves, your wildcard resource.",
 };
 
+const ENDING_TITLES = {
+  prosperity: "Prosperity",
+  survival: "Survival",
+  conquest: "Conquest",
+  revolt: "Revolt",
+};
+
+const ENDING_FLAVOUR = {
+  prosperity:
+    "Twenty-five years on the throne, the granaries full and the customs books in order. The Genoese still anchor at Shamakhi; the mosque you funded carries your name. Later chroniclers measure their Shirvanshahs against your reign, in the way every Shirvanshah after Khalilullah was measured against his.",
+  survival:
+    "Twenty-five years and you put the throne down in one piece. The realm is thinner than your father's, the silk trade reduced, the tribute to whatever suzerain is current a fixed line in the books. Ibrahim I survived Timur and the Qara Yusuf ransom by exactly this kind of careful diminishment, and the next Shirvanshah inherits a kingdom rather than a ruin.",
+  conquest:
+    "The walls failed before the year was out. The treasury had been empty for months when the cavalry appeared at the western gate, and the garrison had no reason to die for a court that could not pay them. Your reign joins the brief Caucasus entries from the 1240s — the realms that emptied themselves before the rider arrived.",
+  revolt:
+    "The Qadi led the procession to the palace gate. The household guard neither opened the doors nor barred them. The chronicler is uncertain whether you died, fled, or ruled in name for another year in someone else's hand, and the dynasty resumes under your nephew, the way it resumed after Vizier Rashid al-Din's execution in 1318.",
+};
+
+const ROMAN_NUMERALS = [
+  ["M", 1000], ["CM", 900], ["D", 500], ["CD", 400],
+  ["C", 100], ["XC", 90], ["L", 50], ["XL", 40],
+  ["X", 10], ["IX", 9], ["V", 5], ["IV", 4], ["I", 1],
+];
+
+function toRoman(n) {
+  if (n < 1) return "I";
+  let result = "";
+  let remaining = n;
+  for (const [letter, value] of ROMAN_NUMERALS) {
+    while (remaining >= value) {
+      result += letter;
+      remaining -= value;
+    }
+  }
+  return result;
+}
+
+function classifyEnding(ending) {
+  if (ending.type === "longevity") {
+    const total = STAT_NAMES.reduce((sum, name) => sum + state.stats[name], 0);
+    return total / STAT_NAMES.length >= 50 ? "prosperity" : "survival";
+  }
+  if (ending.stat === "people" || ending.stat === "faith") return "revolt";
+  return "conquest";
+}
+
+function reignSummary() {
+  const { treasury, people, military, faith, naphtha } = state.stats;
+  return `Year ${toRoman(state.cardsPlayed)}. Treasury ${treasury}, People ${people}, Military ${military}, Faith ${faith}, Naphtha ${naphtha}.`;
+}
+
 const CRISIS_LOW = 15;
 const CRISIS_HIGH = 85;
 const WARN_LOW = 25;
@@ -144,6 +195,8 @@ function nextCard() {
 
 function renderCardImmediate(card) {
   state.activeCard = card;
+  els.card.classList.remove("ending");
+  delete els.card.dataset.endingKind;
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   els.scenario.textContent = card.scenario;
@@ -174,16 +227,6 @@ function checkEnding() {
   return null;
 }
 
-function endingScenario(ending) {
-  if (ending.type === "longevity") {
-    return "Twenty-five years on the throne. Shirvan endures, and so does your name in the chronicles.";
-  }
-  if (ending.type === "collapse") {
-    return `Your ${ending.stat} has fallen to nothing. The court empties; the reign is over.`;
-  }
-  return `Your ${ending.stat} has overflowed past what the kingdom can carry. The reign ends here.`;
-}
-
 function resetReign() {
   for (const stat of STAT_NAMES) state.stats[stat] = 50;
   for (const character of CHARACTER_KEYS) {
@@ -200,11 +243,18 @@ function resetReign() {
 
 function renderEndingImmediate(ending) {
   state.activeCard = null;
-  els.speaker.textContent = "End of Reign";
+  const kind = classifyEnding(ending);
+
+  els.card.classList.add("ending");
+  els.card.dataset.endingKind = kind;
+
+  els.speaker.textContent = ENDING_TITLES[kind];
   els.speaker.dataset.speakerType = "ending";
-  els.scenario.textContent = endingScenario(ending);
-  els.explanation.hidden = true;
-  els.explanation.textContent = "";
+
+  els.scenario.textContent = reignSummary();
+
+  els.explanation.textContent = ENDING_FLAVOUR[kind];
+  els.explanation.hidden = false;
 
   els.options.innerHTML = "";
   const btn = document.createElement("button");
