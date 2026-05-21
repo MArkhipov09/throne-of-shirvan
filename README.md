@@ -30,7 +30,7 @@ Then visit <http://localhost:8000>.
 - **Four endings**: Prosperity, Survival, Conquest, Revolt. Each pulls flavour from a real Shirvanshah-era parallel.
 - **Save is automatic.** Close the tab mid-reign; reopen and the game offers Continue Reign or Begin a New Reign.
 - **Keyboard**: `1` / `2` pick options, `Enter` / `Space` continue.
-- **Sound toggle** in the top-left corner. Click effects and ending fanfares; the toggle state persists.
+- **Music toggle** in the top-left corner. One looping ambient track that plays across the whole session; the toggle state persists.
 
 ## File structure
 
@@ -109,5 +109,5 @@ The block is gated on `location.hostname` and won't ship in production.
 
 - The design audit lives in [POLISH_REPORT.md](./POLISH_REPORT.md): stat balance, explanation length, speaker distribution, concept duplication, accessibility, code health. Read it before making structural changes.
 - The "casual returner" use case is the load-bearing assumption: someone playing for the first time, interrupted, comes back later expecting to continue. The save-on-every-state-change in `src/game.js` exists to make that experience seamless rather than punishing.
-- Sound files are optional. `assets/sounds/README.txt` lists the six referenced filenames; the runtime fails gracefully if any are absent. Drop MP3s in when ready, no code change required.
+- The music file is optional. `assets/sounds/README.txt` documents the one expected filename; the runtime fails gracefully if it is absent. Drop `music.mp3` in when ready, no code change required.
 - The CSS palette is six tokens (`--ink`, `--parchment`, `--caspian`, `--saffron`, `--naphtha`, `--stone`) plus accents (`--moss`, `--brick`, `--silk`). Adding new colours should be rare and considered.

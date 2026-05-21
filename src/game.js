@@ -100,14 +100,7 @@ const SAVE_KEY = "throne-of-shirvan-save";
 const TUTORIAL_KEY = "throne-tutorial-seen";
 const AUDIO_KEY = "throne-of-shirvan-audio";
 
-const SOUND_PATHS = {
-  click: "assets/sounds/click.mp3",
-  prosperity: "assets/sounds/prosperity.mp3",
-  survival: "assets/sounds/survival.mp3",
-  conquest: "assets/sounds/conquest.mp3",
-  revolt: "assets/sounds/revolt.mp3",
-  warning: "assets/sounds/warning.mp3",
-};
+const MUSIC_PATH = "assets/sounds/music.mp3";
 
 function defaultWarningActive() {
   return Object.fromEntries(STAT_NAMES.map((s) => [s, false]));
@@ -166,38 +159,57 @@ function safeStorageRemove(key) {
   }
 }
 
-// --- Audio ---
+// --- Audio (single looping music track) ---
 
-const audioCache = {};
+let musicEl = null;
+let gestureArmed = false;
 
-function getAudio(name) {
-  if (!SOUND_PATHS[name]) return null;
-  if (!audioCache[name]) {
+function getMusic() {
+  if (!musicEl) {
     try {
-      const audio = new Audio();
-      audio.preload = "none";
-      audio.src = SOUND_PATHS[name];
-      audio.addEventListener("error", (e) => {
+      musicEl = new Audio(MUSIC_PATH);
+      musicEl.loop = true;
+      musicEl.preload = "auto";
+      musicEl.addEventListener("error", (e) => {
         if (e && typeof e.preventDefault === "function") e.preventDefault();
       });
-      audioCache[name] = audio;
     } catch {
       return null;
     }
   }
-  return audioCache[name];
+  return musicEl;
 }
 
-function playSound(name) {
-  if (!state.audioEnabled) return;
-  const audio = getAudio(name);
-  if (!audio) return;
+function armMusicOnGesture() {
+  if (gestureArmed) return;
+  gestureArmed = true;
+  const handler = () => {
+    document.removeEventListener("click", handler);
+    document.removeEventListener("keydown", handler);
+    gestureArmed = false;
+    if (state.audioEnabled) startMusic();
+  };
+  document.addEventListener("click", handler);
+  document.addEventListener("keydown", handler);
+}
+
+function startMusic() {
+  const m = getMusic();
+  if (!m) return;
   try {
-    audio.currentTime = 0;
-    const result = audio.play();
+    const result = m.play();
     if (result && typeof result.catch === "function") {
-      result.catch(() => {});
+      result.catch(() => armMusicOnGesture());
     }
+  } catch {
+    armMusicOnGesture();
+  }
+}
+
+function stopMusic() {
+  if (!musicEl) return;
+  try {
+    musicEl.pause();
   } catch {
     /* ignore */
   }
@@ -208,7 +220,7 @@ function applyAudioPref() {
   els.audioToggle.setAttribute("aria-pressed", state.audioEnabled ? "true" : "false");
   els.audioToggle.setAttribute(
     "aria-label",
-    state.audioEnabled ? "Sound effects: on" : "Sound effects: off"
+    state.audioEnabled ? "Music: on" : "Music: off"
   );
 }
 
@@ -216,6 +228,8 @@ function toggleAudio() {
   state.audioEnabled = !state.audioEnabled;
   safeStorageSet(AUDIO_KEY, state.audioEnabled ? "1" : "0");
   applyAudioPref();
+  if (state.audioEnabled) startMusic();
+  else stopMusic();
 }
 
 // --- Save / Resume ---
@@ -704,7 +718,7 @@ function resetReign() {
   state.warningActive = defaultWarningActive();
 }
 
-function renderEndingImmediate(ending, { fromResume = false } = {}) {
+function renderEndingImmediate(ending) {
   removeChronicle();
   state.activeCard = null;
   state.view = "ending";
@@ -751,10 +765,6 @@ function renderEndingImmediate(ending, { fromResume = false } = {}) {
 
   renderStats();
   saveGame();
-
-  if (!fromResume) {
-    playSound(kind);
-  }
 }
 
 function renderCard() {
@@ -797,8 +807,6 @@ function chooseOption(index) {
   const option = card.options[index];
   if (!option) return;
 
-  playSound("click");
-
   const cardType = card.triggerStat ? "crisis" : card.arcCharacter ? "arc" : "normal";
   state.cardHistory.push({
     cardId: card.id,
@@ -808,7 +816,6 @@ function chooseOption(index) {
     effects: { ...(option.effects || {}) },
   });
 
-  let warningFired = false;
   for (const [stat, delta] of Object.entries(option.effects ?? {})) {
     if (!(stat in state.stats)) continue;
     const oldValue = state.stats[stat];
@@ -818,15 +825,12 @@ function chooseOption(index) {
 
     const wasOutside = oldValue < WARN_LOW || oldValue > WARN_HIGH;
     const isOutside = newValue < WARN_LOW || newValue > WARN_HIGH;
-    if (isOutside && !wasOutside && !state.warningActive[stat]) {
+    if (isOutside && !wasOutside) {
       state.warningActive[stat] = true;
-      warningFired = true;
     } else if (!isOutside) {
       state.warningActive[stat] = false;
     }
   }
-
-  if (warningFired) playSound("warning");
 
   if (option.affinityEffects) {
     for (const [character, delta] of Object.entries(option.affinityEffects)) {
@@ -1087,7 +1091,7 @@ function onKeydown(event) {
 
 function renderRestoredView() {
   if (state.view === "ending" && state.endingInfo) {
-    renderEndingImmediate(state.endingInfo, { fromResume: true });
+    renderEndingImmediate(state.endingInfo);
     return true;
   }
   if (state.view === "question" && state.activeCard) {
@@ -1110,6 +1114,7 @@ function init() {
   state.audioEnabled = safeStorageGet(AUDIO_KEY) === "1";
   applyAudioPref();
   els.audioToggle.addEventListener("click", toggleAudio);
+  if (state.audioEnabled) startMusic();
 
   // Try to restore saved game
   const restored = loadGame();
