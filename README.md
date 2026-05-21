@@ -100,7 +100,6 @@ dev.setAffinity("qadi", -8)     // force a character's affinity
 dev.triggerArc("vizier", "high") // prime an arc card to fire on the next choice
 dev.triggerCrisis("people", "low")
 dev.clearSave()                 // forget the saved reign
-dev.resetTutorial()             // re-arm the first-card tutorial overlay
 ```
 
 The block is gated on `location.hostname` and won't ship in production.

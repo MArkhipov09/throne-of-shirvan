@@ -97,7 +97,6 @@ const FADE_MS = 150;
 const INTRO_FADE_MS = 300;
 
 const SAVE_KEY = "throne-of-shirvan-save";
-const TUTORIAL_KEY = "throne-tutorial-seen";
 const AUDIO_KEY = "throne-of-shirvan-audio";
 
 const MUSIC_PATH = "assets/sounds/music.mp3";
@@ -132,6 +131,7 @@ const state = {
 };
 
 let tutorialActive = false;
+let forceTutorialOnIntroHide = false;
 
 // --- Safe localStorage wrappers (handle private browsing / disabled storage) ---
 
@@ -358,10 +358,6 @@ if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     clearSave: () => {
       clearSave();
       console.log("Save cleared");
-    },
-    resetTutorial: () => {
-      safeStorageRemove(TUTORIAL_KEY);
-      console.log("Tutorial flag cleared");
     },
   };
 }
@@ -892,7 +888,6 @@ function maybeShowTutorial() {
   if (state.cardsPlayed !== 0) return;
   if (state.view !== "question") return;
   if (!state.activeCard) return;
-  if (safeStorageGet(TUTORIAL_KEY)) return;
   if (!els.intro.hidden) return;
   showTutorial();
 }
@@ -900,7 +895,6 @@ function maybeShowTutorial() {
 function showTutorial() {
   if (tutorialActive) return;
   tutorialActive = true;
-  safeStorageSet(TUTORIAL_KEY, "1");
 
   const overlay = document.createElement("div");
   overlay.className = "tutorial";
@@ -1044,7 +1038,12 @@ function hideIntro() {
   introHideTimer = setTimeout(() => {
     introHideTimer = null;
     els.intro.hidden = true;
-    maybeShowTutorial();
+    if (forceTutorialOnIntroHide) {
+      forceTutorialOnIntroHide = false;
+      showTutorial();
+    } else {
+      maybeShowTutorial();
+    }
   }, INTRO_FADE_MS);
 }
 
@@ -1147,6 +1146,7 @@ function init() {
   });
 
   els.aboutLink.addEventListener("click", () => {
+    forceTutorialOnIntroHide = true;
     if (state.reignStarted) {
       showIntro({ mode: "return" });
     } else {
