@@ -44,6 +44,16 @@ const state = {
   deck: [],
 };
 
+if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  window.dev = {
+    state,
+    setAffinity: (char, val) => { state.affinity[char] = val; console.log(`${char} affinity = ${val}`); },
+    setStat: (stat, val) => { state[stat] = val; console.log(`${stat} = ${val}`); },
+    triggerArc: (char, dir) => { state.affinity[char] = dir === 'high' ? 7 : -7; console.log(`${char} arc ${dir} primed — click an option to fire`); },
+    triggerCrisis: (stat, dir) => { state[stat] = dir === 'high' ? 86 : 14; console.log(`${stat} ${dir} crisis primed — click an option to fire`); }
+  };
+}
+
 const els = {
   stats: document.getElementById("stats"),
   cardsPlayed: document.getElementById("cards-played"),
