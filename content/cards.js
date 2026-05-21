@@ -352,4 +352,400 @@ export const cards = [
     ],
     tags: ["coalitions", "game-theory", "geopolitics"],
   },
+  {
+    id: "vizier-elasticity",
+    speaker: "Vizier Farrukh",
+    speakerType: "vizier",
+    scenario:
+      "The treasury needs another four thousand dinars before winter, Shah. We can tax the silk leaving Shamakhi or we can tax the bread baked in the city. Bread will raise more, with less complaint from the merchants. Silk will raise less, with more complaint from the bakers.",
+    options: [
+      {
+        label: "Tax the bread.",
+        effects: { treasury: 10, people: -9, faith: -3, military: 1 },
+        affinityEffects: { vizier: 1, qadi: -2 },
+        explanation:
+          "The Vizier's instinct rests on a sharp economic point. Bread has inelastic demand: people buy roughly the same amount whether the price rises or falls, because there is no real substitute and the quantity needed for survival is fixed. A tax on bread therefore raises a lot of revenue and reduces consumption only slightly. Silk has elastic demand: foreign buyers can switch to Persian, Chinese, or Bursa silk if Shirvan's becomes too expensive, and domestic buyers do not need it at all. A tax on silk raises less revenue and distorts trade volumes more.\n\nThis is what economists since Frank Ramsey have called optimal commodity taxation: for revenue, tax inelastic goods; for minimal distortion, also tax inelastic goods. The argument is technically correct and morally uncomfortable, because the inelastic goods tend to be necessities and necessities matter most to the poor. The Shamakhi bakers will absorb almost none of the tax. Their customers will absorb almost all of it.\n\nModern Azerbaijan's tax structure makes the same trade clearly. Value-added tax on essentials is contested in exactly the same terms: revenue versus welfare. Fuel subsidies remain partly because removing them transfers a large real burden to households who have nowhere to substitute. Your Vizier is offering you the revenue-maximising answer. The Qadi will arrive in the courtyard tomorrow morning with a long list of names of children who went hungry.",
+      },
+      {
+        label: "Tax the silk exports.",
+        effects: { treasury: 4, people: 3, faith: 2, military: -2 },
+        affinityEffects: { tahmina: -2, qadi: 1 },
+        explanation:
+          "Taxing silk raises less revenue and distributes the burden across foreign buyers and wealthy Shamakhi merchants — both of whom can afford it, neither of whom you depend on for the city's daily bread. The economic cost is real: some Genoese and Venetian buyers will reroute their purchases to Bursa or Tabriz, where similar grades of silk are available untaxed. The volume of trade through Shamakhi will fall measurably. Tahmina's house will not enjoy the conversation.\n\nThe Shirvanshahs' actual revenue structure relied heavily on transit and trade tolls rather than consumption taxes on necessities. The Shamakhi Khanate later codified the same instinct, taking one-tenth of silk produced and a fixed cattle share rather than reaching directly into the bread basket. The choice was political as much as economic. Bread riots end reigns; merchants merely sail to Derbent.\n\nThe modern parallel is Azerbaijan's tax policy on hydrocarbon exports versus domestic consumption. The state captures most of its revenue from the production chain on the seaward side of the economy — SOFAZ, profit oil, customs — and keeps domestic taxation relatively light, partly because the political cost of squeezing households is high and partly because there is enough rent upstream to make squeezing households unnecessary. Your refusal of the bread tax follows the same logic at medieval scale: take from where it stings least.",
+      },
+    ],
+    tags: ["elasticity", "taxation", "welfare"],
+  },
+  {
+    id: "qadi-madrasa",
+    speaker: "Qadi Mahmud",
+    speakerType: "qadi",
+    scenario:
+      "The boys of poor families learn nothing but their fathers' trade, Shah. A madrasa in Shamakhi, with scholarships for the cleverest sons of the bakers and the cobblers, would in twenty years give you judges, scribes, and astronomers. The treasury pays now. The kingdom collects later.",
+    options: [
+      {
+        label: "Found the madrasa with royal funding.",
+        effects: { treasury: -10, faith: 6, people: 5, military: -1 },
+        affinityEffects: { qadi: 3, vizier: 1 },
+        explanation:
+          "Education is the textbook merit good. The private benefits to the student are real, but the social benefits are larger and harder to capture privately — literate scribes, competent judges, skilled administrators, traders who can compute interest correctly. The market underprovides because students and their families cannot easily borrow against future earnings, and because the wider economy free-rides on whatever they learn. State subsidy or provision corrects this, and the corrective effect is one of the most-replicated findings in development economics.\n\nThe Shirvanshahs took this seriously when they were at their strongest. The Palace complex in Baku, built across the 15th century reigns of Ibrahim I, Khalilullah I, and Farrukh Yasar, included the tomb of Seyid Yahya Bakuvi — the court Sufi scholar and astrologer whose presence at the palace was an investment in intellectual capacity as much as in religious legitimacy. The medieval Islamic world ran on a network of madrasas funded by rulers and waqf endowments, and the centres of scholarship correlated tightly with the centres of political power. Bukhara, Cairo, Tabriz, Shamakhi: where rulers funded learning, learning concentrated.\n\nModern Azerbaijan made the same investment at a national scale through the State Program on Education of Azerbaijani Youth Abroad, which funded thousands of students at foreign universities from oil revenues channelled through SOFAZ. The state paid the cost early. The returns came as those students staffed ministries, banks, energy firms, and universities a decade later. Your madrasa is the medieval version of the same bet.",
+      },
+      {
+        label: "Decline. The merchants can fund their own schools.",
+        effects: { treasury: 2, faith: -4, people: -3, military: 0 },
+        affinityEffects: { qadi: -3 },
+        explanation:
+          "Letting private merchants fund schools sounds reasonable and produces a predictable pattern: the merchants fund schools for their own sons. The bakers' and cobblers' boys learn their fathers' trade. The pool of literate young men from which the next generation of judges, scribes, and astronomers is drawn remains narrow, and the kingdom's administrative capacity ages with the men currently holding the offices.\n\nThe failure mode is documented across pre-modern societies that did not invest in broad-based education. The Ilkhanate's slow administrative decay in the early 14th century is read by historians like Ann Lambton partly as a failure to renew its scribal class once the original generation of trained Persians began to die out. The state had relied on the existing pool rather than expanding it, and when the pool emptied, the documents stopped being produced reliably and the tax-farm contracts stopped being enforceable. Capacity is built; it does not maintain itself.\n\nThe modern parallel is the resource curse in human terms. Several oil states have under-invested in non-oil human capital and discovered, on the second or third oil price downturn, that they have nothing else to draw on. Azerbaijan's choice to fund education aggressively in the 2000s, when oil revenue was rising, was a deliberate hedge against exactly this pattern. The Qadi's argument and the modern argument are the same: pay for learning now, or pay for the absence of learning later. He leaves the courtyard angrier than he arrived.",
+      },
+    ],
+    tags: ["merit-goods", "human-capital", "education"],
+  },
+  {
+    id: "tahmina-salt",
+    speaker: "Tahmina of Shamakhi",
+    speakerType: "tahmina",
+    scenario:
+      "Tax the salt, Shah. Levy it on the merchants who bring the brick blocks from the Caspian flats. We will pass the cost to the consumers, every household will pay a little, and the treasury fills without any one of us feeling the squeeze. Nothing simpler.",
+    options: [
+      {
+        label: "Levy the tax on salt merchants.",
+        effects: { treasury: 11, people: -7, faith: -2, military: 1 },
+        affinityEffects: { tahmina: 1, qadi: -2 },
+        explanation:
+          "Tahmina is being honest about who actually pays. Tax incidence — the question of who bears the burden of a tax regardless of where it is formally levied — depends on the elasticities of demand and supply. Salt has highly inelastic demand: people need it for preservation, for cooking, for the basic chemistry of survival. There is no substitute. When the merchants pay the tax, they raise their prices, and consumers absorb almost the entire burden. Tahmina's house collects the salt, marks up by the tax, and hands you the collected sum without their margin moving at all.\n\nMedieval Islamic states understood this clearly. The Salyan flats and the Caspian salt lakes supplied a market that could not refuse to buy, and rulers from the Abbasids onward used salt as a fiscal instrument precisely because of its inelasticity. The French gabelle, levied for centuries on salt in pre-revolutionary France, is the European parallel — universally hated and immensely productive of revenue. The economic correctness of taxing inelastic necessities sits in permanent tension with the political costs.\n\nThe modern Azerbaijani version runs through fuel taxation and utility pricing. Petrol and gas in Azerbaijan are heavily subsidised, partly because removing the subsidy is a tax in disguise on inelastic demand. Each time the government reduces a subsidy, the real burden falls on households with no substitution options, and the political cost is high. Tahmina is asking you to do the medieval equivalent and accept the political cost. Note that she walks away smiling. The salt merchants are her cousins.",
+      },
+      {
+        label: "Refuse. Salt is the poor man's food.",
+        effects: { treasury: -2, people: 6, faith: 4, military: -1 },
+        affinityEffects: { tahmina: -1, qadi: 2 },
+        explanation:
+          "Refusing the salt tax forgoes the revenue and protects the poorest households from a regressive instrument. A regressive tax is one that falls more heavily on lower incomes as a share of income, because the poor spend a larger share of their income on the taxed good. Salt is the archetypal regressive base. The economic literature on optimal taxation has spent two centuries arguing about whether the revenue argument outweighs the equity argument; medieval rulers tended to resolve the question by political feel.\n\nThe Shirvanshah documentary record is light on direct salt taxation but consistent on the broader pattern: rulers who preserved their reigns tended to extract from trade and concession rather than from the kitchen. Khalilullah I's revenue base in the 15th century leaned on tolls, trade rents, and the naphtha concession economy, while the rural population was taxed in kind — grain, animals, silk — at rates that survived bad harvests without breaking. The instinct was structural rather than principled, but it produced sustainable governance.\n\nThe modern Azerbaijani parallel sits in the deliberate decision to subsidise rather than tax basic necessities. Bread prices, fuel, utilities — the state spends to suppress prices rather than raising revenue from inelastic demand. The cost is the loss of an enormously productive tax base. The benefit is a population that can predict its monthly costs and does not riot when the global wheat price spikes. Your Qadi nods. Tahmina makes a face and goes back to her counting-house. She will be back with a different proposal.",
+      },
+    ],
+    tags: ["tax-incidence", "regressivity", "salt"],
+  },
+  {
+    id: "general-wages",
+    speaker: "General Farrukhzad",
+    speakerType: "general",
+    scenario:
+      "Drought, lean trade, the treasury thinned. Pay the garrison three dinars where it once paid four. They will grumble, Shah. They will not desert. They have wives in Baku and nowhere else to take them. Where else will they go? My word holds them.",
+    options: [
+      {
+        label: "Cut the garrison's pay by a quarter.",
+        effects: { treasury: 8, military: -10, people: -5, faith: -2 },
+        affinityEffects: { general: -3 },
+        explanation:
+          "The General is technically right that the soldiers will not desert in large numbers and is psychologically wrong about almost everything else. Nominal wage cuts produce reactions disproportionate to their economic size. Workers — soldiers, in this case — interpret a pay reduction as a violation of trust, not as a price adjustment. Morale collapses faster than wages fall. Productivity drops. Theft, slow-rolling, and outright mutiny become more likely. The economic literature calls this nominal wage rigidity, and Truman Bewley's interview studies of laid-off American workers and the managers who let them go documented exactly the same pattern with modern wage-earners that you are seeing in your own garrison.\n\nThe medieval evidence runs the same direction. Ilkhanate-era armies, when paid late or paid short, defected to whichever local amir would meet their wages — and the steady fragmentation of the Ilkhanate into successor states after 1335 was driven partly by exactly this dynamic. Garrisons whose pay was honoured stayed loyal across regime changes. Garrisons whose pay was cut frequently switched sides. Sheikh Ibrahim Darbandi's careful management of his military payroll was part of why Shirvan stayed coherent while neighbours collapsed.\n\nThe modern parallel is the case for some positive inflation as monetary policy. Central bankers, including the Central Bank of Azerbaijan, generally aim for inflation slightly above zero precisely because it allows real wages to fall in downturns without nominal cuts. The 2015 manat devaluations cut real wages substantially; the cuts were absorbed because they happened through inflation, not through cheques being reduced. Your General has just offered you a cheque cut. He underestimates what it costs.",
+      },
+      {
+        label: "Pay in grain from the royal stores instead.",
+        effects: { treasury: 3, military: 2, people: -2, faith: 0 },
+        affinityEffects: { general: 1 },
+        explanation:
+          "Paying in grain preserves the nominal cash wage and substitutes a different form of compensation for the gap. The garrison receives its three dinars and a measure of grain whose market value, in a drought year, is meaningful. The soldiers' households see no reduction in the silver they receive, which is the part their wives count. The kingdom converts grain reserves into loyalty.\n\nMedieval Islamic states did this routinely. The *iqta* system, which awarded soldiers and officers the right to collect taxes from particular lands rather than paying them salaries directly, was a sophisticated version of the same logic — soldiers were compensated through revenue flows rather than coin transfers, and the system survived bad coinage years because it did not depend on the coinage. After Ilkhanate fragmentation, Mostawfi recorded that Azerbaijan, Arran, and Shirvan had moved toward military *eqta'* arrangements precisely because the cash economy was unreliable.\n\nThe modern analogue is in-kind compensation and benefits-in-kind in employment contracts. Companies — and states — that face cash constraints sometimes substitute housing, food allowances, school places, or healthcare for nominal wages, and the substitution works when the in-kind value is high. The Azerbaijani military and security services have used the same approach at various points, supplementing salaries with housing allocations and other non-cash benefits during periods of fiscal pressure. The General leaves the throne room satisfied that his soldiers' pride is intact. The Vizier notes that the royal granary is now lighter.",
+      },
+    ],
+    tags: ["wage-stickiness", "labour", "garrison"],
+  },
+  {
+    id: "noble-sumptuary",
+    speaker: "A senior noble of the court",
+    speakerType: "one-off",
+    scenario:
+      "Shah, the merchants' wives wear Genoese velvet finer than my own daughters'. The order of rank is breaking down in the streets. Ban velvet for any household below noble rank. Let the merchants keep their gold and learn to wear plain wool. The kingdom is not a market.",
+    options: [
+      {
+        label: "Pass the sumptuary law.",
+        effects: { treasury: -4, people: -7, faith: 4, military: 1 },
+        affinityEffects: { tahmina: -3, qadi: 1 },
+        explanation:
+          "Sumptuary laws are a particularly clean case study in unintended consequences. The official goal — preserving visible social hierarchy — runs into two predictable economic responses. First, banning a high-status good raises its status value. The good becomes more desirable precisely because it is forbidden, and willingness-to-pay rises for those who can still acquire it. Thorstein Veblen's analysis of conspicuous consumption captures this: the visible cost of the good is part of its value, and prohibition raises that cost dramatically. Second, prohibition creates a black market. Smugglers, bribed customs officers, hidden interior linings, all the standard evasions appear within months.\n\nMedieval and early modern sumptuary laws — from Elizabethan England through Ottoman codes to the various Islamic dress regulations — almost universally failed to maintain the social orders they were intended to defend. They generated revenue for smugglers, undermined the legitimacy of the legal system by being widely flouted, and concentrated the visible defiance among precisely the rising merchant class the laws were intended to suppress. The Italian city-states, which were the source of much of the contested cloth, watched the demand surge wherever the laws were strictest.\n\nThe modern Azerbaijani parallel runs through currency and import controls. The 2015 manat crisis produced informal parallel exchange rates and substantial smuggling of consumer goods around capital controls. The official rate looked stable; the unofficial rate told the real story. Sumptuary laws are the medieval form of the same lesson: when state regulation tries to override a market that has economic depth behind it, the market moves underground. Your noble nods sternly. Tahmina, whose imported velvet stocks have just become more valuable, conceals her satisfaction.",
+      },
+      {
+        label: "Refuse. Let people wear what they buy.",
+        effects: { treasury: 3, people: 5, faith: -2, military: -1 },
+        affinityEffects: { tahmina: 2 },
+        explanation:
+          "Letting the velvet trade run protects the revenue base, the merchant class, and the rule of law. The economic reasoning is that voluntary trade between consenting parties creates value for both — the cloth merchant and the buyer's wife both prefer the transaction to its absence, otherwise it would not happen. Prohibition destroys that surplus and replaces it with smuggling, enforcement costs, and resentment. The benefit, in the noble's framing, is the preservation of a visible status hierarchy. The cost is everything else.\n\nThe Shirvanshahs broadly followed this instinct in practice. The Genoese and Venetian merchants who founded colonies on the Caspian shore from the 12th century onward did so under regimes that tolerated their trade because the customs revenue was worth more than the visual orderliness of the streets. Giosafat Barbaro's 1476 description of Shamakhi as a city of four to five thousand houses producing silk and cotton implies an urban economy in which the merchant class could afford fine cloth, and there is no indication that Shirvanshah rulers attempted to dress them down.\n\nThe modern reading is the case for open consumer markets even where the resulting status competition makes social conservatives uncomfortable. Azerbaijani consumer markets in luxury goods, imported cars, designer fashion in Baku — these are visible status competitions that successive governments have tolerated because suppression is expensive and counter-productive. The noble at your throne is asking you to make a class-based regulation in a city whose wealth depends on cross-class commerce. You decline. He will not be voting your way at the next informal court.",
+      },
+    ],
+    tags: ["sumptuary", "unintended-consequences", "status-goods"],
+  },
+  {
+    id: "mint-consolidation",
+    speaker: "The Master of the Royal Mint",
+    speakerType: "one-off",
+    scenario:
+      "Three mints, Shah, in Shamakhi, Baku, and Derbent. Each strikes coin a fraction different in weight and silver fineness from the others. Merchants weigh every dinar twice. Consolidate to Shamakhi alone. Cleaner coin, less waste, one workshop instead of three. Or keep the three, and accept the noise.",
+    options: [
+      {
+        label: "Consolidate to one mint at Shamakhi.",
+        effects: { treasury: 6, military: -4, people: 2, faith: 0 },
+        affinityEffects: { vizier: 2, general: -1 },
+        explanation:
+          "Consolidation captures economies of scale. Fixed costs — skilled engravers, security, supervisory administration — spread across a larger output, lowering the average cost per coin. Standardisation of weight and purity reduces transaction costs across the entire trading economy: every dinar accepted at one weight everywhere is a dinar that does not need to be weighed at every transaction. The economic gain from standardisation alone is substantial in any monetary system, and the gain from the production efficiency adds to it.\n\nThe medieval evidence supports this in mixed ways. E. A. Pakhomov's catalogue of Azerbaijani coin hoards documents multiple Shirvanshah mints producing coins with subtle variations across the 13th and 14th centuries, and the late 13th century 'silver crisis' that drove the Shirvanshahs, Eldiguzids, and Derbent rulers to issue copper coinage was partly a consequence of distributed minting struggling with constrained silver supply. The Mongol response across the Ilkhanate was greater centralisation — the *kaaniki* dirhams minted in the name of the Great Khan in Tabriz, Ganja, Nakhichevan, and Urmia were closer to a single design than the pre-Mongol coinage they replaced. Centralisation worked.\n\nThe cost is concentration risk. If Shamakhi is sacked, the kingdom's mint capacity disappears with it. The 1192 Shamakhi earthquake, which prompted the Shirvanshahs to relocate to Baku, is the obvious lesson in the limits of single-point administrative concentration. Modern Azerbaijan runs a single central bank with backup reserves and digital systems precisely because the single point of failure problem is now solvable through redundancy that medieval rulers could not afford. Your Master is offering the efficiency gain. The General's concern about the strategic vulnerability is real but smaller than the gain.",
+      },
+      {
+        label: "Keep all three mints running.",
+        effects: { treasury: -2, military: 3, people: 0, faith: 1 },
+        affinityEffects: { general: 1, vizier: -1 },
+        explanation:
+          "Keeping three mints sacrifices the efficiency gain and the standardisation benefit in exchange for resilience. If one city falls, two mints continue. If one master engraver dies or defects, the other workshops keep producing. The kingdom is more robust to disruption at the cost of continuous mild inefficiency in coin quality and a slow ongoing transaction-cost penalty across every market.\n\nThe medieval Shirvanshahs in practice did maintain multiple mints for long stretches, and the Pakhomov material on the post-Mongol period shows the surviving Shirvanshah coinage emerging from several locations as the Ilkhanate fragmented after 1335. The distributed structure was partly a holdover, partly a deliberate hedge. Mostawfi's description of military *eqta'* in Azerbaijan, Arran, and Shirvan after fragmentation suggests a similar distributed-redundancy logic across the administration: multiple smaller centres of fiscal and military capacity rather than a single capital that could be lost.\n\nThe modern parallel is the trade-off between centralisation and resilience in critical infrastructure. Azerbaijan's energy infrastructure is heavily concentrated around Baku and the offshore Caspian fields, which produces economic efficiency and a serious single-point vulnerability simultaneously. The Trans-Anatolian and Southern Gas Corridor pipelines were partly built to reduce that concentration on the export side. Your decision to keep three mints is the medieval version of the same hedge. The General is pleased. The merchants will continue weighing every dinar.",
+      },
+    ],
+    tags: ["economies-of-scale", "standardisation", "currency"],
+  },
+  {
+    id: "gatekeeper-tolls",
+    speaker: "The Master of the Baku Gate",
+    speakerType: "one-off",
+    scenario:
+      "Shirvani merchants and Genoese merchants pay the same toll at the gate, Shah. Two dinars a load. The Genoese can pay four and will not turn their galleys around. Our own merchants would cry murder if I doubled their rate. Let me charge them differently. The treasury notices.",
+    options: [
+      {
+        label: "Differential tolls — higher for foreigners.",
+        effects: { treasury: 8, people: 4, faith: 2, military: -1 },
+        affinityEffects: { tahmina: 2, qadi: 1 },
+        explanation:
+          "Charging different prices to different buyers based on their willingness to pay is price discrimination, and where it is feasible it raises more revenue than uniform pricing without reducing trade volume in the same proportion. Foreign merchants have higher willingness to pay because their journey was longer, their alternative routes are fewer once they are at the Baku gate, and the value of the cargo they have committed to ship is larger relative to the toll. Domestic merchants have lower willingness to pay and easier exit options if you squeeze them. Charging each according to what they can bear is a classic monopolist's strategy applied to a state-monopoly toll point.\n\nThe Shirvanshahs and their successors did exactly this. The 1562 Antony Jenkinson decree from the Shirvan governor Abdulla Khan Ustajlu, granting the Muscovy Company specific toll exemptions, demonstrates that differential treatment was the norm and that exemptions were the diplomatic currency of trade negotiation. The implicit default was tiered, negotiable rates rather than a single published price. The customs offices — *tamgha* posts — operated with discretion built into the structure.\n\nThe modern parallel runs through visa fees, dual pricing at museums and transport systems, and the broader logic of imperfect competition. Azerbaijan's transit fees on the Middle Corridor differ by cargo type, origin, and destination — the formal mechanism is different from medieval tolls, but the underlying economics is the same. The cost is the resentment of foreign merchants who learn they are paying twice what the Shirvani next to them paid, and the risk that some of them reroute to Derbent or Tabriz. The Master of the Gate is betting the price ceiling is higher than that. Usually he is right.",
+      },
+      {
+        label: "Uniform toll for all. Equal treatment.",
+        effects: { treasury: -3, people: 2, faith: 1, military: 1 },
+        affinityEffects: { qadi: 2 },
+        explanation:
+          "A uniform toll forgoes the revenue gain from price discrimination and treats every merchant by the same rule. The economic cost is straightforward: you collect less from those who would have paid more, and you do not collect more from those who would have paid less. The benefit is simplicity, transparency, and the absence of negotiation overhead at every transaction. Customs officers cannot be bribed to lower a rate that is the same for everyone.\n\nThe Shirvanshahs' actual practice mixed both approaches, but the trend in the medieval Islamic world was toward formally differential rates with broad customary defaults, modified by specific grants and exemptions. The institutional infrastructure to enforce a single rate against all comers did not really exist; *tamgha* offices were closer to negotiating posts than to fixed-price gates. Insisting on uniformity is, in this period, a normative choice rather than an administrative default. It says the kingdom treats foreign merchants the same as its own, which has its own diplomatic value.\n\nThe modern reading runs through the most-favoured-nation principle in international trade. WTO-era trade law specifically requires non-discrimination as a default, with allowed exceptions through formal agreements. Azerbaijan's trade structure now operates within that framework. Your medieval Shirvan does not face WTO pressure but does face the practical question of whether the relationships with Genoa, Venice, and Astrakhan are worth a flat published rate. The Qadi approves of the principle. The Master of the Gate is disappointed.",
+      },
+    ],
+    tags: ["price-discrimination", "tolls", "trade-policy"],
+  },
+  {
+    id: "watchman-wine",
+    speaker: "A captain of the Shamakhi city watch",
+    speakerType: "one-off",
+    scenario:
+      "The wine taverns in the Armenian quarter multiply, Shah. Muslim youths spend their nights there. Brawls every week. Fathers complain. Tax the wine houses heavily, or close them. The Qadi will applaud either choice.",
+    options: [
+      {
+        label: "Tax the wine houses but allow them to operate.",
+        effects: { treasury: 7, people: -2, faith: 4, military: 1 },
+        affinityEffects: { qadi: 2 },
+        explanation:
+          "A demerit good is a good whose consumption produces negative externalities — costs imposed on people other than the consumer. Wine in a Muslim-majority city produces costs of several kinds: medical, familial, public order, religious disapproval. The economic argument is that the market price of wine does not reflect those external costs, so consumption is too high. A tax — Arthur Cecil Pigou formalised this in 1920 as a tax equal to the marginal external cost — raises the consumer price toward the social cost and reduces consumption to a more efficient level. Critically, it does so without destroying the legitimate trade entirely.\n\nMedieval Caucasus cities operated with this trade-off explicitly in mind. Shamakhi had a significant Armenian Christian community, and the dhimmi tradition under Islamic law allowed non-Muslim production of wine while taxing it through the *jizya* and various commercial levies. Outright prohibition would have driven the trade underground, raised the value of smuggled wine, and damaged the legal status of the Armenian merchant community — whose trade Shamakhi depended on for revenue and intellectual capital. Taxation preserved the community, suppressed consumption at the margin, and yielded revenue.\n\nThe modern Azerbaijani parallel is the country's notably secular legal structure within a Muslim-majority population, and the standard fiscal treatment of alcohol and tobacco as taxed but legal demerit goods. Excise duties on these goods are economically substantial across the modern tax base. The instrument is unchanged from the dhimmi-era logic: tax the externality, don't ban the trade. The Qadi approves the tax. The watchman wanted closure. He will accept the tax because the alternative was nothing.",
+      },
+      {
+        label: "Close the wine houses.",
+        effects: { treasury: -3, people: -6, faith: 5, military: -2 },
+        affinityEffects: { qadi: 3, tahmina: -2 },
+        explanation:
+          "Prohibition shuts down the legal trade and pushes it underground. Wine continues to be produced in cellars, smuggled in barrels described as honey or vinegar, and sold at higher prices through informal networks that pay no tax. The visible problem disappears from the main streets of Shamakhi. The actual consumption falls modestly. The smuggling economy grows. The Armenian merchant community, whose legal status depended on the *dhimmi* compact that permitted their commercial activity, feels the ground move under it.\n\nThe medieval evidence on prohibition is thin in Shirvan specifically but rich in the broader Islamic world. Prohibition campaigns in various Ottoman, Safavid, and Mughal contexts had the consistent feature of producing visible compliance, hidden continuation, and economic loss in the affected merchant communities. The Ilkhanate, governed by rulers some of whom were not personally Muslim, oscillated on these questions with results that depended more on political need than on religious consistency. Ghazan Khan's conversion to Islam in 1295 produced a wave of formal prohibitions; the unofficial economy carried on.\n\nThe modern parallel runs through every prohibition policy, from US Prohibition in the 1920s to current drug-control regimes worldwide. The consistent finding is that prohibition reduces the targeted activity less than its advocates expect and generates organised criminal economies more than they anticipate. Azerbaijan's pragmatic legal framework on alcohol — taxed, regulated, accessible — reflects this learning at a national scale. The watchman is satisfied. The Qadi is delighted. The Armenian merchants begin quiet conversations about whether they should be planning to leave.",
+      },
+    ],
+    tags: ["demerit-goods", "prohibition", "externality"],
+  },
+  {
+    id: "guild-standards",
+    speaker: "A guild master of the Shamakhi cloth-trade",
+    speakerType: "one-off",
+    scenario:
+      "Every district weighs its bales by a different measure, Shah. The Baku ratl is not the Shamakhi ratl. The Derbent stone is not either. Decree a single standard for all of Shirvan. The merchants will grumble for a year and thank you for a generation.",
+    options: [
+      {
+        label: "Decree a single standard for the kingdom.",
+        effects: { treasury: -4, people: 6, military: 1, faith: 1 },
+        affinityEffects: { vizier: 2, tahmina: 2 },
+        explanation:
+          "Standardisation of weights and measures is a classic problem of network effects. A standard becomes more valuable as more people use it, but no single market has the incentive to switch first because the surrounding markets are still on the old measures. The result is a coordination failure: everyone would prefer a single standard, no one will move alone. The economic case for state imposition is that the state can solve the coordination problem by decree, capturing benefits across the whole network that no private actor could capture alone. The cost is the one-time transition pain — every contract, every counterweight, every long-running trade relationship has to be renegotiated to the new units.\n\nThe Islamic world had broad standards for weights and currency — the dirham as silver weight, the dinar as gold — but local variations multiplied below the level of the formal standard. Coin hoards from Shirvan, Eldiguzid, and Derbent territories show the variation directly. Standardisation efforts came and went with each strong ruler. Khalilullah I's strong administrative period in the 15th century produced coinage of more consistent fineness than the pre-Mongol mints; the standardisation effort was real even if incomplete. The benefit to the trading economy was measurable in transaction volume and merchant confidence.\n\nThe modern analogue is everywhere: ISO standards, the metric system, telecommunications protocols, the GSM standard for mobile networks. Each is a state-or-treaty-imposed solution to a coordination problem that the market could not solve alone. Azerbaijan's adoption of EU and international trade and customs standards as part of its Middle Corridor positioning was a deliberate decision to absorb the transition cost in exchange for network access. Your guild master is asking you to make the same trade at medieval scale. He is more right than the merchants who will complain to your court next week.",
+      },
+      {
+        label: "Let the districts keep their measures.",
+        effects: { treasury: 1, people: -3, military: 0, faith: 0 },
+        affinityEffects: { vizier: -1 },
+        explanation:
+          "Letting the existing measures continue avoids the transition cost and accepts the ongoing inefficiency. Every cross-district transaction continues to require conversion between local units, every contract specifies which ratl it means, every merchant carries a memorised table of equivalences. The friction is small per transaction and large in aggregate. Markets continue to function; they simply function worse than they could.\n\nThe medieval path of least resistance was this one, and it was the default in most pre-modern economies. The cost of imposing a standard across a kingdom — the inspectors who had to verify weights, the official measures held in royal storehouses for reference, the disputes adjudicated in the courts — was high enough that most rulers did not attempt it consistently. The Shirvanshahs operated within this default for stretches of their history, and the trade network functioned despite the friction because the alternative was harder and the friction was bearable.\n\nThe modern parallel runs through every coordination problem that successive governments have decided was too expensive to solve. Multiple incompatible technical standards persist in regions of the world where no authority has the capacity or the political will to mandate a single one. The cost is paid forever, in small fractions of every transaction, until eventually a stronger authority forces the issue. Azerbaijan's adoption of international standards has been incremental for exactly this reason — the political cost of forcing change is real, and each domain gets standardised when the benefit clearly outweighs the resistance. Your guild master walks out unsatisfied. The merchants who would have complained never appear.",
+      },
+    ],
+    tags: ["network-effects", "standardisation", "coordination"],
+  },
+  {
+    id: "astronomer-school",
+    speaker: "Seyid Yahya Bakuvi, court astronomer",
+    speakerType: "one-off",
+    scenario:
+      "Shah, my eyes weaken and my students are few. Fund an observatory on the hill above the palace and a school for those who would study the stars, the calendar, the mathematics of irrigation. The cost is real today. The kingdom that comes after you will not know its debt.",
+    options: [
+      {
+        label: "Fund the observatory and the school.",
+        effects: { treasury: -12, people: 3, faith: 5, military: -1 },
+        affinityEffects: { qadi: 2, vizier: 1 },
+        explanation:
+          "Investment in human capital and knowledge production yields returns over decades, not seasons. The economic concept is the same as physical capital investment — sacrificing current consumption for future productivity — but with the added complication that the returns are diffuse, partly non-excludable, and partly captured by rulers other than the one paying. This is why states underinvest in basic research and education across history: the ruler who pays does not always live to see the payoff, and other rulers free-ride on the spillovers. The economic case for state funding rests on the fact that no private actor will internalise the returns either.\n\nThe Shirvanshah court genuinely invested in scholarship at its peak. Seyid Yahya Bakuvi is a real historical figure, court astrologer and Sufi scholar under the 15th-century Shirvanshahs, buried in the royal mausoleum complex at the Palace of the Shirvanshahs in Baku. His tomb is one of the more striking monuments in the Icheri Sheher inner city. The intellectual capacity gathered around the palace — astronomers, theologians, calendar-makers, architects — was a deliberate investment that paid back in the prestige and administrative capability of the dynasty's late period. The mathematical sophistication required to design the palace, the Maiden Tower, and the irrigation works depended on the scholarly community Khalilullah I and Farrukh Yasar funded.\n\nThe modern Azerbaijani analogue is the deliberate use of SOFAZ revenue to fund higher education and scholarly capacity — the State Program on Education of Azerbaijani Youth Abroad, ADA University, the network of state research institutions. The return on the investment shows up a decade or two later in the staff of ministries, banks, and energy firms. Your decision today seeds a generation. Bakuvi does not live to see the school in full operation, but his students do.",
+      },
+      {
+        label: "Decline. The treasury cannot afford it now.",
+        effects: { treasury: 1, people: -2, faith: -4, military: 0 },
+        affinityEffects: { qadi: -2 },
+        explanation:
+          "Declining preserves twelve thousand dinars in the treasury and forgoes the long-run capacity-building. The decision is rational on a short time horizon and questionable on a long one. The astronomer dies. His students disperse to find patronage in Tabriz, Herat, or Bukhara. The next generation of Shirvani administrators is drawn from a thinner pool. The kingdom continues to function but its intellectual centre of gravity drifts elsewhere. The cost is paid invisibly over thirty years.\n\nThe historical record shows what happens to courts that stop funding their scholars. The post-1335 fragmentation of the Ilkhanate accelerated partly because the administrative scholarship that had held the system together — the Persian *divan* tradition, the legal scholars of Tabriz and Sultaniyya — lost their state patronage as successor states fought for resources. The intellectual infrastructure thinned, the administrative capacity thinned with it, and the successor states inherited a weaker apparatus than the one their predecessors had built. The Shirvanshahs, who kept funding their scholars through this period, retained more capacity than most of their neighbours.\n\nThe modern resource curse literature documents the same pattern at national scale. Several oil states have under-invested in non-resource human capital during boom years and discovered, when the resource cycle turned, that they had nothing to fall back on. Azerbaijan's deliberate policy to invest in education during the 2000s was a hedge against this; the timing was chosen because the alternative was the resource curse outcome. Your refusal today is defensible on the current year's budget. It is harder to defend across the longer time horizon that the Shirvanshah court works in. Bakuvi bows and leaves. The Qadi notices.",
+      },
+    ],
+    tags: ["human-capital", "research", "long-run-growth"],
+  },
+  {
+    id: "arc-vizier-reform",
+    speaker: "Vizier Farrukh",
+    speakerType: "vizier",
+    arcCharacter: "vizier",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, after these years of trust I will speak plainly. Our administration leaks. Tax-farmers skim a third before the silver reaches Shamakhi. I have drawn up a reform — paid officials, kept books, regular audits. The merchants will resist. The Qadi will call it innovation. The yield in ten years will repay it twice over.",
+    options: [
+      {
+        label: "Back the reform. Sign the papers.",
+        effects: { treasury: -8, people: 4, military: 2, faith: -4 },
+        affinityEffects: { vizier: 2, qadi: -3, tahmina: -2 },
+        explanation:
+          "Institutional reform is the highest-return and slowest-paying investment a state can make. The economic concept is sometimes called administrative capacity or state capacity, and Daron Acemoglu and James Robinson's work over the past two decades has converged on the finding that inclusive, rule-bound institutions outperform extractive ones across centuries. The catch is that the transition is painful, takes longer than any single ruler's reign, and produces concentrated short-term costs for groups who benefited from the old system.\n\nThe Ilkhanate's clearest attempt at this kind of reform was Ghazan Khan's *yarligh* of around 1300, which tried to give security of tenure to landowners, regularise taxation, and curb the worst excesses of tax-farming. The reform partially worked — Ghazan's reign is generally read by historians as the peak of Ilkhanate administrative capacity — but the gains were not durable past his successors, who reverted to short-term extraction. Vizier Rashid al-Din, who helped draft the reforms and chronicled the period, was eventually executed in 1318 when the politics turned against him. Reform is fragile precisely because the people it dispossesses do not forget.\n\nThe modern Azerbaijani analogue runs through the country's State Tax Service modernisation in the late 2000s, the Asan Khidmat one-stop government service centres launched in 2012, and the ongoing tension between formalisation of the economy and the informal networks that resist it. The general direction is the same as your Vizier proposes: regularise, audit, professionalise. The cost is paid by the people who were profiting from opacity. The Vizier's affinity is at its peak. You have a window to do this; it will close.",
+      },
+      {
+        label: "Decline. The current system works.",
+        effects: { treasury: 3, people: -2, military: -1, faith: 2 },
+        affinityEffects: { vizier: -4, qadi: 1, tahmina: 2 },
+        explanation:
+          "Declining preserves the existing arrangement and the relationships that depend on it. The Qadi is reassured. Tahmina is reassured. The tax-farmers continue to skim a third, but they also continue to deliver the remaining two-thirds reliably, which is what they have always done. The kingdom does not change.\n\nThe medieval pattern of governance was overwhelmingly this one. Most rulers, including most Shirvanshahs, governed within inherited institutions and modified at the margins. The cost is a permanent ceiling on what the state can do: it can fight defensive wars, fund occasional infrastructure, maintain the court and the army, but it cannot mobilise the kingdom's full economic potential because the administrative apparatus is structurally constrained. Acemoglu and Robinson would call this an extractive equilibrium. The kingdom survives. It does not grow.\n\nThe modern parallel is every state that has chosen administrative continuity over reform when reform was available. The Resource Curse literature documents this pattern repeatedly: oil-rich states that did not modernise their administrative capacity during the boom years discovered, when oil prices fell, that their institutions were not strong enough to manage the adjustment. Azerbaijan's deliberate institutional investment during the 2000s and 2010s was a hedge against the same outcome. Your refusal today is defensible. Your Vizier loses years of accumulated trust in a single conversation. He will continue to serve. He will not propose anything ambitious again.",
+      },
+    ],
+    tags: ["institutional-reform", "state-capacity", "arc"],
+  },
+  {
+    id: "arc-vizier-removal",
+    speaker: "A delegation of three nobles",
+    speakerType: "one-off",
+    arcCharacter: "vizier",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shah, your Vizier moves against you. He has held meetings with the Qadi and with merchants of Shamakhi. We have witnesses. We can name names. Move first, before he does, or stand trial in your own court within the month.",
+    options: [
+      {
+        label: "Arrest the Vizier. Confiscate his estates.",
+        effects: { treasury: 8, military: 3, people: -6, faith: -3 },
+        affinityEffects: { vizier: -10, qadi: -2 },
+        explanation:
+          "Acting first against a suspected rival has the appeal of decisiveness and the cost of every relationship that depended on the rival continuing to function. The Vizier's estate transfers to the treasury. The nobles who informed on him are rewarded with positions and patronage. The Qadi, who may or may not have actually conspired, recalculates his own exposure and either flees, submits, or begins planning his own move. The kingdom acquires a reputation for arbitrary aristocratic justice that will cost it the loyalty of every future official who hopes to serve and survive.\n\nThe Ilkhanate record is full of these episodes. Shams al-Din Juvayni, Hulagu's vizier, accumulated enormous estates under one ruler and was executed under the next in 1284 on charges that included poisoning the previous Ilkhan; his estates were seized as *inju* lands and the kingdom's administrative continuity took a measurable hit in the years following. Rashid al-Din, who succeeded the Juvaynis as the dominant administrative figure, was executed in 1318 on similar charges. Each removal solved an immediate political problem and weakened the institutional capacity the state depended on.\n\nThe modern parallel runs through every leadership consolidation in resource-rich states. The economic cost shows up not in the year of the removal but in the years afterward, as competent officials calculate that visible competence is now a risk factor. Azerbaijani institutional development has worked, where it has worked, partly by keeping the rules visible enough that competence is not punished as ambition. Your nobles are pleased with the arrests. The next generation of vizier-candidates is now reading the wind.",
+      },
+      {
+        label: "Refuse. Hear the Vizier yourself first.",
+        effects: { treasury: -2, military: -2, people: 3, faith: 4 },
+        affinityEffects: { vizier: 4, qadi: 1 },
+        explanation:
+          "Refusing to act on the nobles' word alone preserves the procedural norm that accusations must be tested before being acted on. The Vizier is summoned and questioned. The witnesses are examined. The accusations may or may not have substance; what matters institutionally is that the test happened. If the Vizier is innocent, you have preserved a working relationship after a near-miss. If guilty, you have evidence that will survive any successor's scrutiny. Either outcome strengthens the rule-of-law character of your court.\n\nMedieval Islamic governance had a developed theoretical position on this — the Sharia courts and the *mazalim* tribunals of complaint that ran above them were specifically intended to test accusations before punishment. The institution worked unevenly in practice. Ghazan Khan's reforms tried to strengthen exactly this principle. Where the reforms held, capacity grew; where they failed, the state reverted to arbitrary action and lost capacity in proportion.\n\nThe modern Azerbaijani analogue is the ongoing development of judicial independence and the courts' relationship to executive power. The work is unfinished in most modern states; it was certainly unfinished in medieval Shirvan. What matters is the direction of travel. Your refusal to act on the delegation's word alone is a vote for procedure over expedience. The nobles leave disappointed. The Vizier's affinity recovers part of its loss. Whether he was actually plotting will be discovered in time.",
+      },
+    ],
+    tags: ["arc", "succession", "institutional-capacity"],
+  },
+  {
+    id: "arc-qadi-council",
+    speaker: "Qadi Mahmud",
+    speakerType: "qadi",
+    arcCharacter: "qadi",
+    arcAffinityDirection: "high",
+    scenario:
+      "Shah, the ulama of Tabriz, Shamakhi, and Baku ask leave to convene a council in the great mosque. They wish to issue rulings on the lawful and the forbidden in commerce — usury, weights, the wine trade, the dhimmi taxes. Your patronage gives the council authority. Withhold it, and they meet anyway, with less.",
+    options: [
+      {
+        label: "Patronise the council. Open it yourself.",
+        effects: { treasury: -3, faith: 8, people: 4, military: -2 },
+        affinityEffects: { qadi: 3, vizier: -1, tahmina: -2 },
+        explanation:
+          "Patronising the religious establishment converts religious legitimacy into political legitimacy. The economic concept is closer to political economy than to standard microeconomics: the ruler trades resources and access for the legitimating capacity of the clergy, who in turn use the ruler's patronage to settle internal disputes about doctrine and practice. The classical Islamic political theory, from al-Mawardi onward, expected exactly this relationship and the institutions developed around it.\n\nThe Shirvanshahs took this seriously. The Palace of the Shirvanshahs complex includes the Palace Mosque, completed in 1441–42 under Khalilullah I, and the tomb of Seyid Yahya Bakuvi — a Sufi scholar and astrologer whose status at the court was part religious authority and part intellectual capacity. The architectural investment in religious legitimacy was deliberate and expensive. Khalilullah I's funding of the Sangachal caravanserai and his broader patronage network worked because the religious establishment was inside the system rather than outside it.\n\nThe modern Azerbaijani parallel is the country's distinctive arrangement between a secular state structure and a state-recognised religious authority — the Caucasus Muslim Office, headed by the Sheikh-ul-Islam. The arrangement is unusual in the Muslim world and is the direct institutional descendant of the medieval model: religious authority operating with state recognition and within state-defined boundaries. Your patronage today sets the precedent for that relationship. The Vizier and Tahmina both notice that the council's rulings on commerce will narrow some of their options. The Qadi notices that you have honoured him.",
+      },
+      {
+        label: "Withhold patronage. Let them meet without it.",
+        effects: { treasury: 2, faith: -4, people: -2, military: 1 },
+        affinityEffects: { qadi: -3, tahmina: 1 },
+        explanation:
+          "Withholding patronage signals that the kingdom does not depend on religious legitimation. The council meets anyway, in a smaller hall, with less formal authority and a sharper edge. Its rulings are read by the faithful and disregarded by the merchants. The clergy notes the absence and adjusts its assessment of where the court stands relative to the *ummah*.\n\nThe long-run cost is hard to see in any single year. Most rulers who declined to fund religious institutions did not face immediate consequences. The consequences accumulated. The Ilkhanate's pre-Ghazan rulers, several of whom were not Muslim and one of whom (Arghun) was openly hostile, governed for decades without serious religious challenge — but the Ilkhanate state's reach into Muslim society was constrained for those same decades, and the eventual Islamisation under Ghazan Khan in 1295 was partly a recognition that the lack of religious legitimacy had become a structural constraint on state action.\n\nThe modern parallel is the long debate in Muslim-majority states over the relationship between secular authority and religious institutions. Different countries have settled at different points on the spectrum, with corresponding trade-offs. Azerbaijan's settlement — secular state structure, recognised religious authority, state oversight of religious appointments — was the outcome of a long political process and was not the obvious choice when independence came in 1991. Your refusal today is a vote for state autonomy from clerical influence. The Qadi will remember it. Tahmina is quietly pleased; her commerce was about to be regulated.",
+      },
+    ],
+    tags: ["arc", "legitimacy", "religious-economy"],
+  },
+  {
+    id: "arc-qadi-fatwa",
+    speaker: "A messenger from the great mosque",
+    speakerType: "one-off",
+    arcCharacter: "qadi",
+    arcAffinityDirection: "low",
+    scenario:
+      "The Qadi has issued a *fatwa*, Shah. Your debasement of the coin, your tolerance of the wine houses, your dealings with the Genoese — all are pronounced contrary to the law. The faithful are instructed to consider their loyalty. He preaches at noon prayers tomorrow.",
+    options: [
+      {
+        label: "Have him removed. Replace him with a compliant Qadi.",
+        effects: { treasury: -2, faith: -8, people: -7, military: 2 },
+        affinityEffects: { qadi: -10 },
+        explanation:
+          "Removing a sitting Qadi over a *fatwa* is a step few medieval Islamic rulers took lightly. The institutional cost is the perceived legitimacy of every future Qadi the kingdom appoints: if Qadis serve at the ruler's pleasure and are removed for inconvenient rulings, their authority collapses to that of any other royal official. The faithful note who left office and why. The replacement, however eminent, governs in the shadow of the removal. The legitimating function of the religious establishment, which is precisely what the ruler benefits from when relations are good, is degraded.\n\nThe Ilkhanate did this and paid the price. Several Ilkhans, particularly before Ghazan Khan's conversion in 1295, treated religious officials as employees and rotated them aggressively. The resulting weakness of the religious establishment was one of the structural problems Ghazan tried to repair; the *yarligh* reforms restored some autonomy to clerical institutions specifically to rebuild the legitimating function the previous generation had hollowed out. The cost of weakening religious institutions is paid for decades after the weakening.\n\nThe modern parallel runs through every state that has tried to subordinate religious authority entirely to political authority. The results have been mixed and rarely as the rulers hoped. The Caucasus Muslim Office in modern Azerbaijan operates within state-defined limits but retains substantive religious authority precisely because complete subordination would defeat the purpose. Your removal of the Qadi today is the medieval version of the same mistake. The replacement preaches what you require. No one listens with the same weight.",
+      },
+      {
+        label: "Hear him out. Negotiate a settlement.",
+        effects: { treasury: -4, faith: 3, people: 2, military: -1 },
+        affinityEffects: { qadi: 3, vizier: -1 },
+        explanation:
+          "Negotiating with the Qadi acknowledges that religious authority has a real basis the throne cannot simply override. The *fatwa* may be modified, withdrawn, or narrowed in exchange for concessions — closing the worst of the wine houses, reforming a specific debasement, regularising the dhimmi taxes. The negotiation is humiliating but the alternative — a public preaching against your rule at noon prayers in the great mosque — is much worse.\n\nThe medieval evidence supports negotiation over confrontation in this kind of dispute. Mehmed II and the Ottoman *ulama*, Akbar and the Mughal religious establishment, the Safavid shahs and the Twelver clergy — each of these relationships involved repeated negotiations and concessions in both directions, with the rulers who handled them best generally being the ones who recognised that religious authority operated on a different basis from political authority and could not be coerced into submission without permanent damage to the legitimating function. Outright confrontation produced short-term victories and long-term institutional weakness.\n\nThe modern Azerbaijani equivalent is the ongoing calibration between the state's secular structure and the religious establishment's substantive authority on matters of personal status, family law, and religious practice. The settlement is not fixed; it is renegotiated continuously through small adjustments. Your negotiation with the Qadi today is the medieval version of the same continuous adjustment. He withdraws the *fatwa* in exchange for visible concessions. His affinity recovers partly. The kingdom continues without the rupture.",
+      },
+    ],
+    tags: ["arc", "religious-authority", "legitimacy"],
+  },
+  {
+    id: "arc-tahmina-redirect",
+    speaker: "Tahmina of Shamakhi",
+    speakerType: "tahmina",
+    arcCharacter: "tahmina",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shirvanshah, this has become tedious. I have been taxed, refused, lectured by your Qadi, and accused twice by your Vizier. My caravans will go north next season. The Astrakhan route is open. I have already paid the bribes. Stop me with a better offer or watch the silk leave Shamakhi.",
+    options: [
+      {
+        label: "Make the offer. Tax remission and a privileged status.",
+        effects: { treasury: -10, people: 2, faith: -3, military: 1 },
+        affinityEffects: { tahmina: 4, qadi: -2 },
+        explanation:
+          "Buying Tahmina back is a hostage negotiation. Her threat to redirect to the Astrakhan route is credible — the northern Volga-Caspian route was a real and active alternative throughout the medieval period, used by Russian and English merchants in the later centuries and by Genoese vessels operating through Astrakhan from the 14th century onward. If she goes, the customs revenue from her caravans goes with her, plus the wider network effect of the merchants who would have followed her trade through Shamakhi. The lost revenue over years is much larger than the cost of the concessions you're being asked for.\n\nThe medieval pattern of merchant retention shows up clearly in the documentary record. The 1562 Antony Jenkinson decree from the Shirvan governor Abdulla Khan Ustajlu, granting the Muscovy Company specific customs exemptions, is exactly the kind of negotiated privilege that retained foreign trade. The Genoese and Venetian colonies on the Caspian shore from the 12th century onward operated on similar grants. Rulers who refused to bargain saw merchants reroute; rulers who bargained kept the trade and accepted the smaller per-caravan revenue.\n\nThe modern Azerbaijani parallel is the country's deliberate use of tax incentives and customs facilitation to attract Middle Corridor transit traffic. Container traffic on the Trans-Caspian International Transport Route grew from 1.5 million tons in 2022 to 3.2 million tons in 2024, partly because the state actively bargained with shippers and offered terms that competing routes did not match. Your offer to Tahmina is the medieval scale-model of the same logic: accept lower margins per caravan to keep the caravans coming through. The Qadi notes the cost. The Vizier privately admires the manoeuvre.",
+      },
+      {
+        label: "Let her go. Trade will find another route.",
+        effects: { treasury: -6, people: -3, military: -1, faith: 2 },
+        affinityEffects: { tahmina: -6 },
+        explanation:
+          "Letting Tahmina go saves the immediate concessions and costs the long-run trade flow. Her caravans redirect to Astrakhan. The customs revenue from her share of the Shamakhi trade disappears from the rolls. The smaller merchants who used her network for protection and credit lose those services and either follow her north, find other patrons, or shrink their operations. The Shamakhi market thins measurably within two seasons.\n\nThe historical record on lost trade is heavy with cases of cities that overplayed their hand. Routes are sticky for a generation and then suddenly shift. Once shifted they rarely return on the same scale. The Volga-Caspian route, Astrakhan, and the northern alternatives gained durably whenever the southern Caspian routes raised their effective transaction costs through tariffs, instability, or unfriendly courts. The Shirvanshah period was not immune from this and the Shirvanshahs who survived longest were the ones who recognised the dynamic.\n\nThe modern analogue is the recurring threat of cargo diversion that Azerbaijan faces from the alternative northern route through Russia and the southern route through Iran. The state's competitive position on the Middle Corridor is not given; it is actively maintained through pricing, infrastructure investment, and diplomatic capacity. Letting a major shipper redirect because the state refused a marginal concession is rarely a winning trade. Tahmina is gone. Her warehouse stands empty for a season and then is sold. The next major merchant who considers basing operations in Shamakhi notes what happened to her.",
+      },
+    ],
+    tags: ["arc", "merchant-retention", "trade-routes"],
+  },
+  {
+    id: "arc-general-throne",
+    speaker: "A captain of the household guard",
+    speakerType: "one-off",
+    arcCharacter: "general",
+    arcAffinityDirection: "low",
+    scenario:
+      "Shah, General Farrukhzad has marched two regiments to the palace gate. He claims a tribute owed and demands you receive him. His standard is raised. The garrison commander asks whether to bar the gate or open it. Your answer in the next hour shapes whether you are still on the throne by sundown.",
+    options: [
+      {
+        label: "Open the gate. Hear what he demands.",
+        effects: { treasury: -12, military: 6, people: -3, faith: -2 },
+        affinityEffects: { general: 5 },
+        explanation:
+          "Opening the gate accepts the General's coercive leverage and negotiates from a position of weakness. Whatever he demands — back pay for his troops, a confiscated estate restored, a marriage alliance, a removal of the Vizier — will cost the kingdom in proportion to how much you fear him. The economic concept is the price of an implicit threat: an army at the gate is worth the difference between what you would have paid voluntarily and what you will pay under duress. The number is rarely small.\n\nMedieval succession crises are full of these moments. The Ilkhanate's transition from Arghun to Gaykhatu in 1291, the Shirvanshah ransom of Ibrahim I from Qara Yusuf — each involved direct payment in exchange for the avoidance of worse outcomes. The Ibrahim ransom is particularly instructive: he paid a large sum in coin to recover his freedom and his throne, and the payment was understood as the price of resumption rather than a defeat. The kingdom survived because the payment was made. The longer-run cost was that the precedent existed.\n\nThe modern equivalent is the dilemma every state faces when a powerful subordinate institution — a military, an oligarchic faction, a regional governor — begins to act semi-autonomously. Azerbaijani institutional development has, over decades, increasingly subordinated regional and military authorities to central control, but the process was not smooth and there were moments in the 1990s when it could have gone otherwise. Your decision to open the gate is the medieval version of accepting a costly compromise to preserve continuity. The General gets what he wants. His affinity recovers. The captain of the household guard updates his estimate of who really commands.",
+      },
+      {
+        label: "Bar the gate. Summon loyal forces.",
+        effects: { treasury: -3, military: -8, people: 4, faith: 3 },
+        affinityEffects: { general: -3 },
+        explanation:
+          "Barring the gate refuses the coercive demand and forces the General to either back down, retreat, or attempt an actual assault on the palace. The economic cost is whatever the resulting battle costs in men, structures, and the loyalties of those forced to choose a side. The political cost is the public spectacle of a kingdom whose military commander has marched on its capital. The benefit, if you survive, is that the precedent of coercive demands is broken.\n\nThe historical pattern of successful resistance to military coups is real but specific. It tends to require the existence of a counter-force — household troops, loyal nobles, allied foreign powers — and the appearance of legitimate authority on the side that resists. Sheikh Ibrahim Darbandi of Shirvan navigated several such moments by maintaining alliances that constrained any single subordinate's ability to act independently. The Ilkhanate's repeated successions, by contrast, often went the other way precisely because no counter-force existed strong enough to bar the gate.\n\nThe modern analogue runs through every successful and unsuccessful coup attempt in modern history, and the pattern that emerges is that institutional resistance succeeds when the institutions resisting are themselves substantively legitimate. Azerbaijani state development through the 2000s and 2010s built precisely this kind of institutional resilience, partly in conscious response to the instability of the early independence period. Your decision to resist is a vote for institutional integrity over personal continuity. The General either backs down, dies in the assault, or wins. If the gate holds, the kingdom changes. If it falls, the kingdom changes more.",
+      },
+    ],
+    tags: ["arc", "succession", "coup"],
+  },
 ];
