@@ -426,10 +426,10 @@ function renderAffinity(card) {
 function buildStatBars() {
   els.stats.innerHTML = STAT_NAMES.map(
     (name) => `
-      <li class="stat" data-stat="${name}" data-tooltip="${STAT_DESCRIPTIONS[name]}">
-        <span class="stat-name">${name}</span>
-        <div class="stat-track"><div class="stat-fill"></div></div>
-        <span class="stat-value">0</span>
+      <li class="stat" data-stat="${name}" data-tooltip="${STAT_DESCRIPTIONS[name]}" tabindex="0" aria-label="${name}: 50 of 100. ${STAT_DESCRIPTIONS[name]}">
+        <span class="stat-name" aria-hidden="true">${name}</span>
+        <div class="stat-track" aria-hidden="true"><div class="stat-fill"></div></div>
+        <span class="stat-value" aria-hidden="true">0</span>
       </li>`
   ).join("");
 }
@@ -440,7 +440,12 @@ function renderStats() {
     const row = els.stats.querySelector(`[data-stat="${name}"]`);
     row.querySelector(".stat-fill").style.width = `${value}%`;
     row.querySelector(".stat-value").textContent = value;
-    row.classList.toggle("warning", value < WARN_LOW || value > WARN_HIGH);
+    const isWarn = value < WARN_LOW || value > WARN_HIGH;
+    row.classList.toggle("warning", isWarn);
+    row.setAttribute(
+      "aria-label",
+      `${name}: ${value} of 100${isWarn ? ", at risk" : ""}. ${STAT_DESCRIPTIONS[name]}`
+    );
   }
   els.cardsPlayed.textContent = state.cardsPlayed;
 }
@@ -626,6 +631,8 @@ function renderCardImmediate(card) {
     button.addEventListener("click", () => chooseOption(index));
     els.options.appendChild(button);
   });
+
+  els.options.querySelector("button")?.focus();
 
   renderStats();
   saveGame();
