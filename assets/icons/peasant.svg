@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Peasant — wheat sheaf">
+  <rect width="128" height="128" fill="#e6dcc4"/>
+
+  <!-- Wheat stalks (radiating bundle) -->
+  <g stroke="#2c1810" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M 64 100 L 42 30"/>
+    <path d="M 64 100 L 50 26"/>
+    <path d="M 64 100 L 58 22"/>
+    <path d="M 64 100 L 64 20"/>
+    <path d="M 64 100 L 70 22"/>
+    <path d="M 64 100 L 78 26"/>
+    <path d="M 64 100 L 86 30"/>
+  </g>
+
+  <!-- Wheat ears (grain heads) - small ovals on each stalk top -->
+  <g fill="#2c1810">
+    <ellipse cx="42" cy="30" rx="3" ry="6" transform="rotate(-20 42 30)"/>
+    <ellipse cx="50" cy="26" rx="3" ry="6" transform="rotate(-12 50 26)"/>
+    <ellipse cx="58" cy="22" rx="3" ry="6" transform="rotate(-6 58 22)"/>
+    <ellipse cx="64" cy="20" rx="3" ry="6"/>
+    <ellipse cx="70" cy="22" rx="3" ry="6" transform="rotate(6 70 22)"/>
+    <ellipse cx="78" cy="26" rx="3" ry="6" transform="rotate(12 78 26)"/>
+    <ellipse cx="86" cy="30" rx="3" ry="6" transform="rotate(20 86 30)"/>
+  </g>
+
+  <!-- Awns (whiskers) on each grain head -->
+  <g stroke="#2c1810" stroke-width="0.7" fill="none">
+    <path d="M 40 24 L 38 18"/>
+    <path d="M 44 22 L 44 16"/>
+    <path d="M 48 20 L 47 14"/>
+    <path d="M 52 18 L 53 12"/>
+    <path d="M 56 16 L 57 10"/>
+    <path d="M 60 15 L 62 9"/>
+    <path d="M 64 14 L 64 8"/>
+    <path d="M 68 15 L 66 9"/>
+    <path d="M 72 16 L 71 10"/>
+    <path d="M 76 18 L 75 12"/>
+    <path d="M 80 20 L 81 14"/>
+    <path d="M 84 22 L 84 16"/>
+    <path d="M 88 24 L 90 18"/>
+  </g>
+
+  <!-- Binding band -->
+  <rect x="50" y="74" width="28" height="10" fill="#2c1810"/>
+  <line x1="54" y1="76" x2="74" y2="76" stroke="#e6dcc4" stroke-width="0.6"/>
+  <line x1="54" y1="82" x2="74" y2="82" stroke="#e6dcc4" stroke-width="0.6"/>
+
+  <!-- Frame -->
+  <g fill="none" stroke="#c89b3c">
+    <rect x="4" y="4" width="120" height="120" stroke-width="1"/>
+    <rect x="9" y="9" width="110" height="110" stroke-width="0.4"/>
+  </g>
+</svg>

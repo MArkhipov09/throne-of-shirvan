@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 160" role="img" aria-label="Caspian coast scene: city wall and tower on the shore, a galley on the water">
+  <!-- Sky / background -->
+  <rect width="480" height="160" fill="#f3ebd9"/>
+
+  <!-- Sun / moon disc -->
+  <circle cx="380" cy="40" r="14" fill="none" stroke="#c89b3c" stroke-width="1"/>
+  <circle cx="380" cy="40" r="10" fill="#c89b3c" opacity="0.6"/>
+
+  <!-- Distant mountains right -->
+  <path d="M 280 110 L 320 84 L 340 96 L 370 76 L 400 92 L 430 80 L 460 100 L 480 110 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="0.5"/>
+
+  <!-- Water / sea -->
+  <rect x="0" y="110" width="480" height="50" fill="#e6dcc4"/>
+  <!-- Wave lines -->
+  <g fill="none" stroke="#1e3a5f" stroke-width="0.6" opacity="0.7">
+    <path d="M 0 118 Q 30 120 60 118 Q 90 116 120 118 Q 150 120 180 118 Q 210 116 240 118 Q 270 120 300 118 Q 330 116 360 118 Q 390 120 420 118 Q 450 116 480 118"/>
+    <path d="M 0 126 Q 30 128 60 126 Q 90 124 120 126 Q 150 128 180 126 Q 210 124 240 126 Q 270 128 300 126 Q 330 124 360 126 Q 390 128 420 126 Q 450 124 480 126"/>
+    <path d="M 0 136 Q 30 138 60 136 Q 90 134 120 136 Q 150 138 180 136 Q 210 134 240 136 Q 270 138 300 136 Q 330 134 360 136 Q 390 138 420 136 Q 450 134 480 136"/>
+    <path d="M 0 148 Q 30 150 60 148 Q 90 146 120 148 Q 150 150 180 148 Q 210 146 240 148 Q 270 150 300 148 Q 330 146 360 148 Q 390 150 420 148 Q 450 146 480 148"/>
+  </g>
+
+  <!-- Shore line -->
+  <path d="M 0 110 L 480 110" stroke="#2c1810" stroke-width="0.8"/>
+
+  <!-- Bird flight (V-shapes) -->
+  <g fill="none" stroke="#2c1810" stroke-width="0.8">
+    <path d="M 200 36 Q 204 32 208 36"/>
+    <path d="M 216 30 Q 220 26 224 30"/>
+    <path d="M 234 38 Q 238 34 242 38"/>
+  </g>
+
+  <!-- City silhouette on the left -->
+  <!-- Outer wall -->
+  <path d="M 30 110 L 30 90 L 150 90 L 150 110 Z" fill="#2c1810"/>
+  <!-- Crenellations along wall -->
+  <g fill="#2c1810">
+    <rect x="30" y="84" width="8" height="6"/>
+    <rect x="44" y="84" width="8" height="6"/>
+    <rect x="58" y="84" width="8" height="6"/>
+    <rect x="72" y="84" width="8" height="6"/>
+    <rect x="86" y="84" width="8" height="6"/>
+    <rect x="100" y="84" width="8" height="6"/>
+    <rect x="114" y="84" width="8" height="6"/>
+    <rect x="128" y="84" width="8" height="6"/>
+    <rect x="142" y="84" width="8" height="6"/>
+  </g>
+
+  <!-- Main tower (Maiden Tower-inspired) -->
+  <rect x="60" y="40" width="36" height="70" fill="#2c1810"/>
+  <!-- Tower crown -->
+  <g fill="#2c1810">
+    <rect x="58" y="36" width="6" height="6"/>
+    <rect x="68" y="36" width="6" height="6"/>
+    <rect x="78" y="36" width="6" height="6"/>
+    <rect x="88" y="36" width="6" height="6"/>
+  </g>
+  <!-- Tower arched windows (negative space) -->
+  <path d="M 72 56 Q 72 50 78 50 Q 84 50 84 56 L 84 66 L 72 66 Z" fill="#f3ebd9"/>
+  <path d="M 72 76 Q 72 70 78 70 Q 84 70 84 76 L 84 86 L 72 86 Z" fill="#f3ebd9"/>
+  <!-- Saffron flag -->
+  <line x1="78" y1="36" x2="78" y2="22" stroke="#2c1810" stroke-width="1.4"/>
+  <path d="M 78 22 L 92 26 L 78 30 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="0.5"/>
+
+  <!-- Smaller flanking tower -->
+  <rect x="130" y="60" width="20" height="50" fill="#2c1810"/>
+  <g fill="#2c1810">
+    <rect x="128" y="56" width="6" height="4"/>
+    <rect x="136" y="56" width="6" height="4"/>
+    <rect x="144" y="56" width="6" height="4"/>
+  </g>
+
+  <!-- Dome of a mosque behind wall (just visible) -->
+  <path d="M 100 88 Q 90 76 100 64 Q 110 52 120 64 Q 130 76 120 88 Z" fill="#2c1810"/>
+  <rect x="108" y="50" width="4" height="14" fill="#2c1810"/>
+  <circle cx="110" cy="48" r="2" fill="#2c1810"/>
+
+  <!-- Reflection of city in water -->
+  <g opacity="0.25" fill="#2c1810">
+    <rect x="30" y="110" width="120" height="14"/>
+    <rect x="60" y="110" width="36" height="20"/>
+    <rect x="130" y="110" width="20" height="16"/>
+  </g>
+
+  <!-- Galley on the water -->
+  <g transform="translate(286, 124)">
+    <!-- Hull -->
+    <path d="M -54 0 L 54 0 Q 48 14 40 14 L -40 14 Q -48 14 -54 0 Z" fill="#2c1810"/>
+    <!-- Raised prow (left) -->
+    <path d="M -54 0 L -50 -16 L -44 -16 L -44 0 Z" fill="#2c1810"/>
+    <!-- Raised stern (right) -->
+    <path d="M 54 0 L 50 -12 L 44 -12 L 44 0 Z" fill="#2c1810"/>
+    <!-- Mast -->
+    <rect x="-2" y="-50" width="3" height="50" fill="#2c1810"/>
+    <!-- Yard -->
+    <rect x="-30" y="-44" width="60" height="2" fill="#2c1810"/>
+    <!-- Sail (parchment color, billowing) -->
+    <path d="M -28 -42 Q 0 -38 28 -42 L 28 -14 Q 0 -8 -28 -14 Z" fill="#f3ebd9" stroke="#2c1810" stroke-width="1"/>
+    <!-- Sail folds -->
+    <path d="M -16 -40 Q -14 -28 -16 -16" fill="none" stroke="#2c1810" stroke-width="0.4"/>
+    <path d="M 0 -38 Q 0 -26 0 -14" fill="none" stroke="#2c1810" stroke-width="0.4"/>
+    <path d="M 16 -40 Q 14 -28 16 -16" fill="none" stroke="#2c1810" stroke-width="0.4"/>
+    <!-- Saffron pennant -->
+    <path d="M 1 -50 L 14 -46 L 1 -42 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="0.4"/>
+    <!-- Oars -->
+    <g stroke="#2c1810" stroke-width="0.8">
+      <line x1="-36" y1="6" x2="-42" y2="18"/>
+      <line x1="-24" y1="6" x2="-30" y2="18"/>
+      <line x1="-12" y1="6" x2="-18" y2="18"/>
+      <line x1="0" y1="6" x2="-6" y2="18"/>
+      <line x1="12" y1="6" x2="6" y2="18"/>
+      <line x1="24" y1="6" x2="18" y2="18"/>
+      <line x1="36" y1="6" x2="30" y2="18"/>
+    </g>
+  </g>
+
+  <!-- Subtle saffron border bottom (under water) -->
+  <line x1="0" y1="158" x2="480" y2="158" stroke="#c89b3c" stroke-width="0.6"/>
+</svg>

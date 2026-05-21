@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Vizier Farrukh">
+  <rect width="256" height="256" fill="#e6dcc4"/>
+
+  <!-- Robe: caspian blue -->
+  <path d="M 36 256 L 36 226 Q 56 192 128 188 Q 200 192 220 226 L 220 256 Z" fill="#1e3a5f"/>
+  <!-- Inner robe / v-neck shadow -->
+  <path d="M 104 192 L 128 220 L 152 192 L 152 256 L 104 256 Z" fill="#2c1810"/>
+  <!-- Saffron sash -->
+  <path d="M 60 232 L 196 232 L 196 244 L 60 244 Z" fill="#c89b3c"/>
+  <path d="M 60 232 L 196 232 L 196 244 L 60 244 Z" fill="none" stroke="#2c1810" stroke-width="0.5"/>
+  <!-- Saffron sash knot -->
+  <path d="M 122 232 L 134 232 L 138 250 L 118 250 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="0.5"/>
+
+  <!-- Neck -->
+  <path d="M 116 168 L 116 200 L 140 200 L 140 168 Z" fill="#f3ebd9"/>
+  <line x1="116" y1="172" x2="116" y2="198" stroke="#2c1810" stroke-width="1"/>
+  <line x1="140" y1="172" x2="140" y2="198" stroke="#2c1810" stroke-width="1"/>
+
+  <!-- Beard: neat, pointed, naphtha -->
+  <path d="M 100 144 Q 102 192 128 212 Q 154 192 156 144 Q 148 174 138 184 Q 128 192 118 184 Q 108 174 100 144 Z" fill="#2c1810"/>
+
+  <!-- Face -->
+  <path d="M 96 96 Q 94 76 128 74 Q 162 76 160 96 L 160 154 Q 158 174 128 178 Q 98 174 96 154 Z" fill="#f3ebd9" stroke="#2c1810" stroke-width="1.4"/>
+
+  <!-- Ear (subtle) -->
+  <path d="M 160 124 Q 168 126 168 134 Q 166 142 160 142" fill="none" stroke="#2c1810" stroke-width="1"/>
+
+  <!-- Eyebrow -->
+  <path d="M 110 108 Q 122 102 134 108" fill="none" stroke="#2c1810" stroke-width="2.4" stroke-linecap="round"/>
+
+  <!-- Almond eye -->
+  <path d="M 112 122 Q 122 117 134 122 Q 122 126 112 122 Z" fill="#2c1810"/>
+
+  <!-- Nose line -->
+  <path d="M 128 124 Q 134 142 132 152 L 124 154" fill="none" stroke="#2c1810" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- Mustache hint -->
+  <path d="M 114 158 Q 122 162 128 160 Q 134 162 142 158" fill="none" stroke="#2c1810" stroke-width="1.2"/>
+
+  <!-- Lip line -->
+  <path d="M 122 166 Q 128 168 134 166" fill="none" stroke="#2c1810" stroke-width="0.7"/>
+
+  <!-- Turban: stone with wraps -->
+  <path d="M 76 100 Q 64 40 128 32 Q 192 40 180 100 Q 178 80 168 70 Q 148 60 128 60 Q 108 60 88 70 Q 78 80 76 100 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="1.2"/>
+  <!-- Turban inner wraps -->
+  <path d="M 82 70 Q 128 54 174 70" fill="none" stroke="#2c1810" stroke-width="0.7"/>
+  <path d="M 78 84 Q 128 66 178 84" fill="none" stroke="#2c1810" stroke-width="0.7"/>
+  <!-- Caspian band -->
+  <path d="M 76 100 Q 128 86 180 100 L 180 106 Q 128 92 76 106 Z" fill="#1e3a5f"/>
+  <!-- Saffron jewel on band -->
+  <circle cx="128" cy="98" r="3.5" fill="#c89b3c" stroke="#2c1810" stroke-width="0.5"/>
+
+  <!-- Scroll, partially held -->
+  <g transform="translate(168, 214) rotate(18)">
+    <rect x="-2" y="-4" width="40" height="14" fill="#f3ebd9" stroke="#2c1810" stroke-width="1"/>
+    <circle cx="-2" cy="3" r="4.2" fill="#f3ebd9" stroke="#2c1810" stroke-width="1"/>
+    <circle cx="38" cy="3" r="4.2" fill="#f3ebd9" stroke="#2c1810" stroke-width="1"/>
+    <line x1="4" y1="-1" x2="32" y2="-1" stroke="#2c1810" stroke-width="0.4"/>
+    <line x1="4" y1="3"  x2="32" y2="3"  stroke="#2c1810" stroke-width="0.4"/>
+    <line x1="4" y1="7"  x2="32" y2="7"  stroke="#2c1810" stroke-width="0.4"/>
+  </g>
+
+  <!-- Frame -->
+  <g fill="none" stroke="#c89b3c">
+    <rect x="6" y="6" width="244" height="244" stroke-width="1.5"/>
+    <rect x="14" y="14" width="228" height="228" stroke-width="0.5"/>
+  </g>
+  <g fill="#c89b3c">
+    <path d="M 22 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 18 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 22 234 l 4 4 l -4 4 l -4 -4 z"/>
+    <path d="M 234 234 l 4 4 l -4 4 l -4 -4 z"/>
+  </g>
+</svg>
