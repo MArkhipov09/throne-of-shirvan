@@ -198,6 +198,36 @@ h3,
   opacity: 0;
 }
 
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 0.6rem;
+}
+
+.card-emblem {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.card-emblem[hidden] {
+  display: none;
+}
+
+.card-emblem img {
+  display: block;
+}
+
+.card-emblem[data-kind="portrait"] img {
+  width: 96px;
+  height: 96px;
+}
+
+.card-emblem[data-kind="icon"] img {
+  width: 44px;
+  height: 44px;
+}
+
 .card.ending {
   text-align: center;
 }
@@ -238,6 +268,12 @@ h3,
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: 0.1em;
+}
+
+.card-header .speaker {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .scenario {
@@ -358,7 +394,15 @@ h3,
   font-style: italic;
   font-size: 1.1rem;
   color: var(--naphtha);
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
+}
+
+.intro-scene {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  margin: 0 auto 1.75rem;
 }
 
 .intro-premise {

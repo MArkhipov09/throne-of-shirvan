@@ -6,6 +6,26 @@ const decisionCards = cards.filter((c) => !c.arcCharacter);
 const STAT_NAMES = ["treasury", "people", "military", "faith", "naphtha"];
 const CHARACTER_KEYS = ["vizier", "qadi", "tahmina", "general", "envoy"];
 
+const SPEAKER_CATEGORY = {
+  "genoese-naphtha": "foreign",
+  "village-mulberry": "peasant",
+  "tanners-water": "merchant",
+  "caspian-fishery": "peasant",
+  "tax-farmer-claim": "official",
+  "noble-sumptuary": "official",
+  "mint-consolidation": "official",
+  "gatekeeper-tolls": "official",
+  "watchman-wine": "soldier",
+  "guild-standards": "merchant",
+  "astronomer-school": "religious",
+  "arc-vizier-removal": "official",
+  "arc-qadi-fatwa": "religious",
+  "arc-general-throne": "soldier",
+  "crisis-bread-riot": "soldier",
+  "crisis-fatwa": "religious",
+  "crisis-naphtha-fire": "official",
+};
+
 const STAT_DESCRIPTIONS = {
   treasury: "Your dinars and trade revenue.",
   people: "Welfare and loyalty.",
@@ -119,6 +139,7 @@ const els = {
   stats: document.getElementById("stats"),
   cardsPlayed: document.getElementById("cards-played"),
   card: document.getElementById("card"),
+  cardEmblem: document.getElementById("card-emblem"),
   speaker: document.getElementById("speaker"),
   scenario: document.getElementById("scenario"),
   explanation: document.getElementById("explanation"),
@@ -127,6 +148,35 @@ const els = {
   introBegin: document.getElementById("intro-begin"),
   aboutLink: document.getElementById("about-link"),
 };
+
+function emblemForCard(card) {
+  if (!card) return null;
+  if (CHARACTER_KEYS.includes(card.speakerType)) {
+    return { kind: "portrait", src: `assets/portraits/${card.speakerType}.svg` };
+  }
+  const category = SPEAKER_CATEGORY[card.id];
+  if (category) {
+    return { kind: "icon", src: `assets/icons/${category}.svg` };
+  }
+  return null;
+}
+
+function renderEmblem(card) {
+  const info = emblemForCard(card);
+  if (!info) {
+    els.cardEmblem.innerHTML = "";
+    els.cardEmblem.hidden = true;
+    els.cardEmblem.removeAttribute("data-kind");
+    return;
+  }
+  const img = document.createElement("img");
+  img.src = info.src;
+  img.alt = "";
+  els.cardEmblem.innerHTML = "";
+  els.cardEmblem.appendChild(img);
+  els.cardEmblem.dataset.kind = info.kind;
+  els.cardEmblem.hidden = false;
+}
 
 function buildStatBars() {
   els.stats.innerHTML = STAT_NAMES.map(
@@ -195,6 +245,7 @@ function nextCard() {
 
 function renderCardImmediate(card) {
   state.activeCard = card;
+  renderEmblem(card);
   els.card.classList.remove("ending");
   delete els.card.dataset.endingKind;
   els.speaker.textContent = card.speaker;
@@ -243,6 +294,7 @@ function resetReign() {
 
 function renderEndingImmediate(ending) {
   state.activeCard = null;
+  renderEmblem(null);
   const kind = classifyEnding(ending);
 
   els.card.classList.add("ending");
