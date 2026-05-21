@@ -48,12 +48,22 @@ if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
   window.dev = {
     state,
     setAffinity: (char, val) => { state.affinity[char] = val; console.log(`${char} affinity = ${val}`); },
-    setStat: (stat, val) => { state[stat] = val; console.log(`${stat} = ${val}`); },
-    triggerArc: (char, dir) => { state.affinity[char] = dir === 'high' ? 7 : -7; console.log(`${char} arc ${dir} primed — click an option to fire`); },
-    triggerCrisis: (stat, dir) => { state[stat] = dir === 'high' ? 86 : 14; console.log(`${stat} ${dir} crisis primed — click an option to fire`); }
+    setStat: (stat, val) => { state.stats[stat] = val; console.log(`${stat} = ${val}`); },
+    triggerArc: (char, dir) => {
+      state.affinity[char] = dir === 'high' ? 7 : -7;
+      state.arcEligible[char] = dir;
+      console.log(`${char} arc ${dir} primed and eligible — click an option to fire`);
+    },
+    triggerCrisis: (stat, dir) => {
+      state.stats[stat] = dir === 'high' ? 86 : 14;
+      if (queueCrisis(stat, dir)) {
+        console.log(`${stat} ${dir} crisis primed — click an option to fire`);
+      } else {
+        console.log(`${stat} ${dir} crisis NOT primed (no matching card or already fired this reign)`);
+      }
+    }
   };
 }
-
 const els = {
   stats: document.getElementById("stats"),
   cardsPlayed: document.getElementById("cards-played"),
@@ -224,6 +234,17 @@ function renderCard() {
   }, FADE_MS);
 }
 
+function queueCrisis(stat, direction) {
+  if (state.crisisFired[stat]) return false;
+  const crisis = crises.find(
+    (c) => c.triggerStat === stat && c.triggerDirection === direction
+  );
+  if (!crisis) return false;
+  state.crisisFired[stat] = true;
+  state.pendingCrisis = crisis;
+  return true;
+}
+
 function animateDelta(stat, delta) {
   if (delta === 0) return;
   const row = els.stats.querySelector(`[data-stat="${stat}"]`);
@@ -266,20 +287,12 @@ function chooseOption(index) {
   if (card.triggerStat === undefined) state.cardsPlayed += 1;
 
   for (const stat of STAT_NAMES) {
-    if (state.crisisFired[stat]) continue;
     const value = state.stats[stat];
     let direction = null;
     if (value < CRISIS_LOW) direction = "low";
     else if (value > CRISIS_HIGH) direction = "high";
     if (!direction) continue;
-    const crisis = crises.find(
-      (c) => c.triggerStat === stat && c.triggerDirection === direction
-    );
-    if (crisis) {
-      state.crisisFired[stat] = true;
-      state.pendingCrisis = crisis;
-      break;
-    }
+    if (queueCrisis(stat, direction)) break;
   }
 
   els.explanation.textContent = option.explanation ?? "";
