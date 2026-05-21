@@ -7,6 +7,7 @@
   --stone: #e6dcc4;
   --moss: #4a6741;
   --brick: #7a2f2a;
+  --silk: #8a5a14;
 }
 
 * {
@@ -37,6 +38,7 @@ h3,
 #app {
   max-width: 36rem;
   margin: 0 auto;
+  perspective: 1200px;
 }
 
 .hud {
@@ -126,12 +128,13 @@ h3,
 .stat[data-stat="naphtha"]  { --stat-color: var(--naphtha); }
 
 .stat.warning .stat-track {
-  border-color: var(--saffron);
-  box-shadow: inset 0 0 0 1px var(--saffron);
+  border-color: var(--brick);
+  box-shadow: inset 0 0 0 1px var(--brick);
 }
 
 .stat.warning .stat-name {
-  color: var(--saffron);
+  color: var(--brick);
+  font-style: italic;
 }
 
 .stat[data-tooltip] {
@@ -191,11 +194,13 @@ h3,
   background: var(--stone);
   border: 1px solid var(--naphtha);
   padding: 1.5rem;
-  transition: opacity 150ms ease;
+  transition: opacity 150ms ease, transform 180ms ease;
+  transform-origin: center center;
 }
 
 .card.fading {
   opacity: 0;
+  transform: rotateY(-18deg) translateY(2px);
 }
 
 .card-header {
@@ -817,4 +822,55 @@ h3,
   color: var(--naphtha);
   margin-top: 0.05rem;
   font-size: 0.95rem;
+}
+
+/* Speaker-type accent colours — wake up data-speaker-type */
+.speaker[data-speaker-type="vizier"]  { color: var(--moss); }
+.speaker[data-speaker-type="qadi"]    { color: var(--caspian); }
+.speaker[data-speaker-type="tahmina"] { color: var(--silk); }
+.speaker[data-speaker-type="general"] { color: var(--brick); }
+.speaker[data-speaker-type="envoy"]   { color: var(--naphtha); }
+
+/* Stat-row focus ring (paired with tabindex="0" in JS) */
+.stat[tabindex]:focus {
+  outline: none;
+}
+
+.stat[tabindex]:focus-visible {
+  outline: 2px solid var(--naphtha);
+  outline-offset: 2px;
+}
+
+/* Portrait breathing — subtle vertical idle */
+.card-emblem[data-kind="portrait"] img {
+  animation: portrait-breathe 4.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes portrait-breathe {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-2px); }
+}
+
+/* Reduced-motion: disable every motion effect, keep the simple opacity cue */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: opacity 100ms ease;
+  }
+  .card.fading {
+    transform: none;
+  }
+  .card-emblem[data-kind="portrait"] img {
+    animation: none;
+  }
+  .stat-delta {
+    animation: none;
+    opacity: 1;
+  }
+  .intro {
+    transition: none;
+  }
+  .stat-fill {
+    transition: none;
+  }
 }
