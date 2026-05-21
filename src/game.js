@@ -21,9 +21,11 @@ const SPEAKER_CATEGORY = {
   "arc-vizier-removal": "official",
   "arc-qadi-fatwa": "religious",
   "arc-general-throne": "soldier",
+  "arc-envoy-punishment": "soldier",
   "crisis-bread-riot": "soldier",
   "crisis-fatwa": "religious",
   "crisis-naphtha-fire": "official",
+  "crisis-treasury-raid": "soldier",
 };
 
 const STAT_DESCRIPTIONS = {

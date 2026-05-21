@@ -15,6 +15,44 @@
   <body>
     <main id="app">
       <header class="hud">
+        <button
+          type="button"
+          class="audio-toggle"
+          id="audio-toggle"
+          aria-pressed="false"
+          aria-label="Sound effects: off"
+          title="Sound effects"
+        >
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" />
+            <path
+              class="audio-wave"
+              d="M16 7.5c1.4 1 2.3 2.7 2.3 4.5s-.9 3.5-2.3 4.5"
+              stroke="currentColor"
+              stroke-width="1.6"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <path
+              class="audio-wave"
+              d="M19 5c2.2 1.7 3.6 4.2 3.6 7s-1.4 5.3-3.6 7"
+              stroke="currentColor"
+              stroke-width="1.6"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <line
+              class="audio-mute"
+              x1="3"
+              y1="3"
+              x2="22"
+              y2="22"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
         <h1>Throne of Shirvan</h1>
         <button type="button" class="about-link" id="about-link">About / How to play</button>
         <ul class="stats" id="stats"></ul>
@@ -24,7 +62,10 @@
       <section class="card" id="card">
         <header class="card-header">
           <div class="card-emblem" id="card-emblem" aria-hidden="true" hidden></div>
-          <p class="speaker" id="speaker"></p>
+          <div class="speaker-block">
+            <p class="speaker" id="speaker"></p>
+            <div class="affinity" id="affinity" hidden></div>
+          </div>
         </header>
         <p class="scenario" id="scenario"></p>
         <p class="explanation" id="explanation" hidden></p>
@@ -53,6 +94,7 @@
         </ul>
         <div class="intro-actions">
           <button class="intro-begin" type="button" id="intro-begin">Begin Reign</button>
+          <button class="intro-secondary" type="button" id="intro-secondary" hidden>Begin a New Reign</button>
         </div>
       </div>
     </section>
