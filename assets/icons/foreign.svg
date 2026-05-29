@@ -1,46 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Foreign — galley ship">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Foreign — a galley under sail">
   <rect width="128" height="128" fill="#e6dcc4"/>
-
-  <!-- Water line (suggested wave) -->
-  <path d="M 8 96 Q 24 100 40 96 Q 56 92 72 96 Q 88 100 104 96 Q 116 92 120 96" fill="none" stroke="#2c1810" stroke-width="0.8"/>
-  <path d="M 8 104 Q 24 108 40 104 Q 56 100 72 104 Q 88 108 104 104 Q 116 100 120 104" fill="none" stroke="#2c1810" stroke-width="0.6"/>
-
-  <!-- Hull -->
-  <path d="M 14 80 L 114 80 Q 108 96 100 96 L 28 96 Q 20 96 14 80 Z" fill="#2c1810"/>
-  <!-- Prow rising at left -->
-  <path d="M 14 80 L 18 60 L 24 60 L 24 80 Z" fill="#2c1810"/>
-  <!-- Stern rising at right -->
-  <path d="M 114 80 L 110 64 L 104 64 L 104 80 Z" fill="#2c1810"/>
-
-  <!-- Mast -->
-  <rect x="62" y="20" width="3" height="60" fill="#2c1810"/>
-
-  <!-- Yard (horizontal cross spar) -->
-  <rect x="36" y="28" width="56" height="2" fill="#2c1810"/>
-
-  <!-- Sail (square, billowing) -->
-  <path d="M 38 30 Q 64 38 90 30 L 90 60 Q 64 68 38 60 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="1.5"/>
-  <!-- Sail folds -->
-  <path d="M 50 32 Q 52 48 50 60" fill="none" stroke="#2c1810" stroke-width="0.5"/>
-  <path d="M 64 34 Q 64 48 64 62" fill="none" stroke="#2c1810" stroke-width="0.5"/>
-  <path d="M 78 32 Q 76 48 78 60" fill="none" stroke="#2c1810" stroke-width="0.5"/>
-
-  <!-- Oars below hull -->
-  <g stroke="#2c1810" stroke-width="1" fill="none">
-    <line x1="32" y1="92" x2="28" y2="100"/>
-    <line x1="44" y1="92" x2="40" y2="100"/>
-    <line x1="56" y1="92" x2="52" y2="100"/>
-    <line x1="68" y1="92" x2="64" y2="100"/>
-    <line x1="80" y1="92" x2="76" y2="100"/>
-    <line x1="92" y1="92" x2="88" y2="100"/>
+  <!-- mast -->
+  <line x1="64" y1="20" x2="64" y2="80" stroke="#2c1810" stroke-width="3"/>
+  <!-- pennant -->
+  <path d="M64 20 L78 24 L64 29 Z" fill="#c89b3c"/>
+  <!-- sail -->
+  <path d="M64 30 L94 64 L64 64 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M64 30 L34 64 L64 64 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- hull -->
+  <path d="M22 74 L106 74 Q98 92 64 92 Q30 92 22 74 Z" fill="#2c1810"/>
+  <!-- prow tip -->
+  <path d="M106 74 L114 66 L108 78 Z" fill="#2c1810"/>
+  <!-- waves -->
+  <g fill="none" stroke="#1e3a5f" stroke-width="3" stroke-linecap="round">
+    <path d="M20 98 q9 7 18 0 q9 -7 18 0 q9 7 18 0 q9 -7 18 0"/>
   </g>
-
-  <!-- Pennant at masthead -->
-  <path d="M 65 20 L 78 24 L 65 28 Z" fill="#2c1810"/>
-
-  <!-- Frame -->
+  <!-- frame -->
   <g fill="none" stroke="#c89b3c">
-    <rect x="4" y="4" width="120" height="120" stroke-width="1"/>
-    <rect x="9" y="9" width="110" height="110" stroke-width="0.4"/>
+    <rect x="6" y="6" width="116" height="116" stroke-width="1.5"/>
+    <rect x="13" y="13" width="102" height="102" stroke-width="0.6"/>
   </g>
 </svg>

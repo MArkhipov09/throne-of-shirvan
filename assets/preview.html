@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Throne of Shirvan — asset preview</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 2rem;
+        background: #f3ebd9;
+        color: #1a1a1f;
+        font-family: Georgia, serif;
+      }
+      h1, h2 { font-weight: 600; letter-spacing: 0.04em; }
+      h2 { border-bottom: 1px solid #2c1810; padding-bottom: 0.3rem; margin-top: 2.5rem; }
+      .row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+      .cell { text-align: center; }
+      .cell img { display: block; background: #e6dcc4; border: 1px solid #2c1810; }
+      .cell .label { font-size: 0.8rem; font-style: italic; margin-top: 0.4rem; color: #2c1810; }
+      .ingame { display: flex; align-items: center; gap: 0.6rem; background: #e6dcc4; border: 1px solid #2c1810; padding: 0.9rem; max-width: 30rem; margin-top: 0.5rem; }
+      .ingame img { display: block; }
+      .note { font-style: italic; color: #2c1810; max-width: 40rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Throne of Shirvan — asset preview</h1>
+    <p class="note">Open this file in a browser. The category icons render at 44&nbsp;px in the game (shown left), with a 2&times; version for detail. Portraits render at 96&nbsp;px.</p>
+
+    <h2>Category icons (redesigned)</h2>
+    <div class="row" id="icons"></div>
+
+    <h2>Icons at in-game size (44&nbsp;px)</h2>
+    <div class="row" id="icons-small"></div>
+
+    <h2>Character portraits (current drafts, 96&nbsp;px)</h2>
+    <div class="row" id="portraits"></div>
+
+    <script>
+      const icons = ["merchant", "official", "peasant", "religious", "soldier", "foreign"];
+      const portraits = ["vizier", "qadi", "tahmina", "general", "envoy"];
+      const big = document.getElementById("icons");
+      const small = document.getElementById("icons-small");
+      for (const i of icons) {
+        big.insertAdjacentHTML("beforeend",
+          `<div class="cell"><img src="icons/${i}.svg" width="88" height="88" alt="${i}"><div class="label">${i}</div></div>`);
+        small.insertAdjacentHTML("beforeend",
+          `<div class="cell"><img src="icons/${i}.svg" width="44" height="44" alt="${i}"><div class="label">${i}</div></div>`);
+      }
+      const port = document.getElementById("portraits");
+      for (const p of portraits) {
+        port.insertAdjacentHTML("beforeend",
+          `<div class="cell"><img src="portraits/${p}.svg" width="96" height="96" alt="${p}"><div class="label">${p}</div></div>`);
+      }
+    </script>
+  </body>
+</html>

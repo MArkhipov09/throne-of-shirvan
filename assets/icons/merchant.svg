@@ -1,36 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Merchant — balance scales">
   <rect width="128" height="128" fill="#e6dcc4"/>
-
-  <!-- Central pole -->
-  <rect x="62" y="34" width="4" height="64" fill="#2c1810"/>
-  <!-- Base -->
-  <path d="M 48 98 L 80 98 L 76 104 L 52 104 Z" fill="#2c1810"/>
-
-  <!-- Top finial -->
-  <circle cx="64" cy="32" r="3" fill="#2c1810"/>
-
-  <!-- Crossbar -->
-  <rect x="26" y="38" width="76" height="3" fill="#2c1810"/>
-  <circle cx="28" cy="40" r="3" fill="#2c1810"/>
-  <circle cx="100" cy="40" r="3" fill="#2c1810"/>
-
-  <!-- Left chains -->
-  <line x1="28" y1="42" x2="22" y2="64" stroke="#2c1810" stroke-width="1"/>
-  <line x1="28" y1="42" x2="36" y2="64" stroke="#2c1810" stroke-width="1"/>
-  <!-- Right chains -->
-  <line x1="100" y1="42" x2="94" y2="64" stroke="#2c1810" stroke-width="1"/>
-  <line x1="100" y1="42" x2="106" y2="64" stroke="#2c1810" stroke-width="1"/>
-
-  <!-- Left pan -->
-  <path d="M 18 64 Q 29 76 40 64 Z" fill="#2c1810"/>
-  <path d="M 18 64 L 40 64" stroke="#2c1810" stroke-width="0.8"/>
-  <!-- Right pan -->
-  <path d="M 88 64 Q 100 76 110 64 Z" fill="#2c1810"/>
-  <path d="M 88 64 L 110 64" stroke="#2c1810" stroke-width="0.8"/>
-
-  <!-- Frame -->
+  <g fill="none" stroke="#2c1810" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- beam -->
+    <line x1="26" y1="46" x2="102" y2="46"/>
+    <!-- post -->
+    <line x1="64" y1="46" x2="64" y2="94"/>
+    <!-- hangers -->
+    <line x1="32" y1="46" x2="32" y2="56" stroke-width="2.5"/>
+    <line x1="96" y1="46" x2="96" y2="56" stroke-width="2.5"/>
+    <!-- pans -->
+    <path d="M18 56 a14 11 0 0 0 28 0 Z"/>
+    <path d="M82 56 a14 11 0 0 0 28 0 Z"/>
+  </g>
+  <!-- base -->
+  <path d="M48 94 H80 L86 102 H42 Z" fill="#2c1810"/>
+  <!-- finial -->
+  <circle cx="64" cy="42" r="6" fill="#c89b3c" stroke="#2c1810" stroke-width="2.5"/>
+  <!-- frame -->
   <g fill="none" stroke="#c89b3c">
-    <rect x="4" y="4" width="120" height="120" stroke-width="1"/>
-    <rect x="9" y="9" width="110" height="110" stroke-width="0.4"/>
+    <rect x="6" y="6" width="116" height="116" stroke-width="1.5"/>
+    <rect x="13" y="13" width="102" height="102" stroke-width="0.6"/>
   </g>
 </svg>

@@ -1,5 +1,6 @@
 import { cards } from "../content/cards.js";
 import { crises } from "../content/crises.js";
+import { concepts as CONCEPT_DEFS } from "../content/concepts.js";
 
 const decisionCards = cards.filter((c) => !c.arcCharacter);
 
@@ -35,6 +36,7 @@ const SPEAKER_CATEGORY = {
   "crisis-treasury-low": "official",
   "crisis-military-low": "soldier",
   "crisis-naphtha-low": "official",
+  "genoese-return": "foreign",
 };
 
 const STAT_DESCRIPTIONS = {
@@ -140,8 +142,31 @@ const INTRO_FADE_MS = 300;
 
 const SAVE_KEY = "throne-of-shirvan-save";
 const AUDIO_KEY = "throne-of-shirvan-audio";
+const PROGRESS_KEY = "throne-of-shirvan-progress";
+const SETTINGS_KEY = "throne-of-shirvan-settings";
 
 const MUSIC_PATH = "assets/sounds/music.mp3";
+
+const ENDING_KINDS = [
+  "prosperity", "survival", "conquest", "revolt", "darkness",
+  "gilded", "praetorian", "tribune", "theocracy", "inferno",
+];
+
+// Difficulty sets the starting value of every stat. Most pressure is downward,
+// so a higher start is more forgiving; a lower start brings collapse closer.
+const DIFFICULTY_START = { lenient: 58, normal: 50, hard: 42 };
+const SWIPE_THRESHOLD = 90; // px a card must be dragged to commit a choice
+
+// Cross-reign progress (codex, endings, bests). Loaded once, saved on change.
+const progress = { concepts: [], endings: [], bestYears: 0, reigns: 0 };
+
+function reducedMotion() {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
 
 function defaultWarningActive() {
   return Object.fromEntries(STAT_NAMES.map((s) => [s, false]));
@@ -170,6 +195,10 @@ const state = {
   cardHistory: [],
   warningActive: defaultWarningActive(),
   audioEnabled: false,
+  flags: [], // delayed-consequence flags set by choices
+  conceptsSeen: [], // concepts encountered this reign (for the report)
+  difficulty: "normal",
+  daily: false,
 };
 
 let tutorialActive = false;
@@ -300,6 +329,10 @@ function saveGame() {
     endingInfo: state.endingInfo,
     cardHistory: state.cardHistory,
     warningActive: state.warningActive,
+    flags: state.flags,
+    conceptsSeen: state.conceptsSeen,
+    difficulty: state.difficulty,
+    daily: state.daily,
   };
   safeStorageSet(SAVE_KEY, JSON.stringify(data));
 }
@@ -325,6 +358,10 @@ function loadGame() {
     state.viewExplanation = data.viewExplanation || "";
     state.endingInfo = data.endingInfo || null;
     state.cardHistory = Array.isArray(data.cardHistory) ? data.cardHistory : [];
+    state.flags = Array.isArray(data.flags) ? data.flags : [];
+    state.conceptsSeen = Array.isArray(data.conceptsSeen) ? data.conceptsSeen : [];
+    state.difficulty = data.difficulty || "normal";
+    state.daily = !!data.daily;
     if (data.warningActive && typeof data.warningActive === "object") {
       state.warningActive = { ...defaultWarningActive(), ...data.warningActive };
     } else {
@@ -361,6 +398,15 @@ const els = {
   audioToggle: document.getElementById("audio-toggle"),
   reign: document.querySelector(".reign"),
   app: document.getElementById("app"),
+  conceptChip: document.getElementById("concept-chip"),
+  timeline: document.getElementById("timeline"),
+  introSetup: document.getElementById("intro-setup"),
+  dailyToggle: document.getElementById("daily-toggle"),
+  introCodex: document.getElementById("intro-codex"),
+  codexLink: document.getElementById("codex-link"),
+  codex: document.getElementById("codex"),
+  codexBody: document.getElementById("codex-body"),
+  codexClose: document.getElementById("codex-close"),
   tutorial: null,
 };
 
@@ -501,25 +547,73 @@ function renderStats() {
       `${name}: ${value} of 100${isWarn ? ", at risk" : ""}. ${STAT_DESCRIPTIONS[name]}`
     );
   }
-  els.cardsPlayed.textContent = state.cardsPlayed;
+  els.cardsPlayed.textContent = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  updateTimeline();
+}
+
+function buildTimeline() {
+  if (!els.timeline) return;
+  els.timeline.innerHTML = Array.from(
+    { length: REIGN_LENGTH },
+    () => '<span class="tl-notch"></span>'
+  ).join("");
+}
+
+function updateTimeline() {
+  if (!els.timeline) return;
+  const notches = els.timeline.querySelectorAll(".tl-notch");
+  notches.forEach((n, i) => n.classList.toggle("filled", i < state.cardsPlayed));
 }
 
 // --- Deck / next-card logic ---
 
+// Random source: Math.random normally; a date-seeded generator in Daily mode so
+// the deck order is identical for every player on a given day.
+let rngFn = Math.random;
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function setRandomSource() {
+  if (state.daily) {
+    const d = new Date();
+    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    rngFn = mulberry32(seed);
+  } else {
+    rngFn = Math.random;
+  }
+}
+
 function shuffle(source) {
   const out = source.slice();
   for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rngFn() * (i + 1));
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
 }
 
+// A card may gate itself on a flag set earlier this reign (delayed consequences).
+function cardEligible(card) {
+  if (card.requires && !state.flags.includes(card.requires)) return false;
+  if (card.excludes && state.flags.includes(card.excludes)) return false;
+  return true;
+}
+
 function drawFromDeck() {
-  if (state.deck.length === 0) {
-    state.deck = shuffle(decisionCards);
+  let guard = 0;
+  while (guard++ < decisionCards.length * 3) {
+    if (state.deck.length === 0) state.deck = shuffle(decisionCards);
+    const card = state.deck.shift();
+    if (card && cardEligible(card)) return card;
   }
-  return state.deck.shift();
+  return decisionCards.find(cardEligible) || decisionCards[0];
 }
 
 function pickArcCard() {
@@ -666,6 +760,7 @@ function renderCardImmediate(card) {
   els.scenario.textContent = card.scenario;
   els.explanation.hidden = true;
   els.explanation.textContent = "";
+  setConceptChip(null);
 
   els.options.innerHTML = "";
   card.options.forEach((option, index) => {
@@ -708,6 +803,7 @@ function renderResultViewImmediate(card, explanationText) {
   els.scenario.textContent = card.scenario;
   els.explanation.textContent = state.viewExplanation;
   els.explanation.hidden = false;
+  setConceptChip(card);
 
   els.options.innerHTML = "";
   const next = document.createElement("button");
@@ -740,7 +836,8 @@ function checkEnding() {
 }
 
 function resetReign() {
-  for (const stat of STAT_NAMES) state.stats[stat] = 50;
+  const start = DIFFICULTY_START[state.difficulty] ?? 50;
+  for (const stat of STAT_NAMES) state.stats[stat] = start;
   for (const character of CHARACTER_KEYS) {
     state.affinity[character] = 0;
     state.arcFired[character] = false;
@@ -755,16 +852,22 @@ function resetReign() {
   state.viewExplanation = "";
   state.endingInfo = null;
   state.cardHistory = [];
-  state.warningActive = defaultWarningActive();
+  state.warningActive = Object.fromEntries(
+    STAT_NAMES.map((s) => [s, start < WARN_LOW || start > WARN_HIGH])
+  );
+  state.flags = [];
+  state.conceptsSeen = [];
+  setRandomSource();
 }
 
-function renderEndingImmediate(ending) {
+function renderEndingImmediate(ending, firstTime = false) {
   removeChronicle();
   state.activeCard = null;
   state.view = "ending";
   state.endingInfo = ending;
   renderEmblem(null);
   renderAffinity(null);
+  setConceptChip(null);
   const kind = classifyEnding(ending);
 
   els.card.classList.add("ending");
@@ -778,6 +881,7 @@ function renderEndingImmediate(ending) {
   els.explanation.textContent = ENDING_FLAVOUR[kind];
   els.explanation.hidden = false;
 
+  renderReignReport(kind, firstTime);
   renderChronicle();
 
   els.options.innerHTML = "";
@@ -810,9 +914,18 @@ function renderEndingImmediate(ending) {
 function renderCard() {
   const ending = checkEnding();
   const next = ending ? null : nextCard();
+  // Record the ending once, here at the live transition (not on save-resume,
+  // which calls renderEndingImmediate directly).
+  let firstTime = false;
+  if (ending) {
+    const kind = classifyEnding(ending);
+    firstTime = !progress.endings.includes(kind);
+    markEndingReached(kind);
+    recordReignResult();
+  }
   els.card.classList.add("fading");
   setTimeout(() => {
-    if (ending) renderEndingImmediate(ending);
+    if (ending) renderEndingImmediate(ending, firstTime);
     else renderCardImmediate(next);
     requestAnimationFrame(() => els.card.classList.remove("fading"));
   }, FADE_MS);
@@ -856,12 +969,20 @@ function chooseOption(index) {
     effects: { ...(option.effects || {}) },
   });
 
+  // Delayed-consequence flag + concept discovery.
+  if (option.flag && !state.flags.includes(option.flag)) state.flags.push(option.flag);
+  if (card.concept) {
+    markConceptDiscovered(card.concept);
+    if (!state.conceptsSeen.includes(card.concept)) state.conceptsSeen.push(card.concept);
+  }
+
   for (const [stat, delta] of Object.entries(option.effects ?? {})) {
     if (!(stat in state.stats)) continue;
     const oldValue = state.stats[stat];
     const newValue = Math.max(0, Math.min(100, oldValue + delta));
     state.stats[stat] = newValue;
     animateDelta(stat, newValue - oldValue);
+    if (newValue !== oldValue) pulseStat(stat);
 
     const wasOutside = oldValue < WARN_LOW || oldValue > WARN_HIGH;
     const isOutside = newValue < WARN_LOW || newValue > WARN_HIGH;
@@ -891,7 +1012,24 @@ function chooseOption(index) {
     }
   }
 
-  if (card.triggerStat === undefined) state.cardsPlayed += 1;
+  if (card.triggerStat === undefined) {
+    state.cardsPlayed += 1;
+    // Passive "naphtha rent": a well-stocked field quietly funds the treasury;
+    // a depleted one bleeds it through imported oil and lamp-fuel. Subtle (±1),
+    // so it rewards conserving naphtha without dominating the ledger.
+    let rent = 0;
+    if (state.stats.naphtha >= 75) rent = 1;
+    else if (state.stats.naphtha <= 25) rent = -1;
+    if (rent !== 0) {
+      const old = state.stats.treasury;
+      state.stats.treasury = Math.max(0, Math.min(100, old + rent));
+      const d = state.stats.treasury - old;
+      if (d !== 0) {
+        animateDelta("treasury", d);
+        pulseStat("treasury");
+      }
+    }
+  }
 
   // If this choice already ends the reign (a stat hit 0 or 100, or the final
   // year was reached), don't queue a crisis the player would never get to see.
@@ -913,6 +1051,7 @@ function chooseOption(index) {
   state.viewExplanation = option.explanation ?? "";
   els.explanation.textContent = state.viewExplanation;
   els.explanation.hidden = false;
+  setConceptChip(card);
   els.options.innerHTML = "";
 
   const next = document.createElement("button");
@@ -1086,6 +1225,8 @@ function showIntro({ mode }) {
     els.introBegin.textContent = "Return to Throne";
     els.introSecondary.hidden = false;
   }
+  // Difficulty + daily only apply to a brand-new reign.
+  if (els.introSetup) els.introSetup.hidden = mode !== "fresh";
 
   els.introBegin.focus();
 }
@@ -1113,6 +1254,7 @@ function hideIntro() {
 
 function startFreshReign() {
   hideTutorial();
+  readReignSettings();
   resetReign();
   state.reignStarted = true;
   renderStats();
@@ -1123,6 +1265,13 @@ function startFreshReign() {
 // --- Keyboard ---
 
 function onKeydown(event) {
+  if (codexOpen) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeCodex();
+    }
+    return;
+  }
   if (tutorialActive && event.key === "Escape") {
     event.preventDefault();
     hideTutorial();
@@ -1130,7 +1279,12 @@ function onKeydown(event) {
   }
   if (!els.intro.hidden) {
     if (event.key === "Enter" || event.key === " ") {
-      if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
+      if (
+        event.target instanceof HTMLButtonElement ||
+        event.target instanceof HTMLAnchorElement ||
+        event.target instanceof HTMLInputElement
+      )
+        return;
       event.preventDefault();
       els.introBegin.click();
     }
@@ -1177,6 +1331,9 @@ function renderRestoredView() {
 
 function init() {
   buildStatBars();
+  buildTimeline();
+  loadProgress();
+  applySavedSettings();
 
   // Audio preference
   state.audioEnabled = safeStorageGet(AUDIO_KEY) === "1";
@@ -1225,9 +1382,329 @@ function init() {
     }
   });
 
+  // Codex
+  els.codexLink?.addEventListener("click", openCodex);
+  els.introCodex?.addEventListener("click", openCodex);
+  els.codexClose?.addEventListener("click", closeCodex);
+  els.codex?.addEventListener("click", (e) => {
+    if (e.target === els.codex) closeCodex();
+  });
+
+  setupSwipe();
+
   document.addEventListener("keydown", onKeydown);
 
   showIntro({ mode: initialMode });
+}
+
+// ------------------------------------------------------------------ //
+// Concept chip, stat pulse, progress/codex, reign report, swipe       //
+// ------------------------------------------------------------------ //
+
+function setConceptChip(card) {
+  if (!els.conceptChip) return;
+  const concept = card && card.concept;
+  if (!concept) {
+    els.conceptChip.hidden = true;
+    els.conceptChip.textContent = "";
+    return;
+  }
+  els.conceptChip.textContent = concept;
+  els.conceptChip.title = CONCEPT_DEFS[concept] || "";
+  els.conceptChip.hidden = false;
+}
+
+function pulseStat(stat) {
+  if (reducedMotion() || !els.stats) return;
+  const row = els.stats.querySelector(`[data-stat="${stat}"]`);
+  if (!row) return;
+  row.classList.remove("pulse");
+  void row.offsetWidth; // restart the animation
+  row.classList.add("pulse");
+  row.addEventListener("animationend", () => row.classList.remove("pulse"), { once: true });
+}
+
+// --- Cross-reign progress (codex / endings / bests) ---
+
+function loadProgress() {
+  try {
+    const d = JSON.parse(safeStorageGet(PROGRESS_KEY) || "{}");
+    if (Array.isArray(d.concepts)) progress.concepts = d.concepts;
+    if (Array.isArray(d.endings)) progress.endings = d.endings.filter((k) => ENDING_KINDS.includes(k));
+    if (Number.isFinite(d.bestYears)) progress.bestYears = d.bestYears;
+    if (Number.isFinite(d.reigns)) progress.reigns = d.reigns;
+  } catch {
+    /* ignore */
+  }
+}
+function saveProgress() {
+  safeStorageSet(PROGRESS_KEY, JSON.stringify(progress));
+}
+function markConceptDiscovered(concept) {
+  if (!concept || progress.concepts.includes(concept)) return;
+  progress.concepts.push(concept);
+  saveProgress();
+}
+function markEndingReached(kind) {
+  if (!kind || progress.endings.includes(kind)) return;
+  progress.endings.push(kind);
+  saveProgress();
+}
+function recordReignResult() {
+  progress.reigns += 1;
+  const years = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  if (years > progress.bestYears) progress.bestYears = years;
+  saveProgress();
+}
+
+// --- Settings (difficulty / daily) ---
+
+function applySavedSettings() {
+  try {
+    const s = JSON.parse(safeStorageGet(SETTINGS_KEY) || "{}");
+    const diff = ["lenient", "normal", "hard"].includes(s.difficulty) ? s.difficulty : "normal";
+    state.difficulty = diff;
+    const radio = document.querySelector(`input[name="difficulty"][value="${diff}"]`);
+    if (radio) radio.checked = true;
+    if (els.dailyToggle) els.dailyToggle.checked = !!s.daily;
+  } catch {
+    /* ignore */
+  }
+}
+function readReignSettings() {
+  const checked = document.querySelector('input[name="difficulty"]:checked');
+  state.difficulty = checked ? checked.value : "normal";
+  state.daily = !!(els.dailyToggle && els.dailyToggle.checked);
+  safeStorageSet(SETTINGS_KEY, JSON.stringify({ difficulty: state.difficulty, daily: state.daily }));
+}
+
+// --- Reign report (ending screen) + shareable result ---
+
+function renderReignReport(kind, firstTime) {
+  const existing = document.querySelector(".reign-report");
+  if (existing) existing.remove();
+
+  const wrap = document.createElement("div");
+  wrap.className = "reign-report";
+
+  if (firstTime) {
+    const banner = document.createElement("p");
+    banner.className = "report-banner";
+    banner.textContent = `✦ New ending discovered — ${ENDING_TITLES[kind]}`;
+    wrap.appendChild(banner);
+  }
+
+  const totalConcepts = Object.keys(CONCEPT_DEFS).length;
+  const line = document.createElement("p");
+  line.className = "report-line";
+  line.textContent =
+    `${state.conceptsSeen.length} concepts encountered this reign. ` +
+    `Collected ${progress.concepts.length}/${totalConcepts} concepts and ` +
+    `${progress.endings.length}/${ENDING_KINDS.length} endings across ${progress.reigns} reigns.`;
+  wrap.appendChild(line);
+
+  const share = document.createElement("button");
+  share.type = "button";
+  share.className = "report-share";
+  share.textContent = "Copy result";
+  share.addEventListener("click", () => copyShare(kind, share));
+  wrap.appendChild(share);
+
+  els.options.parentNode.insertBefore(wrap, els.options);
+}
+
+function dailyDateStr() {
+  const d = new Date();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+function buildShareText(kind) {
+  const years = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  const bar = STAT_NAMES.map((s) => {
+    const f = Math.max(0, Math.min(5, Math.round(state.stats[s] / 20)));
+    return "▰".repeat(f) + "▱".repeat(5 - f);
+  });
+  const head = state.daily ? `Throne of Shirvan · Daily ${dailyDateStr()}` : "Throne of Shirvan";
+  const diff = state.difficulty !== "normal" ? ` (${state.difficulty})` : "";
+  return [
+    head,
+    `${ENDING_TITLES[kind]} — ${years} years${diff}`,
+    `T ${bar[0]}  P ${bar[1]}  M ${bar[2]}`,
+    `F ${bar[3]}  N ${bar[4]}`,
+    `Concepts ${progress.concepts.length}/${Object.keys(CONCEPT_DEFS).length}`,
+  ].join("\n");
+}
+function copyShare(kind, btn) {
+  const text = buildShareText(kind);
+  const done = () => {
+    const old = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = old), 1500);
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+      return;
+    }
+  } catch {
+    /* fall through */
+  }
+  fallbackCopy(text, done);
+}
+function fallbackCopy(text, done) {
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    done();
+  } catch {
+    /* ignore */
+  }
+}
+
+// --- Codex ---
+
+let codexOpen = false;
+let codexReturnFocus = null;
+
+function escHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function buildCodex() {
+  if (!els.codexBody) return;
+  const totalConcepts = Object.keys(CONCEPT_DEFS).length;
+  const conceptNames = Object.keys(CONCEPT_DEFS).sort((a, b) => a.localeCompare(b));
+
+  const conceptItems = conceptNames
+    .map((name) => {
+      const found = progress.concepts.includes(name);
+      if (found) {
+        return `<li class="codex-item found"><span class="codex-name">${escHtml(name)}</span><span class="codex-def">${escHtml(CONCEPT_DEFS[name])}</span></li>`;
+      }
+      return `<li class="codex-item locked"><span class="codex-name">？？？</span><span class="codex-def">Encountered when you play the card that teaches it.</span></li>`;
+    })
+    .join("");
+
+  const endingItems = ENDING_KINDS.map((kind) => {
+    const found = progress.endings.includes(kind);
+    return `<li class="codex-item ${found ? "found" : "locked"}"><span class="codex-name">${found ? escHtml(ENDING_TITLES[kind]) : "？？？"}</span></li>`;
+  }).join("");
+
+  els.codexBody.innerHTML = `
+    <p class="codex-stats">
+      <span>${progress.concepts.length}/${totalConcepts} concepts</span>
+      <span>${progress.endings.length}/${ENDING_KINDS.length} endings</span>
+      <span>Longest reign: ${progress.bestYears} years</span>
+    </p>
+    <h3 class="codex-section">Concepts</h3>
+    <ul class="codex-list">${conceptItems}</ul>
+    <h3 class="codex-section">Endings</h3>
+    <ul class="codex-list codex-endings">${endingItems}</ul>
+  `;
+}
+
+function openCodex() {
+  buildCodex();
+  codexReturnFocus = document.activeElement;
+  els.codex.hidden = false;
+  codexOpen = true;
+  els.app?.setAttribute("inert", "");
+  if (!els.intro.hidden) els.intro.setAttribute("inert", "");
+  els.codexClose?.focus();
+}
+function closeCodex() {
+  if (!els.codex) return;
+  els.codex.hidden = true;
+  codexOpen = false;
+  els.intro?.removeAttribute("inert");
+  if (els.intro && els.intro.hidden) els.app?.removeAttribute("inert");
+  if (codexReturnFocus && typeof codexReturnFocus.focus === "function") codexReturnFocus.focus();
+}
+
+// --- Swipe to choose (pointer drag on the card) ---
+
+function setupSwipe() {
+  const card = els.card;
+  if (!card || typeof window.PointerEvent === "undefined") return;
+  let startX = 0, startY = 0, dx = 0, dragging = false, active = false, pid = null;
+
+  function clearTargets() {
+    els.options.querySelectorAll(".swipe-target").forEach((b) => b.classList.remove("swipe-target"));
+  }
+  function clearDrag() {
+    active = false;
+    dragging = false;
+    dx = 0;
+    pid = null;
+    card.removeAttribute("data-swiping");
+    card.style.removeProperty("--swipe");
+    card.style.transition = ""; // restore CSS transition (animates the snap-back)
+    card.style.transform = "";
+    clearTargets();
+  }
+  card.addEventListener("pointerdown", (e) => {
+    if (reducedMotion()) return;
+    if (codexOpen || !els.intro.hidden || tutorialActive) return;
+    if (!(state.view === "question" || state.view === "result" || state.view === "ending")) return;
+    if (e.target.closest && e.target.closest("button")) return; // let buttons be tapped
+    active = true;
+    dragging = false;
+    startX = e.clientX;
+    startY = e.clientY;
+    dx = 0;
+    pid = e.pointerId;
+  });
+  card.addEventListener("pointermove", (e) => {
+    if (!active) return;
+    dx = e.clientX - startX;
+    if (!dragging) {
+      if (Math.abs(dx) < 8) return;
+      if (Math.abs(e.clientY - startY) > Math.abs(dx)) {
+        active = false;
+        return;
+      }
+      dragging = true;
+      card.setAttribute("data-swiping", "");
+      card.style.transition = "none";
+      try {
+        card.setPointerCapture(pid);
+      } catch {
+        /* ignore */
+      }
+    }
+    const rot = Math.max(-10, Math.min(10, dx / 14));
+    card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+    card.style.setProperty("--swipe", String(Math.max(-1, Math.min(1, dx / SWIPE_THRESHOLD))));
+    if (state.view === "question") {
+      clearTargets();
+      const tgt = els.options.querySelector(`button[data-option-index="${dx > 0 ? 0 : 1}"]`);
+      tgt?.classList.add("swipe-target");
+    }
+  });
+  function finish() {
+    if (!active) return;
+    const committed = dragging && Math.abs(dx) >= SWIPE_THRESHOLD;
+    const dir = dx;
+    const view = state.view;
+    clearDrag();
+    if (!committed) return;
+    let btn = null;
+    if (view === "question") {
+      btn = els.options.querySelector(`button[data-option-index="${dir > 0 ? 0 : 1}"]`);
+    } else {
+      btn = els.options.querySelector('button[data-continue="true"]');
+    }
+    btn?.click();
+  }
+  card.addEventListener("pointerup", finish);
+  card.addEventListener("pointercancel", clearDrag);
 }
 
 init();

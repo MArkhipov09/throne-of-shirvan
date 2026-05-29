@@ -63,9 +63,15 @@
           </svg>
         </button>
         <h1>Throne of Shirvan</h1>
-        <button type="button" class="about-link" id="about-link">About / How to play</button>
-        <ul class="stats" id="stats"></ul>
-        <p class="reign">Cards played: <span id="cards-played">0</span></p>
+        <div class="hud-corner">
+          <button type="button" class="about-link" id="about-link">About / How to play</button>
+          <button type="button" class="about-link codex-link" id="codex-link" aria-haspopup="dialog">Codex</button>
+        </div>
+        <ul class="stats" id="stats" aria-label="Kingdom stats"></ul>
+        <div class="reign" id="reign">
+          <div class="timeline" id="timeline" aria-hidden="true"></div>
+          <p class="reign-label">Year <span id="cards-played">0</span> of 25</p>
+        </div>
       </header>
 
       <section class="card" id="card">
@@ -77,6 +83,7 @@
           </div>
         </header>
         <p class="scenario" id="scenario" aria-live="polite" aria-atomic="true"></p>
+        <p class="concept-chip" id="concept-chip" hidden></p>
         <p class="explanation" id="explanation" aria-live="polite" aria-atomic="true" hidden></p>
         <div class="options" id="options"></div>
       </section>
@@ -101,12 +108,30 @@
           <li><span class="key-stat">Faith</span> &mdash; clerical favour and religious balance.</li>
           <li><span class="key-stat">Naphtha</span> &mdash; the Absheron oil reserves, your wildcard resource.</li>
         </ul>
+        <div class="intro-setup" id="intro-setup">
+          <fieldset class="difficulty" id="difficulty">
+            <legend>Difficulty</legend>
+            <label><input type="radio" name="difficulty" value="lenient" /> Lenient</label>
+            <label><input type="radio" name="difficulty" value="normal" checked /> Normal</label>
+            <label><input type="radio" name="difficulty" value="hard" /> Hard</label>
+          </fieldset>
+          <label class="daily-toggle"><input type="checkbox" id="daily-toggle" /> Daily reign &mdash; the same deck for every player today</label>
+        </div>
         <div class="intro-actions">
           <button class="intro-begin" type="button" id="intro-begin">Begin Reign</button>
           <button class="intro-secondary" type="button" id="intro-secondary" hidden>Begin a New Reign</button>
+          <button class="intro-secondary" type="button" id="intro-codex">View the Codex</button>
         </div>
       </div>
     </section>
+
+    <div class="codex-overlay" id="codex" hidden role="dialog" aria-modal="true" aria-label="The Codex">
+      <div class="codex-panel">
+        <button type="button" class="codex-close" id="codex-close" aria-label="Close the Codex">&times;</button>
+        <h2 class="codex-heading">The Codex</h2>
+        <div class="codex-body" id="codex-body"></div>
+      </div>
+    </div>
 
     <script type="module" src="src/game.js" defer></script>
   </body>
