@@ -25,7 +25,7 @@
   </head>
   <body>
     <h1>Throne of Shirvan — asset preview</h1>
-    <p class="note">Open this file in a browser. These are the final OpenAI-generated images (Persian illuminated-miniature house style). The category icons render at 44&nbsp;px in the game (shown left), with a 2&times; version for detail. Portraits render at 96&nbsp;px.</p>
+    <p class="note">Open this file in a browser. These are the final OpenAI-generated images (Persian illuminated-miniature house style). The category icons render at ~58&nbsp;px in the game (small row), with a larger version for detail. Portraits render at ~132&nbsp;px. (The game loads downscaled <code>-256/-512</code> srcset variants; these previews use the full-size originals.)</p>
 
     <h2>Category icons</h2>
     <div class="row" id="icons"></div>
@@ -48,12 +48,12 @@
         big.insertAdjacentHTML("beforeend",
           `<div class="cell"><img src="icons/${i}.png" width="88" height="88" alt="${i}"><div class="label">${i}</div></div>`);
         small.insertAdjacentHTML("beforeend",
-          `<div class="cell"><img src="icons/${i}.png" width="44" height="44" alt="${i}"><div class="label">${i}</div></div>`);
+          `<div class="cell"><img src="icons/${i}.png" width="58" height="58" alt="${i}"><div class="label">${i}</div></div>`);
       }
       const port = document.getElementById("portraits");
       for (const p of portraits) {
         port.insertAdjacentHTML("beforeend",
-          `<div class="cell"><img src="portraits/${p}.png" width="96" height="96" alt="${p}"><div class="label">${p}</div></div>`);
+          `<div class="cell"><img src="portraits/${p}.png" width="132" height="132" alt="${p}"><div class="label">${p}</div></div>`);
       }
       document.getElementById("intro").insertAdjacentHTML("beforeend",
         `<div class="cell"><img src="intro-scene.png" width="480" alt="intro scene"><div class="label">intro-scene</div></div>`);

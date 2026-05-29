@@ -1,13 +1,32 @@
 :root {
   --ink: #1a1a1f;
   --parchment: #f3ebd9;
+  --parchment-hi: #fbf6ea; /* lit highlight on parchment surfaces */
+  --parchment-lo: #e7dcc2; /* shaded parchment for gradients */
   --caspian: #1e3a5f;
+  --caspian-deep: #13273f;
   --saffron: #c89b3c;
+  --saffron-hi: #e7c66b; /* gold glint / sheen highlight */
   --naphtha: #2c1810;
   --stone: #e6dcc4;
-  --moss: #4a6741;
+  --stone-lo: #d7caab; /* shaded stone for gradients */
+  --moss: #4a6741; /* brand moss — stat fill */
+  --moss-text: #38502f; /* darker moss that meets AA on light surfaces */
   --brick: #7a2f2a;
+  --brick-hi: #a4443c;
   --silk: #8a5a14;
+  --silk-text: #6c4610; /* darker silk that meets AA on light surfaces */
+
+  /* Atmosphere — the dark court ground behind the lit parchment panel */
+  --court-bg: #170f08;
+  --court-bg-2: #241a0e;
+
+  /* Depth + light */
+  --shadow-inset: 0 1px 0 rgba(255, 250, 238, 0.5) inset, 0 2px 6px rgba(20, 12, 4, 0.16);
+  --shadow-panel: 0 14px 40px rgba(10, 6, 2, 0.55), 0 3px 10px rgba(10, 6, 2, 0.35);
+  --shadow-card: 0 8px 22px rgba(12, 7, 2, 0.4);
+  --mat-frame: 0 0 0 3px var(--stone-lo), 0 0 0 4px var(--saffron), 0 6px 16px rgba(12, 7, 2, 0.45);
+  --glow-warm: 0 0 44px rgba(200, 155, 60, 0.16);
 }
 
 * {
@@ -16,13 +35,31 @@
 
 body {
   margin: 0;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   min-height: 100vh;
-  background-color: var(--parchment);
+  background-color: var(--court-bg);
+  background-image:
+    radial-gradient(125% 80% at 50% -12%, rgba(200, 155, 60, 0.14), transparent 58%),
+    radial-gradient(120% 100% at 50% 118%, rgba(30, 58, 95, 0.22), transparent 55%),
+    radial-gradient(140% 130% at 50% 45%, transparent 52%, rgba(0, 0, 0, 0.5)),
+    linear-gradient(var(--court-bg-2), var(--court-bg));
+  background-attachment: fixed;
   color: var(--ink);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1.125rem;
   line-height: 1.5;
+}
+
+/* The play area is a lit parchment page floating on the dark court ground. */
+#app {
+  max-width: 36rem;
+  margin: 0 auto;
+  perspective: 1200px;
+  background: linear-gradient(160deg, var(--parchment-hi), var(--parchment) 55%, var(--parchment-lo));
+  border: 1px solid var(--naphtha);
+  box-shadow: var(--shadow-panel), 0 0 0 1px rgba(200, 155, 60, 0.35),
+    0 0 0 6px rgba(20, 12, 4, 0.25);
+  padding: 1.6rem 1.6rem 2rem;
 }
 
 h1,
@@ -33,12 +70,6 @@ h3,
   font-weight: 600;
   letter-spacing: 0.04em;
   margin: 0 0 0.5rem;
-}
-
-#app {
-  max-width: 36rem;
-  margin: 0 auto;
-  perspective: 1200px;
 }
 
 .hud {
@@ -175,7 +206,7 @@ h3,
   animation: float-delta 1500ms ease-out forwards;
 }
 
-.stat-delta.positive { color: var(--moss); }
+.stat-delta.positive { color: var(--moss-text); }
 .stat-delta.negative { color: var(--brick); }
 
 @keyframes float-delta {
@@ -191,8 +222,11 @@ h3,
 }
 
 .card {
-  background: var(--stone);
+  position: relative;
+  background: linear-gradient(165deg, var(--stone), var(--stone-lo));
   border: 1px solid var(--naphtha);
+  border-top: 3px solid var(--saffron);
+  box-shadow: var(--shadow-inset), var(--shadow-card), var(--glow-warm);
   padding: 1.5rem;
   transition: opacity 150ms ease, transform 180ms ease;
   transform-origin: center center;
@@ -207,7 +241,9 @@ h3,
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(44, 24, 16, 0.18);
 }
 
 .card-emblem {
@@ -224,13 +260,18 @@ h3,
 }
 
 .card-emblem[data-kind="portrait"] img {
-  width: 96px;
-  height: 96px;
+  width: 132px;
+  height: 132px;
+  object-fit: cover;
+  box-shadow: var(--mat-frame);
 }
 
 .card-emblem[data-kind="icon"] img {
-  width: 44px;
-  height: 44px;
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--stone-lo), 0 0 0 3px var(--saffron),
+    0 3px 9px rgba(12, 7, 2, 0.4);
 }
 
 .card.ending {
@@ -338,7 +379,7 @@ h3,
 .options button {
   font-family: inherit;
   font-size: 1.05rem;
-  background: var(--parchment);
+  background: linear-gradient(var(--parchment-hi), var(--parchment));
   color: var(--ink);
   border: 1px solid var(--naphtha);
   border-radius: 0;
@@ -349,7 +390,8 @@ h3,
   align-items: center;
   gap: 0.6rem;
   width: 100%;
-  transition: background-color 150ms ease, box-shadow 150ms ease;
+  box-shadow: var(--shadow-inset);
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 90ms ease;
 }
 
 .options button .option-label {
@@ -357,12 +399,17 @@ h3,
 }
 
 .options button:hover {
-  background: var(--stone);
-  box-shadow: inset 0 0 0 1px var(--naphtha);
+  background: linear-gradient(var(--stone), var(--stone-lo));
+  box-shadow: inset 0 0 0 1px var(--saffron), 0 0 12px rgba(200, 155, 60, 0.28);
+}
+
+.options button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgba(20, 12, 4, 0.22);
 }
 
 .options button:focus-visible {
-  background: var(--stone);
+  background: linear-gradient(var(--stone), var(--stone-lo));
   box-shadow: inset 0 0 0 2px var(--naphtha);
   outline: none;
 }
@@ -395,11 +442,16 @@ h3,
 .intro {
   position: fixed;
   inset: 0;
-  background: var(--parchment);
+  background-color: var(--court-bg);
+  background-image:
+    radial-gradient(125% 80% at 50% -12%, rgba(200, 155, 60, 0.16), transparent 58%),
+    radial-gradient(120% 100% at 50% 118%, rgba(30, 58, 95, 0.22), transparent 55%),
+    radial-gradient(140% 130% at 50% 45%, transparent 50%, rgba(0, 0, 0, 0.55)),
+    linear-gradient(var(--court-bg-2), var(--court-bg));
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   overflow-y: auto;
   z-index: 200;
   opacity: 1;
@@ -418,15 +470,30 @@ h3,
   max-width: 36rem;
   width: 100%;
   text-align: center;
+  background: linear-gradient(160deg, var(--parchment-hi), var(--parchment) 55%, var(--parchment-lo));
+  border: 1px solid var(--naphtha);
+  box-shadow: var(--shadow-panel), 0 0 0 1px rgba(200, 155, 60, 0.35),
+    0 0 0 6px rgba(20, 12, 4, 0.25);
+  padding: 2.2rem 1.8rem 1.9rem;
 }
 
 .intro-title {
   font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
   font-weight: 700;
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   letter-spacing: 0.1em;
   margin: 0 0 0.4rem;
   color: var(--ink);
+  text-shadow: 0 1px 0 var(--parchment-hi);
+}
+
+.intro-title::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 2px;
+  margin: 0.55rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--saffron), transparent);
 }
 
 .intro-subtitle {
@@ -442,6 +509,8 @@ h3,
   max-width: 30rem;
   height: auto;
   margin: 0 auto 1.75rem;
+  border: 1px solid var(--naphtha);
+  box-shadow: var(--mat-frame);
 }
 
 .intro-premise {
@@ -589,7 +658,7 @@ h3,
   color: var(--naphtha);
 }
 
-.option-preview-chip.positive { color: var(--moss); }
+.option-preview-chip.positive { color: var(--moss-text); }
 .option-preview-chip.negative { color: var(--brick); }
 
 /* Tutorial overlay */
@@ -793,7 +862,7 @@ h3,
 }
 
 .chronicle-entry[data-type="arc"] .chronicle-tag {
-  color: var(--saffron);
+  color: var(--silk-text);
 }
 
 .chronicle-entry[data-type="crisis"] .chronicle-tag {
@@ -825,9 +894,9 @@ h3,
 }
 
 /* Speaker-type accent colours — wake up data-speaker-type */
-.speaker[data-speaker-type="vizier"]  { color: var(--moss); }
+.speaker[data-speaker-type="vizier"]  { color: var(--moss-text); }
 .speaker[data-speaker-type="qadi"]    { color: var(--caspian); }
-.speaker[data-speaker-type="tahmina"] { color: var(--silk); }
+.speaker[data-speaker-type="tahmina"] { color: var(--silk-text); }
 .speaker[data-speaker-type="general"] { color: var(--brick); }
 .speaker[data-speaker-type="envoy"]   { color: var(--naphtha); }
 
@@ -910,8 +979,17 @@ h3,
    portrait, and padding so the stat names don't clip below ~360px. */
 @media (max-width: 30rem) {
   body {
-    padding: 1rem 0.6rem;
+    padding: 1rem 0.55rem;
     font-size: 1.05rem;
+  }
+  #app {
+    padding: 1rem 1rem 1.4rem;
+  }
+  .intro {
+    padding: 1rem 0.55rem;
+  }
+  .intro-content {
+    padding: 1.4rem 1.1rem 1.3rem;
   }
   .stat {
     grid-template-columns: 4.2rem 1fr 1.9rem;
@@ -925,14 +1003,18 @@ h3,
     padding: 1.1rem;
   }
   .card-emblem[data-kind="portrait"] img {
-    width: 64px;
-    height: 64px;
+    width: 96px;
+    height: 96px;
+  }
+  .card-emblem[data-kind="icon"] img {
+    width: 50px;
+    height: 50px;
   }
   .scenario {
     font-size: 1.12rem;
   }
   .intro-title {
-    font-size: 2rem;
+    font-size: 2.1rem;
   }
 }
 
@@ -1090,7 +1172,7 @@ h3,
 .report-banner {
   font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
   letter-spacing: 0.06em;
-  color: var(--silk);
+  color: var(--silk-text);
   margin: 0 0 0.4rem;
 }
 .report-line {
@@ -1228,5 +1310,129 @@ h3,
   }
   .tl-notch {
     transition: none;
+  }
+}
+
+/* ================================================================== */
+/* Bolder visual layer: card deal-in, type accents, ending-mood drama  */
+/* ================================================================== */
+
+@keyframes card-deal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.card.dealing {
+  animation: card-deal 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes explain-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.explanation:not([hidden]) {
+  animation: explain-in 360ms ease-out both;
+}
+
+/* Crisis and arc cards announce themselves with a distinct accent + glow. */
+.card[data-card-type="crisis"] {
+  border-top-color: var(--brick);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 44px rgba(164, 68, 60, 0.24);
+}
+.card[data-card-type="crisis"] .speaker {
+  color: var(--brick);
+}
+.card[data-card-type="arc"] {
+  border-top-color: var(--saffron-hi);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 48px rgba(200, 155, 60, 0.32);
+}
+
+/* Ending screens take the mood of the ending kind. */
+.card.ending[data-ending-kind="prosperity"],
+.card.ending[data-ending-kind="gilded"] {
+  border-top-color: var(--saffron);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 60px rgba(200, 155, 60, 0.3);
+}
+.card.ending[data-ending-kind="conquest"],
+.card.ending[data-ending-kind="praetorian"],
+.card.ending[data-ending-kind="inferno"] {
+  border-top-color: var(--brick);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 60px rgba(164, 68, 60, 0.28);
+}
+.card.ending[data-ending-kind="survival"],
+.card.ending[data-ending-kind="theocracy"] {
+  border-top-color: var(--caspian);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 60px rgba(30, 58, 95, 0.3);
+}
+.card.ending[data-ending-kind="revolt"],
+.card.ending[data-ending-kind="tribune"] {
+  border-top-color: var(--moss);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 60px rgba(56, 80, 47, 0.3);
+}
+.card.ending[data-ending-kind="darkness"] {
+  border-top-color: var(--naphtha);
+  box-shadow: var(--shadow-inset), var(--shadow-card), 0 0 60px rgba(20, 12, 4, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.dealing,
+  .explanation:not([hidden]) {
+    animation: none;
+  }
+}
+
+/* ================================================================== */
+/* Landscape / wide windows: fill the window with a two-pane layout —  */
+/* a kingdom dashboard on the left, the decision card on the right.    */
+/* ================================================================== */
+@media (min-width: 64rem) {
+  body {
+    padding: 2.25rem 2rem;
+  }
+  #app {
+    max-width: 80rem;
+    display: grid;
+    grid-template-columns: 22rem 1fr;
+    column-gap: 2.25rem;
+    align-items: start;
+    padding: 1.6rem 2.25rem 2.25rem;
+  }
+  /* Left pane: the kingdom dashboard (title, stats, timeline). */
+  .hud {
+    margin: 0;
+    padding: 1.4rem 0 0;
+    border-bottom: none;
+    border-right: 1px solid rgba(44, 24, 16, 0.18);
+    padding-right: 1.6rem;
+    text-align: left;
+    position: sticky;
+    top: 2.25rem;
+  }
+  .hud > h1 {
+    text-align: center;
+    font-size: 1.55rem;
+    margin-bottom: 1rem;
+  }
+  .stats {
+    margin: 0.4rem 0 0.75rem;
+  }
+  /* Right pane: the decision card, vertically roomy. */
+  .card {
+    margin: 0;
+    min-height: 26rem;
+  }
+  .scenario {
+    font-size: 1.35rem;
   }
 }

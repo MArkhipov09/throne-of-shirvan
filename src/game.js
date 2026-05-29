@@ -137,6 +137,13 @@ const ARC_THRESHOLD = 7;
 const AFFINITY_MIN = -10;
 const AFFINITY_MAX = 10;
 const REIGN_LENGTH = 25;
+// Selectable reign lengths (years). "standard" is the historical 25-year reign.
+const REIGN_LENGTHS = { short: 15, standard: 25, long: 40 };
+function clampReignLength(v) {
+  const n = Number(v);
+  if (Number.isFinite(n) && n >= 5 && n <= 60) return Math.round(n);
+  return REIGN_LENGTH;
+}
 const FADE_MS = 150;
 const INTRO_FADE_MS = 300;
 
@@ -199,6 +206,9 @@ const state = {
   conceptsSeen: [], // concepts encountered this reign (for the report)
   difficulty: "normal",
   daily: false,
+  reignLength: REIGN_LENGTH,
+  customStart: null, // { stat: value } when difficulty === "custom"
+  modifiers: {}, // optional run mutators: ironman, crisisHeavy, hideEssays, predict
 };
 
 let tutorialActive = false;
@@ -333,6 +343,9 @@ function saveGame() {
     conceptsSeen: state.conceptsSeen,
     difficulty: state.difficulty,
     daily: state.daily,
+    reignLength: state.reignLength,
+    customStart: state.customStart,
+    modifiers: state.modifiers,
   };
   safeStorageSet(SAVE_KEY, JSON.stringify(data));
 }
@@ -362,6 +375,11 @@ function loadGame() {
     state.conceptsSeen = Array.isArray(data.conceptsSeen) ? data.conceptsSeen : [];
     state.difficulty = data.difficulty || "normal";
     state.daily = !!data.daily;
+    state.reignLength = clampReignLength(data.reignLength);
+    state.customStart =
+      data.customStart && typeof data.customStart === "object" ? data.customStart : null;
+    state.modifiers =
+      data.modifiers && typeof data.modifiers === "object" ? data.modifiers : {};
     if (data.warningActive && typeof data.warningActive === "object") {
       state.warningActive = { ...defaultWarningActive(), ...data.warningActive };
     } else {
@@ -384,6 +402,7 @@ function clearSave() {
 const els = {
   stats: document.getElementById("stats"),
   cardsPlayed: document.getElementById("cards-played"),
+  reignLength: document.getElementById("reign-length"),
   card: document.getElementById("card"),
   cardEmblem: document.getElementById("card-emblem"),
   speaker: document.getElementById("speaker"),
@@ -477,6 +496,12 @@ function renderEmblem(card) {
   const img = document.createElement("img");
   img.src = info.src;
   img.alt = "";
+  img.decoding = "async";
+  // Serve a small display copy (resize_assets.py writes -256/-512 variants);
+  // the 1024px original stays the fallback / source of truth.
+  const base = info.src.replace(/\.png$/, "");
+  img.srcset = `${base}-256.png 256w, ${base}-512.png 512w, ${info.src} 1024w`;
+  img.sizes = info.kind === "portrait" ? "140px" : "60px";
   els.cardEmblem.innerHTML = "";
   els.cardEmblem.appendChild(img);
   els.cardEmblem.dataset.kind = info.kind;
@@ -547,14 +572,15 @@ function renderStats() {
       `${name}: ${value} of 100${isWarn ? ", at risk" : ""}. ${STAT_DESCRIPTIONS[name]}`
     );
   }
-  els.cardsPlayed.textContent = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  els.cardsPlayed.textContent = Math.min(state.cardsPlayed, state.reignLength);
+  if (els.reignLength) els.reignLength.textContent = state.reignLength;
   updateTimeline();
 }
 
 function buildTimeline() {
   if (!els.timeline) return;
   els.timeline.innerHTML = Array.from(
-    { length: REIGN_LENGTH },
+    { length: state.reignLength },
     () => '<span class="tl-notch"></span>'
   ).join("");
 }
@@ -745,6 +771,20 @@ function renderChronicle() {
 
 // --- Card rendering ---
 
+// Re-trigger the deal-in entrance animation for a freshly rendered card.
+function dealIn() {
+  if (reducedMotion()) return;
+  els.card.classList.remove("dealing");
+  void els.card.offsetWidth; // force reflow so the animation restarts each card
+  els.card.classList.add("dealing");
+}
+
+// crisis cards have a triggerStat; arc cards an arcCharacter; the rest are plain
+// decisions. Exposed as a data attribute so the stylesheet can mark them apart.
+function cardTypeOf(card) {
+  return card.triggerStat ? "crisis" : card.arcCharacter ? "arc" : "decision";
+}
+
 function renderCardImmediate(card) {
   removeChronicle();
   state.activeCard = card;
@@ -754,6 +794,7 @@ function renderCardImmediate(card) {
   renderEmblem(card);
   els.card.classList.remove("ending");
   delete els.card.dataset.endingKind;
+  els.card.dataset.cardType = cardTypeOf(card);
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   renderAffinity(card);
@@ -784,6 +825,7 @@ function renderCardImmediate(card) {
   els.options.querySelector("button")?.focus();
 
   renderStats();
+  dealIn();
   saveGame();
   maybeShowTutorial();
 }
@@ -797,6 +839,7 @@ function renderResultViewImmediate(card, explanationText) {
   renderEmblem(card);
   els.card.classList.remove("ending");
   delete els.card.dataset.endingKind;
+  els.card.dataset.cardType = cardTypeOf(card);
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   renderAffinity(card);
@@ -831,13 +874,22 @@ function checkEnding() {
     if (value <= 0) return { type: "collapse", stat };
     if (value >= 100) return { type: "overflow", stat };
   }
-  if (state.cardsPlayed >= REIGN_LENGTH) return { type: "longevity" };
+  if (state.cardsPlayed >= state.reignLength) return { type: "longevity" };
   return null;
 }
 
+function startValueFor(stat) {
+  // Custom difficulty lets the player set each stat's starting value; every
+  // other difficulty starts all five stats at the same forgiving/harsh value.
+  if (state.difficulty === "custom" && state.customStart) {
+    const v = Number(state.customStart[stat]);
+    return Number.isFinite(v) ? Math.max(0, Math.min(100, Math.round(v))) : 50;
+  }
+  return DIFFICULTY_START[state.difficulty] ?? 50;
+}
+
 function resetReign() {
-  const start = DIFFICULTY_START[state.difficulty] ?? 50;
-  for (const stat of STAT_NAMES) state.stats[stat] = start;
+  for (const stat of STAT_NAMES) state.stats[stat] = startValueFor(stat);
   for (const character of CHARACTER_KEYS) {
     state.affinity[character] = 0;
     state.arcFired[character] = false;
@@ -853,7 +905,7 @@ function resetReign() {
   state.endingInfo = null;
   state.cardHistory = [];
   state.warningActive = Object.fromEntries(
-    STAT_NAMES.map((s) => [s, start < WARN_LOW || start > WARN_HIGH])
+    STAT_NAMES.map((s) => [s, state.stats[s] < WARN_LOW || state.stats[s] > WARN_HIGH])
   );
   state.flags = [];
   state.conceptsSeen = [];
@@ -872,6 +924,7 @@ function renderEndingImmediate(ending, firstTime = false) {
 
   els.card.classList.add("ending");
   els.card.dataset.endingKind = kind;
+  delete els.card.dataset.cardType;
 
   els.speaker.textContent = ENDING_TITLES[kind];
   els.speaker.dataset.speakerType = "ending";
@@ -1035,7 +1088,7 @@ function chooseOption(index) {
   // year was reached), don't queue a crisis the player would never get to see.
   const reignEnds =
     STAT_NAMES.some((s) => state.stats[s] <= 0 || state.stats[s] >= 100) ||
-    state.cardsPlayed >= REIGN_LENGTH;
+    state.cardsPlayed >= state.reignLength;
   if (!reignEnds) {
     for (const stat of STAT_NAMES) {
       const value = state.stats[stat];
@@ -1228,7 +1281,9 @@ function showIntro({ mode }) {
   // Difficulty + daily only apply to a brand-new reign.
   if (els.introSetup) els.introSetup.hidden = mode !== "fresh";
 
-  els.introBegin.focus();
+  // Focus the primary action for keyboard users without scrolling the title
+  // off the top of the intro panel.
+  els.introBegin.focus({ preventScroll: true });
 }
 
 function hideIntro() {
@@ -1452,7 +1507,7 @@ function markEndingReached(kind) {
 }
 function recordReignResult() {
   progress.reigns += 1;
-  const years = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  const years = Math.min(state.cardsPlayed, state.reignLength);
   if (years > progress.bestYears) progress.bestYears = years;
   saveProgress();
 }
@@ -1462,20 +1517,81 @@ function recordReignResult() {
 function applySavedSettings() {
   try {
     const s = JSON.parse(safeStorageGet(SETTINGS_KEY) || "{}");
-    const diff = ["lenient", "normal", "hard"].includes(s.difficulty) ? s.difficulty : "normal";
+    const diff = ["lenient", "normal", "hard", "custom"].includes(s.difficulty)
+      ? s.difficulty
+      : "normal";
     state.difficulty = diff;
     const radio = document.querySelector(`input[name="difficulty"][value="${diff}"]`);
     if (radio) radio.checked = true;
     if (els.dailyToggle) els.dailyToggle.checked = !!s.daily;
+
+    state.reignLength = clampReignLength(s.reignLength);
+    const lenRadio = document.querySelector(
+      `input[name="reign-length"][value="${state.reignLength}"]`
+    );
+    if (lenRadio) lenRadio.checked = true;
+
+    state.customStart =
+      s.customStart && typeof s.customStart === "object" ? s.customStart : null;
+    if (state.customStart) {
+      for (const stat of STAT_NAMES) {
+        const el = document.getElementById(`custom-${stat}`);
+        if (el && state.customStart[stat] != null) el.value = state.customStart[stat];
+      }
+    }
+
+    state.modifiers = s.modifiers && typeof s.modifiers === "object" ? s.modifiers : {};
+    for (const [k, v] of Object.entries(state.modifiers)) {
+      const el = document.querySelector(`input[name="modifier"][value="${k}"]`);
+      if (el) el.checked = !!v;
+    }
   } catch {
     /* ignore */
   }
 }
+
+// Read the custom per-stat starting values from the setup UI (Phase 3.1 markup).
+function readCustomStart() {
+  if (state.difficulty !== "custom") return null;
+  const out = {};
+  let any = false;
+  for (const stat of STAT_NAMES) {
+    const el = document.getElementById(`custom-${stat}`);
+    if (el) {
+      out[stat] = Math.max(0, Math.min(100, Number(el.value) || 50));
+      any = true;
+    }
+  }
+  return any ? out : null;
+}
+
+// Read any opt-in run modifiers (mutators) checked in the setup UI.
+function readModifiers() {
+  const out = {};
+  document.querySelectorAll('input[name="modifier"]:checked').forEach((el) => {
+    out[el.value] = true;
+  });
+  return out;
+}
+
 function readReignSettings() {
   const checked = document.querySelector('input[name="difficulty"]:checked');
   state.difficulty = checked ? checked.value : "normal";
+  const lenInput = document.querySelector('input[name="reign-length"]:checked');
+  state.reignLength = lenInput ? clampReignLength(lenInput.value) : state.reignLength;
+  state.customStart = readCustomStart();
+  state.modifiers = readModifiers();
   state.daily = !!(els.dailyToggle && els.dailyToggle.checked);
-  safeStorageSet(SETTINGS_KEY, JSON.stringify({ difficulty: state.difficulty, daily: state.daily }));
+  safeStorageSet(
+    SETTINGS_KEY,
+    JSON.stringify({
+      difficulty: state.difficulty,
+      daily: state.daily,
+      reignLength: state.reignLength,
+      customStart: state.customStart,
+      modifiers: state.modifiers,
+    })
+  );
 }
 
 // --- Reign report (ending screen) + shareable result ---
@@ -1520,7 +1636,7 @@ function dailyDateStr() {
   return `${d.getFullYear()}-${m}-${day}`;
 }
 function buildShareText(kind) {
-  const years = Math.min(state.cardsPlayed, REIGN_LENGTH);
+  const years = Math.min(state.cardsPlayed, state.reignLength);
   const bar = STAT_NAMES.map((s) => {
     const f = Math.max(0, Math.min(5, Math.round(state.stats[s] / 20)));
     return "▰".repeat(f) + "▱".repeat(5 - f);
