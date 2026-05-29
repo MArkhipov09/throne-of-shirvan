@@ -27,7 +27,7 @@ Then visit <http://localhost:8000>.
 - **Two choices per card.** Hover or focus an option to preview the stat deltas before committing.
 - **Five recurring characters** — the Vizier, the Qadi, Tahmina the silk-merchant, the General, the foreign Envoy. Each tracks an affinity score from −10 to +10, shown as dots beside their portrait. Push affinity to ±7 and a **character arc card** queues up — the moment they trust you enough to ask for something large, or distrust you enough to move against you.
 - **Crises** fire when a stat crosses 15 (low) or 85 (high). They jump the queue; their outcomes are usually expensive.
-- **Four endings**: Prosperity, Survival, Conquest, Revolt. Each pulls flavour from a real Shirvanshah-era parallel.
+- **Ten endings.** Last twenty-five years and you get Prosperity or Survival (by your average stat). Let a stat hit **0** and the reign collapses into Conquest, Revolt, or — for naphtha — the Dark. Push a stat to **100** and it ruins you a different way: the Gilded Cage (treasury), the Sword Ascendant (military), the People's Tide (people), the Pulpit Throne (faith), or the Burning Shore (naphtha). Each pulls flavour from a real Shirvanshah-era parallel.
 - **Save is automatic.** Close the tab mid-reign; reopen and the game offers Continue Reign or Begin a New Reign.
 - **Keyboard**: `1` / `2` pick options, `Enter` / `Space` continue.
 - **Music toggle** in the top-left corner. One looping ambient track that plays across the whole session; the toggle state persists.
@@ -41,8 +41,8 @@ throne-of-shirvan/
 │   ├── style.css       # design tokens + layout
 │   └── game.js         # state, deck, save/load, audio, tutorial, chronicle
 ├── content/
-│   ├── cards.js        # 26 decision + 10 arc cards
-│   └── crises.js       # 4 crisis cards
+│   ├── cards.js        # 37 decision + 10 arc cards
+│   └── crises.js       # 7 crisis cards
 ├── assets/
 │   ├── portraits/      # SVG character portraits (5)
 │   ├── icons/          # SVG speaker-category icons (6)
@@ -87,7 +87,7 @@ Stats: `treasury`, `people`, `military`, `faith`, `naphtha`. Effects are deltas;
 
 ## Adding a card
 
-Append to the `cards` array in `content/cards.js` using the model above. Keep the explanation in the 220–280 word range to match the rest of the deck (`POLISH_REPORT.md` §3 has the rationale). The tag inventory in §5 is the de-facto concept map.
+Append to the `cards` array in `content/cards.js` using the model above. Vary the explanation's shape and length deliberately — some essays open with the history, some name the economic concept and stop in the 13th century, some are a single tight paragraph. The aim is that no two consecutive cards read the same; a uniform 250-word "concept → medieval parallel → modern-Azerbaijan coda" template is exactly the house style being moved away from. Where a recurring character speaks or reacts, write them in their own register (the Qadi in legal cadence, Tahmina in mercantile wit, the General in clipped imperatives). The tag inventory is the de-facto concept map; avoid teaching the same concept on two cards.
 
 ## Dev console
 
@@ -108,5 +108,5 @@ The block is gated on `location.hostname` and won't ship in production.
 
 - The design audit lives in [POLISH_REPORT.md](./POLISH_REPORT.md): stat balance, explanation length, speaker distribution, concept duplication, accessibility, code health. Read it before making structural changes.
 - The "casual returner" use case is the load-bearing assumption: someone playing for the first time, interrupted, comes back later expecting to continue. The save-on-every-state-change in `src/game.js` exists to make that experience seamless rather than punishing.
-- The music file is optional. `assets/sounds/README.txt` documents the one expected filename; the runtime fails gracefully if it is absent. Drop `music.mp3` in when ready, no code change required.
+- The music file (`assets/sounds/music.mp3`) ships with the game. The runtime fails gracefully if it is ever absent, and it loads lazily (`preload="none"`) only once the player turns music on. The track is large (~12 MB); a smaller mono ambient loop would be friendlier on metered connections.
 - The CSS palette is six tokens (`--ink`, `--parchment`, `--caspian`, `--saffron`, `--naphtha`, `--stone`) plus accents (`--moss`, `--brick`, `--silk`). Adding new colours should be rare and considered.

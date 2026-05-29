@@ -24,6 +24,17 @@ const SPEAKER_CATEGORY = {
   "crisis-bread-riot": "soldier",
   "crisis-fatwa": "religious",
   "crisis-naphtha-fire": "official",
+  "naphtha-greekfire": "foreign",
+  "naphtha-firetemple": "religious",
+  "naphtha-strike": "official",
+  "naphtha-overdraw": "official",
+  "sarraf-bill": "merchant",
+  "closed-guild": "merchant",
+  "after-plague": "peasant",
+  "clipped-dinar": "official",
+  "crisis-treasury-low": "official",
+  "crisis-military-low": "soldier",
+  "crisis-naphtha-low": "official",
 };
 
 const STAT_DESCRIPTIONS = {
@@ -39,6 +50,21 @@ const ENDING_TITLES = {
   survival: "Survival",
   conquest: "Conquest",
   revolt: "Revolt",
+  darkness: "The Dark",
+  gilded: "The Gilded Cage",
+  praetorian: "The Sword Ascendant",
+  tribune: "The People's Tide",
+  theocracy: "The Pulpit Throne",
+  inferno: "The Burning Shore",
+};
+
+// Which ending an overflow (a stat reaching 100) maps to, by stat.
+const OVERFLOW_KIND = {
+  treasury: "gilded",
+  military: "praetorian",
+  people: "tribune",
+  faith: "theocracy",
+  naphtha: "inferno",
 };
 
 const ENDING_FLAVOUR = {
@@ -50,6 +76,18 @@ const ENDING_FLAVOUR = {
     "The walls failed before the year was out. The treasury had been empty for months when the cavalry appeared at the western gate, and the garrison had no reason to die for a court that could not pay them. Your reign joins the brief Caucasus entries from the 1240s — the realms that emptied themselves before the rider arrived.",
   revolt:
     "The Qadi led the procession to the palace gate. The household guard neither opened the doors nor barred them. The chronicler is uncertain whether you died, fled, or ruled in name for another year in someone else's hand, and the dynasty resumes under your nephew, the way it resumed after Vizier Rashid al-Din's execution in 1318.",
+  darkness:
+    "The last of the seeps gave out, the lamps of Baku went dark, and the customs books that the white oil had filled fell silent. A wealth that is spent and never renewed is a wealth that ends. Yours did, quietly, in one cold and unlit winter.",
+  gilded:
+    "The vaults could not be shut for the weight of silver in them, and every chief from the Daghestan passes to the Volga mouth heard the count. Wealth without walls is a standing invitation, and the invitation was accepted. You held the richest court in the Caucasus for exactly as long as it took the riders to reach it.",
+  praetorian:
+    "An army with nothing left to fight stops asking the throne what to do and starts telling it. The garrison was better paid, better drilled, and more numerous than anything that could check it, and one morning the household guard simply took its orders from the barracks. The Shirvanshahs who lasted kept their soldiers loyal by keeping them a little hungry.",
+  tribune:
+    "Adoration is a current, and a current needs no channel. The crowds that filled the maidan to bless your name found they could fill it for any reason at all, and a Shah beloved past all restraint is a Shah the city no longer thinks it requires. They carried someone else through the gate on their shoulders and scarcely noticed you were gone.",
+  theocracy:
+    "You gave the mosque everything it asked and a little more, and authority, once given, is rarely returned. The Qadi's word came to carry further than the Shah's; the rulings issued from the great mosque and the palace only sealed them. You reigned, at the last, as the most pious clerk in your own court.",
+  inferno:
+    "The seeps were stocked past anything the trenches could safely hold, and the Absheron night turned to noon when they caught. The fire walked from pool to pool faster than men could run from it, and the smoke stood visible from Derbent. A kingdom that hoards fire learns, in the end, what fire is for.",
 };
 
 const ROMAN_NUMERALS = [
@@ -76,7 +114,11 @@ function classifyEnding(ending) {
     const total = STAT_NAMES.reduce((sum, name) => sum + state.stats[name], 0);
     return total / STAT_NAMES.length >= 50 ? "prosperity" : "survival";
   }
+  // A stat pushed to 100 is its own kind of ruin, distinct from collapse.
+  if (ending.type === "overflow") return OVERFLOW_KIND[ending.stat] || "conquest";
+  // Collapse (stat fell to 0).
   if (ending.stat === "people" || ending.stat === "faith") return "revolt";
+  if (ending.stat === "naphtha") return "darkness";
   return "conquest";
 }
 
@@ -169,7 +211,8 @@ function getMusic() {
     try {
       musicEl = new Audio(MUSIC_PATH);
       musicEl.loop = true;
-      musicEl.preload = "auto";
+      // "none": don't fetch the (large) track until playback is actually requested.
+      musicEl.preload = "none";
       musicEl.addEventListener("error", (e) => {
         if (e && typeof e.preventDefault === "function") e.preventDefault();
       });
@@ -317,6 +360,7 @@ const els = {
   aboutLink: document.getElementById("about-link"),
   audioToggle: document.getElementById("audio-toggle"),
   reign: document.querySelector(".reign"),
+  app: document.getElementById("app"),
   tutorial: null,
 };
 
@@ -832,24 +876,37 @@ function chooseOption(index) {
     for (const [character, delta] of Object.entries(option.affinityEffects)) {
       if (!(character in state.affinity)) continue;
       const oldValue = state.affinity[character];
-      const newValue = Math.max(AFFINITY_MIN, Math.min(AFFINITY_MAX, oldValue + delta));
-      state.affinity[character] = newValue;
-      if (!state.arcFired[character] && !state.arcEligible[character]) {
-        if (newValue >= ARC_THRESHOLD) state.arcEligible[character] = "high";
-        else if (newValue <= -ARC_THRESHOLD) state.arcEligible[character] = "low";
+      state.affinity[character] = Math.max(AFFINITY_MIN, Math.min(AFFINITY_MAX, oldValue + delta));
+    }
+    // Re-derive arc eligibility from the *current* affinity each time it changes.
+    // Latching once meant a character who later slid back toward neutral (or to the
+    // opposite extreme) could still fire a stale-direction arc; this reconciles it.
+    for (const character of CHARACTER_KEYS) {
+      if (state.arcFired[character]) {
+        state.arcEligible[character] = null;
+        continue;
       }
+      const v = state.affinity[character];
+      state.arcEligible[character] = v >= ARC_THRESHOLD ? "high" : v <= -ARC_THRESHOLD ? "low" : null;
     }
   }
 
   if (card.triggerStat === undefined) state.cardsPlayed += 1;
 
-  for (const stat of STAT_NAMES) {
-    const value = state.stats[stat];
-    let direction = null;
-    if (value < CRISIS_LOW) direction = "low";
-    else if (value > CRISIS_HIGH) direction = "high";
-    if (!direction) continue;
-    if (queueCrisis(stat, direction)) break;
+  // If this choice already ends the reign (a stat hit 0 or 100, or the final
+  // year was reached), don't queue a crisis the player would never get to see.
+  const reignEnds =
+    STAT_NAMES.some((s) => state.stats[s] <= 0 || state.stats[s] >= 100) ||
+    state.cardsPlayed >= REIGN_LENGTH;
+  if (!reignEnds) {
+    for (const stat of STAT_NAMES) {
+      const value = state.stats[stat];
+      let direction = null;
+      if (value < CRISIS_LOW) direction = "low";
+      else if (value > CRISIS_HIGH) direction = "high";
+      if (!direction) continue;
+      if (queueCrisis(stat, direction)) break;
+    }
   }
 
   state.view = "result";
@@ -929,6 +986,7 @@ function showTutorial() {
   els.tutorial = overlay;
 
   positionTutorialTips();
+  dismiss.focus();
   window.addEventListener("resize", positionTutorialTips);
   window.addEventListener("scroll", positionTutorialTips, true);
 }
@@ -1013,6 +1071,10 @@ function showIntro({ mode }) {
   els.intro.hidden = false;
   els.intro.classList.remove("fading-out");
   els.intro.setAttribute("aria-hidden", "false");
+  // The intro is a fullscreen blocker; make the game behind it non-interactive
+  // so keyboard and screen-reader users can't tab into it.
+  els.app?.setAttribute("inert", "");
+  els.app?.setAttribute("aria-hidden", "true");
 
   if (mode === "fresh") {
     els.introBegin.textContent = "Begin Reign";
@@ -1035,6 +1097,8 @@ function hideIntro() {
   }
   els.intro.classList.add("fading-out");
   els.intro.setAttribute("aria-hidden", "true");
+  els.app?.removeAttribute("inert");
+  els.app?.removeAttribute("aria-hidden");
   introHideTimer = setTimeout(() => {
     introHideTimer = null;
     els.intro.hidden = true;
@@ -1059,6 +1123,11 @@ function startFreshReign() {
 // --- Keyboard ---
 
 function onKeydown(event) {
+  if (tutorialActive && event.key === "Escape") {
+    event.preventDefault();
+    hideTutorial();
+    return;
+  }
   if (!els.intro.hidden) {
     if (event.key === "Enter" || event.key === " ") {
       if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
@@ -1146,10 +1215,12 @@ function init() {
   });
 
   els.aboutLink.addEventListener("click", () => {
-    forceTutorialOnIntroHide = true;
     if (state.reignStarted) {
+      // Mid-reign: show the About/intro panel, but don't force the first-card
+      // coachmark back over an in-progress game.
       showIntro({ mode: "return" });
     } else {
+      forceTutorialOnIntroHide = true;
       showIntro({ mode: "fresh" });
     }
   });

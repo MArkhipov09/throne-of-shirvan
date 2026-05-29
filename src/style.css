@@ -874,3 +874,78 @@ h3,
     transition: none;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Review fixes: touch preview, responsive layout, visible focus rings */
+/* ------------------------------------------------------------------ */
+
+/* Touch / no-hover devices have no way to hover an option, and the first tap
+   commits the choice — so always show the stat-delta preview there. */
+@media (hover: none), (pointer: coarse) {
+  .option-preview {
+    display: flex;
+  }
+}
+
+/* The text/icon controls previously signalled focus with a colour change only
+   (fails WCAG 2.4.7 / 1.4.11). Give them a real outline. These rules come after
+   the originals, so they win without editing each block. */
+.about-link:focus-visible,
+.audio-toggle:focus-visible,
+.intro-secondary:focus-visible,
+.chronicle > summary:focus-visible {
+  outline: 2px solid var(--caspian);
+  outline-offset: 2px;
+}
+
+/* Keyboard focus on buttons was only 1px different from hover; make it distinct. */
+.options button:focus-visible,
+.intro-begin:focus-visible,
+.tutorial-dismiss:focus-visible {
+  outline: 2px solid var(--caspian);
+  outline-offset: 2px;
+}
+
+/* Small screens: the layout had no breakpoints. Shrink the fixed columns,
+   portrait, and padding so the stat names don't clip below ~360px. */
+@media (max-width: 30rem) {
+  body {
+    padding: 1rem 0.6rem;
+    font-size: 1.05rem;
+  }
+  .stat {
+    grid-template-columns: 4.2rem 1fr 1.9rem;
+    gap: 0.4rem;
+  }
+  .stat-name {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+  .card {
+    padding: 1.1rem;
+  }
+  .card-emblem[data-kind="portrait"] img {
+    width: 64px;
+    height: 64px;
+  }
+  .scenario {
+    font-size: 1.12rem;
+  }
+  .intro-title {
+    font-size: 2rem;
+  }
+}
+
+/* Windows High Contrast / forced-colors mode strips box-shadow rings; keep a
+   focus outline so keyboard users are never left without one. */
+@media (forced-colors: active) {
+  .options button:focus-visible,
+  .intro-begin:focus-visible,
+  .about-link:focus-visible,
+  .audio-toggle:focus-visible,
+  .intro-secondary:focus-visible,
+  .tutorial-dismiss:focus-visible,
+  .chronicle > summary:focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
