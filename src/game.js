@@ -47,6 +47,16 @@ const STAT_DESCRIPTIONS = {
   naphtha: "The Absheron oil reserves, your wildcard resource.",
 };
 
+// Display names for the five stats; STAT_DESCRIPTIONS is the single source of
+// truth for their blurbs (HUD tooltips, screen-reader labels, intro key).
+const STAT_LABELS = {
+  treasury: "Treasury",
+  people: "People",
+  military: "Military",
+  faith: "Faith",
+  naphtha: "Naphtha",
+};
+
 const ENDING_TITLES = {
   prosperity: "Prosperity",
   survival: "Survival",
@@ -418,6 +428,7 @@ const els = {
   reign: document.querySelector(".reign"),
   app: document.getElementById("app"),
   conceptChip: document.getElementById("concept-chip"),
+  conceptDef: document.getElementById("concept-def"),
   timeline: document.getElementById("timeline"),
   introSetup: document.getElementById("intro-setup"),
   dailyToggle: document.getElementById("daily-toggle"),
@@ -510,6 +521,18 @@ function renderEmblem(card) {
 
 // --- Affinity indicator ---
 
+// Turn a raw affinity value (-10..+10) into a one-word court relationship,
+// so the dots aren't a mystery to a new player.
+function affinityWord(v) {
+  if (v >= 6) return "Devoted";
+  if (v >= 3) return "Warm";
+  if (v >= 1) return "Favorable";
+  if (v === 0) return "Neutral";
+  if (v > -3) return "Cool";
+  if (v > -6) return "Wary";
+  return "Hostile";
+}
+
 function renderAffinity(card) {
   if (!card || !CHARACTER_KEYS.includes(card.speakerType)) {
     els.affinity.hidden = true;
@@ -536,13 +559,18 @@ function renderAffinity(card) {
     );
   }
 
-  els.affinity.innerHTML = parts.join("");
-  els.affinity.dataset.character = card.speakerType;
   const sign = value >= 0 ? "+" : "";
+  const word = affinityWord(value);
+  els.affinity.innerHTML =
+    `<span class="affinity-word">${word}</span>` +
+    parts.join("") +
+    `<span class="affinity-num">${sign}${value}</span>`;
+  els.affinity.dataset.character = card.speakerType;
   els.affinity.setAttribute(
     "aria-label",
-    `${card.speakerType} affinity ${sign}${value}`
+    `Your standing with the ${card.speakerType}: ${word}, ${sign}${value} of 10`
   );
+  els.affinity.title = `Your standing with the ${card.speakerType}: ${word} (${sign}${value})`;
   els.affinity.hidden = false;
 }
 
@@ -574,6 +602,12 @@ function renderStats() {
   }
   els.cardsPlayed.textContent = Math.min(state.cardsPlayed, state.reignLength);
   if (els.reignLength) els.reignLength.textContent = state.reignLength;
+  // Flag the final year of the reign so the last decision feels weighty.
+  const finalYear =
+    state.reignStarted &&
+    state.view !== "ending" &&
+    state.cardsPlayed >= state.reignLength - 1;
+  els.reign?.classList.toggle("final-year", finalYear);
   updateTimeline();
 }
 
@@ -995,7 +1029,7 @@ function queueCrisis(stat, direction) {
   return true;
 }
 
-function animateDelta(stat, delta) {
+function animateDelta(stat, delta, note) {
   if (delta === 0) return;
   const row = els.stats.querySelector(`[data-stat="${stat}"]`);
   if (!row) return;
@@ -1003,6 +1037,12 @@ function animateDelta(stat, delta) {
   node.className = `stat-delta ${delta > 0 ? "positive" : "negative"}`;
   const sign = delta > 0 ? "+" : "−";
   node.textContent = `${sign}${Math.abs(delta)}`;
+  if (note) {
+    const tag = document.createElement("small");
+    tag.className = "stat-delta-note";
+    tag.textContent = note;
+    node.appendChild(tag);
+  }
   row.appendChild(node);
   node.addEventListener("animationend", () => node.remove(), { once: true });
 }
@@ -1078,7 +1118,7 @@ function chooseOption(index) {
       state.stats.treasury = Math.max(0, Math.min(100, old + rent));
       const d = state.stats.treasury - old;
       if (d !== 0) {
-        animateDelta("treasury", d);
+        animateDelta("treasury", d, "naphtha rent");
         pulseStat("treasury");
       }
     }
@@ -1154,9 +1194,18 @@ function showTutorial() {
   overlay.appendChild(backdrop);
 
   const tipDefs = [
-    { target: "stats", text: "Your kingdom's five stats. Keep them in balance." },
-    { target: "reign", text: "Twenty-five years. Make them count." },
-    { target: "options", text: "Two choices. Both have costs." },
+    {
+      target: "stats",
+      text: "Your five stats. Keep each off 0 and 100 — either extreme ends your reign. Drift to the edge and a crisis strikes.",
+    },
+    {
+      target: "reign",
+      text: `Your reign runs ${state.reignLength} years. Survive them all, or fall early — each ending tells a different story.`,
+    },
+    {
+      target: "options",
+      text: "Two choices, both with costs (shown beneath each). Tap one, or swipe the card left or right.",
+    },
   ];
 
   for (const def of tipDefs) {
@@ -1384,9 +1433,24 @@ function renderRestoredView() {
 
 // --- Init ---
 
+// Build the intro's stat key from the shared STAT_DESCRIPTIONS so the intro and
+// the in-game tooltips can never drift apart.
+function populateStatKey() {
+  const ul = document.querySelector(".intro-stat-key");
+  if (!ul) return;
+  const lowerFirst = (s) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : s);
+  ul.innerHTML = STAT_NAMES.map(
+    (s) =>
+      `<li><span class="key-stat">${STAT_LABELS[s]}</span> &mdash; ${lowerFirst(
+        STAT_DESCRIPTIONS[s]
+      )}</li>`
+  ).join("");
+}
+
 function init() {
   buildStatBars();
   buildTimeline();
+  populateStatKey();
   loadProgress();
   applySavedSettings();
 
@@ -1394,6 +1458,7 @@ function init() {
   state.audioEnabled = safeStorageGet(AUDIO_KEY) === "1";
   applyAudioPref();
   els.audioToggle.addEventListener("click", toggleAudio);
+  els.conceptChip?.addEventListener("click", toggleConceptDef);
   if (state.audioEnabled) startMusic();
 
   // Try to restore saved game
@@ -1462,11 +1527,31 @@ function setConceptChip(card) {
   if (!concept) {
     els.conceptChip.hidden = true;
     els.conceptChip.textContent = "";
+    els.conceptChip.setAttribute("aria-expanded", "false");
+    if (els.conceptDef) {
+      els.conceptDef.hidden = true;
+      els.conceptDef.textContent = "";
+    }
     return;
   }
   els.conceptChip.textContent = concept;
-  els.conceptChip.title = CONCEPT_DEFS[concept] || "";
+  const def = CONCEPT_DEFS[concept] || "";
+  els.conceptChip.title = def;
   els.conceptChip.hidden = false;
+  els.conceptChip.setAttribute("aria-expanded", "false");
+  if (els.conceptDef) {
+    els.conceptDef.textContent = def;
+    els.conceptDef.hidden = true; // revealed when the chip is tapped/clicked
+  }
+}
+
+// Tap/click the concept chip to reveal its plain-language definition inline
+// (mobile has no hover for the title tooltip).
+function toggleConceptDef() {
+  if (!els.conceptDef || !els.conceptDef.textContent) return;
+  const show = els.conceptDef.hidden;
+  els.conceptDef.hidden = !show;
+  els.conceptChip.setAttribute("aria-expanded", String(show));
 }
 
 function pulseStat(stat) {

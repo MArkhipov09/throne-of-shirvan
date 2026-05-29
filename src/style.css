@@ -637,7 +637,7 @@ h3,
 
 .option-preview {
   width: 100%;
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 0.3rem 0.8rem;
   margin-top: 0.4rem;
@@ -1435,4 +1435,98 @@ h3,
   .scenario {
     font-size: 1.35rem;
   }
+}
+
+/* ================================================================== */
+/* Phase 2 — UX legibility: year-end, rent note, affinity, concept def,*/
+/* crisis/arc ribbons                                                   */
+/* ================================================================== */
+
+/* Final-year warning on the reign label. */
+.reign.final-year .reign-label {
+  color: var(--brick);
+  font-weight: 600;
+}
+.reign.final-year .reign-label::after {
+  content: " · Final year";
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+/* "naphtha rent" note on the floating treasury delta. */
+.stat-delta-note {
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  color: var(--naphtha);
+  text-align: right;
+}
+
+/* Affinity: a one-word standing + numeric beside the dots. */
+.affinity-word {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--caspian);
+  margin-right: 0.3rem;
+}
+.affinity-num {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--naphtha);
+  margin-left: 0.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The concept chip is a button now; tap reveals its definition inline. */
+.concept-chip {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.concept-chip::after {
+  content: "\00a0\24D8"; /* nbsp + circled-i */
+  font-weight: 400;
+}
+.concept-def {
+  margin: 0 0 0.9rem;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--naphtha);
+  border-left: 3px solid var(--saffron);
+  padding-left: 0.75rem;
+}
+.concept-def[hidden] {
+  display: none;
+}
+
+/* Crisis / arc cards fly a small ribbon (data-card-type set in JS). */
+.card[data-card-type="crisis"]::before,
+.card[data-card-type="arc"]::before {
+  position: absolute;
+  top: -1px;
+  right: 1rem;
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.6rem 0.22rem;
+  z-index: 5;
+}
+.card[data-card-type="crisis"]::before {
+  content: "Crisis";
+  background: var(--brick);
+  color: var(--parchment-hi);
+}
+.card[data-card-type="arc"]::before {
+  content: "Audience";
+  background: var(--saffron);
+  color: var(--ink);
 }
