@@ -5,7 +5,17 @@ import { concepts as CONCEPT_DEFS } from "../content/concepts.js";
 const decisionCards = cards.filter((c) => !c.arcCharacter);
 
 const STAT_NAMES = ["treasury", "people", "military", "faith", "naphtha"];
-const CHARACTER_KEYS = ["vizier", "qadi", "tahmina", "general", "envoy"];
+const CHARACTER_KEYS = [
+  "vizier",
+  "qadi",
+  "tahmina",
+  "general",
+  "envoy",
+  "astronomer",
+  "spymaster",
+  "queenmother",
+  "caravan",
+];
 
 const SPEAKER_CATEGORY = {
   "genoese-naphtha": "foreign",

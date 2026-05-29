@@ -16,6 +16,11 @@
   --brick-hi: #a4443c;
   --silk: #8a5a14;
   --silk-text: #6c4610; /* darker silk that meets AA on light surfaces */
+  /* New-character accent text colors (all AA on parchment/stone). */
+  --indigo-text: #2e2a6b; /* astronomer */
+  --slate-text: #3b424a; /* spymaster */
+  --plum-text: #6a2c66; /* queen mother */
+  --terracotta-text: #8f3c1f; /* caravan-master */
 
   /* Atmosphere — the dark court ground behind the lit parchment panel */
   --court-bg: #170f08;
@@ -899,6 +904,10 @@ h3,
 .speaker[data-speaker-type="tahmina"] { color: var(--silk-text); }
 .speaker[data-speaker-type="general"] { color: var(--brick); }
 .speaker[data-speaker-type="envoy"]   { color: var(--naphtha); }
+.speaker[data-speaker-type="astronomer"]  { color: var(--indigo-text); }
+.speaker[data-speaker-type="spymaster"]    { color: var(--slate-text); }
+.speaker[data-speaker-type="queenmother"]  { color: var(--plum-text); }
+.speaker[data-speaker-type="caravan"]      { color: var(--terracotta-text); }
 
 /* Stat-row focus ring (paired with tabindex="0" in JS) */
 .stat[tabindex]:focus {
