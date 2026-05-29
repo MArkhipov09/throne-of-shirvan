@@ -1530,3 +1530,140 @@ h3,
   background: var(--saffron);
   color: var(--ink);
 }
+
+/* ================================================================== */
+/* Phase 3 — setup screen groups, custom-stat sliders, predict beat    */
+/* ================================================================== */
+
+.intro-setup .setup-group {
+  border: 1px solid var(--naphtha);
+  background: var(--stone);
+  padding: 0.45rem 0.9rem 0.65rem;
+  margin: 0;
+  width: 100%;
+  max-width: 28rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.9rem;
+  align-items: center;
+  justify-content: center;
+}
+.intro-setup .setup-group legend {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--caspian);
+  padding: 0 0.4rem;
+}
+.intro-setup .setup-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+.intro-setup .modifiers {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.intro-setup .modifiers label {
+  font-style: italic;
+}
+.intro-setup .custom-stats {
+  flex-direction: column;
+  align-items: stretch;
+}
+.custom-stat-row {
+  display: grid;
+  grid-template-columns: 5rem 1fr 2rem;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+.custom-stat-name {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--naphtha);
+}
+.custom-stat-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--saffron);
+}
+.custom-stat-val {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--caspian);
+}
+
+/* Predict-the-outcome beat */
+.predict-q {
+  font-style: italic;
+  color: var(--naphtha);
+  margin: 0 0 0.7rem;
+}
+.predict-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.predict-btn {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  background: linear-gradient(var(--parchment-hi), var(--parchment));
+  color: var(--ink);
+  border: 1px solid var(--naphtha);
+  box-shadow: var(--shadow-inset);
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 90ms ease;
+}
+.predict-btn:hover {
+  background: linear-gradient(var(--stone), var(--stone-lo));
+  box-shadow: inset 0 0 0 1px var(--saffron);
+}
+.predict-btn:active {
+  transform: translateY(1px);
+}
+.predict-btn:focus-visible {
+  outline: 2px solid var(--caspian);
+  outline-offset: 2px;
+}
+.predict-skip {
+  font-style: italic;
+  opacity: 0.85;
+}
+.predict-feedback {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.6rem;
+}
+.predict-feedback[data-correct="true"] {
+  color: var(--moss-text);
+}
+.predict-feedback[data-correct="false"] {
+  color: var(--brick);
+}
+/* In predict mode the option previews stay hidden so the guess matters. */
+.predict-mode .option-preview {
+  display: none;
+}
+
+/* Timeline acts: a small gap at each third splits the reign into three phases. */
+.tl-notch.act-start {
+  margin-left: 7px;
+}
+
+/* Reign report: earned-title banner + score line. */
+.report-title {
+  color: var(--silk-text);
+}
+.report-score {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--caspian);
+  margin: 0 0 0.5rem;
+}

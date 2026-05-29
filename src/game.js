@@ -174,8 +174,48 @@ const ENDING_KINDS = [
 const DIFFICULTY_START = { lenient: 58, normal: 50, hard: 42 };
 const SWIPE_THRESHOLD = 90; // px a card must be dragged to commit a choice
 
-// Cross-reign progress (codex, endings, bests). Loaded once, saved on change.
-const progress = { concepts: [], endings: [], bestYears: 0, reigns: 0 };
+// Cross-reign progress (codex, endings, bests, earned titles). Loaded once, saved on change.
+const progress = { concepts: [], endings: [], bestYears: 0, reigns: 0, unlocked: [] };
+
+// Earned titles — meta-progression shown in the Codex and announced on the
+// ending screen. Evaluated against cross-reign progress + the reign just ended.
+const ACHIEVEMENTS = [
+  { id: "scholar", name: "The Scholar", desc: "Collect 10 economic concepts.",
+    test: () => progress.concepts.length >= 10 },
+  { id: "polymath", name: "The Polymath", desc: "Collect 30 concepts.",
+    test: () => progress.concepts.length >= 30 },
+  { id: "chronicler", name: "The Chronicler", desc: "Collect every concept in the Codex.",
+    test: () => progress.concepts.length >= Object.keys(CONCEPT_DEFS).length },
+  { id: "enduring", name: "The Enduring", desc: "Reign the full term without falling.",
+    test: (c) => c.fullTerm },
+  { id: "steadfast", name: "The Steadfast", desc: "Survive a full Hard reign.",
+    test: (c) => c.fullTerm && c.difficulty === "hard" },
+  { id: "fated", name: "The Fated", desc: "Witness five different endings.",
+    test: () => progress.endings.length >= 5 },
+  { id: "complete-chronicle", name: "The Complete Chronicle", desc: "Witness all ten endings.",
+    test: () => progress.endings.length >= ENDING_KINDS.length },
+  { id: "oracle", name: "The Oracle", desc: "Predict 5+ outcomes in a reign with 80% accuracy.",
+    test: (c) => c.predictTotal >= 5 && c.predictHits / c.predictTotal >= 0.8 },
+];
+
+function checkAchievements(ctx) {
+  const newly = [];
+  for (const a of ACHIEVEMENTS) {
+    if (progress.unlocked.includes(a.id)) continue;
+    let ok = false;
+    try {
+      ok = !!a.test(ctx);
+    } catch {
+      ok = false;
+    }
+    if (ok) {
+      progress.unlocked.push(a.id);
+      newly.push(a);
+    }
+  }
+  if (newly.length) saveProgress();
+  return newly;
+}
 
 function reducedMotion() {
   try {
@@ -218,7 +258,10 @@ const state = {
   daily: false,
   reignLength: REIGN_LENGTH,
   customStart: null, // { stat: value } when difficulty === "custom"
-  modifiers: {}, // optional run mutators: ironman, crisisHeavy, hideEssays, predict
+  modifiers: {}, // optional run mutators: predict, crisisHeavy, volatile
+  predictHits: 0,
+  predictTotal: 0,
+  lastPrediction: null, // transient: { predicted, actual, correct } for the result view
 };
 
 let tutorialActive = false;
@@ -356,6 +399,8 @@ function saveGame() {
     reignLength: state.reignLength,
     customStart: state.customStart,
     modifiers: state.modifiers,
+    predictHits: state.predictHits,
+    predictTotal: state.predictTotal,
   };
   safeStorageSet(SAVE_KEY, JSON.stringify(data));
 }
@@ -390,6 +435,9 @@ function loadGame() {
       data.customStart && typeof data.customStart === "object" ? data.customStart : null;
     state.modifiers =
       data.modifiers && typeof data.modifiers === "object" ? data.modifiers : {};
+    state.predictHits = Number(data.predictHits) || 0;
+    state.predictTotal = Number(data.predictTotal) || 0;
+    state.lastPrediction = null;
     if (data.warningActive && typeof data.warningActive === "object") {
       state.warningActive = { ...defaultWarningActive(), ...data.warningActive };
     } else {
@@ -613,10 +661,15 @@ function renderStats() {
 
 function buildTimeline() {
   if (!els.timeline) return;
-  els.timeline.innerHTML = Array.from(
-    { length: state.reignLength },
-    () => '<span class="tl-notch"></span>'
-  ).join("");
+  // Split the reign into three acts with a small gap at each boundary, so the
+  // span of years reads as early / middle / late rather than one flat run.
+  const len = state.reignLength;
+  const a1 = Math.round(len / 3);
+  const a2 = Math.round((2 * len) / 3);
+  els.timeline.innerHTML = Array.from({ length: len }, (_, i) => {
+    const actStart = i === a1 || i === a2;
+    return `<span class="tl-notch${actStart ? " act-start" : ""}"></span>`;
+  }).join("");
 }
 
 function updateTimeline() {
@@ -836,6 +889,9 @@ function renderCardImmediate(card) {
   els.explanation.hidden = true;
   els.explanation.textContent = "";
   setConceptChip(null);
+  state.lastPrediction = null;
+  document.getElementById("predict-feedback")?.remove();
+  applyModifierClasses();
 
   els.options.innerHTML = "";
   card.options.forEach((option, index) => {
@@ -852,7 +908,7 @@ function renderCardImmediate(card) {
     button.appendChild(keyHint);
     button.appendChild(optionLabel);
     button.appendChild(buildOptionPreview(option));
-    button.addEventListener("click", () => chooseOption(index));
+    button.addEventListener("click", () => onOptionChosen(index));
     els.options.appendChild(button);
   });
 
@@ -881,6 +937,7 @@ function renderResultViewImmediate(card, explanationText) {
   els.explanation.textContent = state.viewExplanation;
   els.explanation.hidden = false;
   setConceptChip(card);
+  renderPredictFeedback();
 
   els.options.innerHTML = "";
   const next = document.createElement("button");
@@ -943,6 +1000,9 @@ function resetReign() {
   );
   state.flags = [];
   state.conceptsSeen = [];
+  state.predictHits = 0;
+  state.predictTotal = 0;
+  state.lastPrediction = null;
   setRandomSource();
 }
 
@@ -1047,6 +1107,110 @@ function animateDelta(stat, delta, note) {
   node.addEventListener("animationend", () => node.remove(), { once: true });
 }
 
+// --- Run modifiers + predict beat ---
+
+// Crisis-prone court pulls the danger zones inward (crises strike sooner).
+function crisisLow() {
+  return state.modifiers && state.modifiers.crisisHeavy ? 20 : CRISIS_LOW;
+}
+function crisisHigh() {
+  return state.modifiers && state.modifiers.crisisHeavy ? 80 : CRISIS_HIGH;
+}
+
+// Volatile fortunes amplify every stat swing (kept at least as large as the
+// original, never flipping sign or dropping to zero).
+function applyVolatile(d) {
+  if (!d || !(state.modifiers && state.modifiers.volatile)) return d;
+  const scaled = Math.round(d * 1.5);
+  return scaled === 0 ? d : scaled;
+}
+
+// The stat a given option shifts the most (by magnitude) — used by predict mode.
+function largestEffectStat(option) {
+  let best = null;
+  let mag = 0;
+  for (const [stat, d] of Object.entries(option.effects || {})) {
+    if (Math.abs(d) > mag) {
+      mag = Math.abs(d);
+      best = stat;
+    }
+  }
+  return best;
+}
+
+// Option click: in predict mode, ask for a guess first; otherwise resolve.
+function onOptionChosen(index) {
+  if (state.modifiers && state.modifiers.predict) renderPredictionPrompt(index);
+  else chooseOption(index);
+}
+
+function renderPredictionPrompt(index) {
+  const card = state.activeCard;
+  if (!card || !card.options[index]) return;
+  els.options.innerHTML = "";
+  const q = document.createElement("p");
+  q.className = "predict-q";
+  q.textContent = "Before the result — which stat will this move the most?";
+  els.options.appendChild(q);
+  const row = document.createElement("div");
+  row.className = "predict-choices";
+  for (const stat of STAT_NAMES) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "predict-btn";
+    b.textContent = STAT_LABELS[stat];
+    b.addEventListener("click", () => resolvePrediction(index, stat));
+    row.appendChild(b);
+  }
+  const skip = document.createElement("button");
+  skip.type = "button";
+  skip.className = "predict-btn predict-skip";
+  skip.textContent = "Skip";
+  skip.addEventListener("click", () => resolvePrediction(index, null));
+  row.appendChild(skip);
+  els.options.appendChild(row);
+  row.querySelector("button")?.focus();
+}
+
+function resolvePrediction(index, predictedStat) {
+  const option = state.activeCard?.options[index];
+  const actual = option ? largestEffectStat(option) : null;
+  if (predictedStat && actual) {
+    state.predictTotal += 1;
+    const correct = predictedStat === actual;
+    if (correct) state.predictHits += 1;
+    state.lastPrediction = { predicted: predictedStat, actual, correct };
+  } else {
+    state.lastPrediction = null;
+  }
+  chooseOption(index);
+}
+
+// Show whether the player's prediction matched the actual largest mover.
+function renderPredictFeedback() {
+  const existing = document.getElementById("predict-feedback");
+  const p = state.lastPrediction;
+  if (!p) {
+    existing?.remove();
+    return;
+  }
+  const el = existing || document.createElement("p");
+  el.id = "predict-feedback";
+  el.className = "predict-feedback";
+  el.dataset.correct = String(p.correct);
+  el.textContent = p.correct
+    ? `✓ You foresaw it — ${STAT_LABELS[p.actual]} moved the most.`
+    : `✗ You guessed ${STAT_LABELS[p.predicted]}; ${STAT_LABELS[p.actual]} moved the most.`;
+  if (!existing) els.conceptChip.parentNode.insertBefore(el, els.conceptChip);
+}
+
+function applyModifierClasses() {
+  document.body.classList.toggle(
+    "predict-mode",
+    !!(state.modifiers && state.modifiers.predict)
+  );
+}
+
 function chooseOption(index) {
   const card = state.activeCard;
   if (!card) return;
@@ -1071,8 +1235,9 @@ function chooseOption(index) {
 
   for (const [stat, delta] of Object.entries(option.effects ?? {})) {
     if (!(stat in state.stats)) continue;
+    const d = applyVolatile(delta);
     const oldValue = state.stats[stat];
-    const newValue = Math.max(0, Math.min(100, oldValue + delta));
+    const newValue = Math.max(0, Math.min(100, oldValue + d));
     state.stats[stat] = newValue;
     animateDelta(stat, newValue - oldValue);
     if (newValue !== oldValue) pulseStat(stat);
@@ -1133,8 +1298,8 @@ function chooseOption(index) {
     for (const stat of STAT_NAMES) {
       const value = state.stats[stat];
       let direction = null;
-      if (value < CRISIS_LOW) direction = "low";
-      else if (value > CRISIS_HIGH) direction = "high";
+      if (value < crisisLow()) direction = "low";
+      else if (value > crisisHigh()) direction = "high";
       if (!direction) continue;
       if (queueCrisis(stat, direction)) break;
     }
@@ -1145,6 +1310,7 @@ function chooseOption(index) {
   els.explanation.textContent = state.viewExplanation;
   els.explanation.hidden = false;
   setConceptChip(card);
+  renderPredictFeedback();
   els.options.innerHTML = "";
 
   const next = document.createElement("button");
@@ -1447,12 +1613,54 @@ function populateStatKey() {
   ).join("");
 }
 
+// Inject the custom-difficulty starting-stat sliders into the setup screen.
+function populateCustomStats() {
+  const box = document.getElementById("custom-stats");
+  if (!box) return;
+  const legend = box.querySelector("legend");
+  box.innerHTML = "";
+  if (legend) box.appendChild(legend);
+  for (const stat of STAT_NAMES) {
+    const row = document.createElement("label");
+    row.className = "custom-stat-row";
+    row.innerHTML =
+      `<span class="custom-stat-name">${STAT_LABELS[stat]}</span>` +
+      `<input type="range" id="custom-${stat}" min="0" max="100" step="1" value="50" aria-label="${STAT_LABELS[stat]} starting value" />` +
+      `<span class="custom-stat-val" id="custom-${stat}-val">50</span>`;
+    const input = row.querySelector("input");
+    const val = row.querySelector(".custom-stat-val");
+    input.addEventListener("input", () => {
+      val.textContent = input.value;
+    });
+    box.appendChild(row);
+  }
+}
+
+// Show the custom sliders only when the Custom difficulty is selected, and keep
+// their value read-outs in sync (e.g. after restoring saved settings).
+function syncCustomStatsVisibility() {
+  const box = document.getElementById("custom-stats");
+  if (!box) return;
+  const sel = document.querySelector('input[name="difficulty"]:checked');
+  box.hidden = !(sel && sel.value === "custom");
+  for (const stat of STAT_NAMES) {
+    const i = document.getElementById(`custom-${stat}`);
+    const v = document.getElementById(`custom-${stat}-val`);
+    if (i && v) v.textContent = i.value;
+  }
+}
+
 function init() {
   buildStatBars();
   buildTimeline();
   populateStatKey();
+  populateCustomStats();
   loadProgress();
   applySavedSettings();
+  syncCustomStatsVisibility();
+  document.querySelectorAll('input[name="difficulty"]').forEach((r) =>
+    r.addEventListener("change", syncCustomStatsVisibility)
+  );
 
   // Audio preference
   state.audioEnabled = safeStorageGet(AUDIO_KEY) === "1";
@@ -1474,6 +1682,7 @@ function init() {
       resetReign();
     }
   }
+  applyModifierClasses();
   renderStats();
 
   els.introBegin.addEventListener("click", () => {
@@ -1573,6 +1782,9 @@ function loadProgress() {
     if (Array.isArray(d.endings)) progress.endings = d.endings.filter((k) => ENDING_KINDS.includes(k));
     if (Number.isFinite(d.bestYears)) progress.bestYears = d.bestYears;
     if (Number.isFinite(d.reigns)) progress.reigns = d.reigns;
+    if (Array.isArray(d.unlocked)) {
+      progress.unlocked = d.unlocked.filter((id) => ACHIEVEMENTS.some((a) => a.id === id));
+    }
   } catch {
     /* ignore */
   }
@@ -1681,28 +1893,83 @@ function readReignSettings() {
 
 // --- Reign report (ending screen) + shareable result ---
 
+// Composite reign score: longevity, learning, foresight, balance, ending bonus.
+function reignScore(years, kind) {
+  const avg = Math.round(
+    STAT_NAMES.reduce((s, n) => s + state.stats[n], 0) / STAT_NAMES.length
+  );
+  const endingBonus = { prosperity: 60, survival: 30 }[kind] ?? 0;
+  return (
+    years * 4 + state.conceptsSeen.length * 3 + state.predictHits * 2 + avg + endingBonus
+  );
+}
+
+// One-line read of how the reign was governed (which stat the choices favoured).
+function dominantPolicyLine() {
+  const net = Object.fromEntries(STAT_NAMES.map((s) => [s, 0]));
+  for (const e of state.cardHistory) {
+    for (const [s, d] of Object.entries(e.effects || {})) if (s in net) net[s] += d;
+  }
+  let best = null;
+  let val = 0;
+  for (const s of STAT_NAMES) {
+    if (net[s] > val) {
+      val = net[s];
+      best = s;
+    }
+  }
+  return best ? `Your reign favoured the ${STAT_LABELS[best]} above all.` : null;
+}
+
 function renderReignReport(kind, firstTime) {
   const existing = document.querySelector(".reign-report");
   if (existing) existing.remove();
 
   const wrap = document.createElement("div");
   wrap.className = "reign-report";
+  const years = Math.min(state.cardsPlayed, state.reignLength);
+
+  const addLine = (text, cls = "report-line") => {
+    if (!text) return;
+    const p = document.createElement("p");
+    p.className = cls;
+    p.textContent = text;
+    wrap.appendChild(p);
+  };
 
   if (firstTime) {
-    const banner = document.createElement("p");
-    banner.className = "report-banner";
-    banner.textContent = `✦ New ending discovered — ${ENDING_TITLES[kind]}`;
-    wrap.appendChild(banner);
+    addLine(`✦ New ending discovered — ${ENDING_TITLES[kind]}`, "report-banner");
   }
 
+  // Earned titles (meta-progression).
+  const ctx = {
+    kind,
+    years,
+    fullTerm: years >= state.reignLength,
+    difficulty: state.difficulty,
+    predictTotal: state.predictTotal,
+    predictHits: state.predictHits,
+  };
+  for (const a of checkAchievements(ctx)) {
+    addLine(`★ Title earned — ${a.name}`, "report-banner report-title");
+  }
+
+  addLine(`Reign score: ${reignScore(years, kind)}`, "report-score");
+  addLine(dominantPolicyLine());
+
   const totalConcepts = Object.keys(CONCEPT_DEFS).length;
-  const line = document.createElement("p");
-  line.className = "report-line";
-  line.textContent =
+  addLine(
     `${state.conceptsSeen.length} concepts encountered this reign. ` +
-    `Collected ${progress.concepts.length}/${totalConcepts} concepts and ` +
-    `${progress.endings.length}/${ENDING_KINDS.length} endings across ${progress.reigns} reigns.`;
-  wrap.appendChild(line);
+      `Collected ${progress.concepts.length}/${totalConcepts} concepts and ` +
+      `${progress.endings.length}/${ENDING_KINDS.length} endings across ${progress.reigns} reigns.`
+  );
+
+  if (state.predictTotal > 0) {
+    addLine(`Foresight: ${state.predictHits}/${state.predictTotal} predictions correct.`);
+  }
+  if (state.daily) {
+    addLine(`Daily reign · ${dailyDateStr()}`);
+  }
 
   const share = document.createElement("button");
   share.type = "button";
@@ -1798,16 +2065,24 @@ function buildCodex() {
     return `<li class="codex-item ${found ? "found" : "locked"}"><span class="codex-name">${found ? escHtml(ENDING_TITLES[kind]) : "？？？"}</span></li>`;
   }).join("");
 
+  const titleItems = ACHIEVEMENTS.map((a) => {
+    const got = progress.unlocked.includes(a.id);
+    return `<li class="codex-item ${got ? "found" : "locked"}"><span class="codex-name">${got ? escHtml(a.name) : "？？？"}</span><span class="codex-def">${escHtml(a.desc)}</span></li>`;
+  }).join("");
+
   els.codexBody.innerHTML = `
     <p class="codex-stats">
       <span>${progress.concepts.length}/${totalConcepts} concepts</span>
       <span>${progress.endings.length}/${ENDING_KINDS.length} endings</span>
+      <span>${progress.unlocked.length}/${ACHIEVEMENTS.length} titles</span>
       <span>Longest reign: ${progress.bestYears} years</span>
     </p>
     <h3 class="codex-section">Concepts</h3>
     <ul class="codex-list">${conceptItems}</ul>
     <h3 class="codex-section">Endings</h3>
     <ul class="codex-list codex-endings">${endingItems}</ul>
+    <h3 class="codex-section">Titles</h3>
+    <ul class="codex-list">${titleItems}</ul>
   `;
 }
 

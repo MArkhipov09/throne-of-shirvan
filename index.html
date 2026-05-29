@@ -118,12 +118,33 @@
           <li><span class="key-stat">Naphtha</span> &mdash; the Absheron oil reserves, your wildcard resource.</li>
         </ul>
         <div class="intro-setup" id="intro-setup">
-          <fieldset class="difficulty" id="difficulty">
+          <fieldset class="setup-group" id="reign-length-group">
+            <legend>Reign length</legend>
+            <label><input type="radio" name="reign-length" value="15" /> Short &middot; 15</label>
+            <label><input type="radio" name="reign-length" value="25" checked /> Standard &middot; 25</label>
+            <label><input type="radio" name="reign-length" value="40" /> Long &middot; 40</label>
+          </fieldset>
+
+          <fieldset class="setup-group difficulty" id="difficulty">
             <legend>Difficulty</legend>
             <label><input type="radio" name="difficulty" value="lenient" /> Lenient</label>
             <label><input type="radio" name="difficulty" value="normal" checked /> Normal</label>
             <label><input type="radio" name="difficulty" value="hard" /> Hard</label>
+            <label><input type="radio" name="difficulty" value="custom" /> Custom</label>
           </fieldset>
+
+          <fieldset class="setup-group custom-stats" id="custom-stats" hidden>
+            <legend>Starting stats</legend>
+            <!-- sliders injected by populateCustomStats() -->
+          </fieldset>
+
+          <fieldset class="setup-group modifiers" id="modifiers">
+            <legend>Modifiers &mdash; optional</legend>
+            <label title="Guess which stat shifts most before each result is revealed."><input type="checkbox" name="modifier" value="predict" /> Predict the outcome</label>
+            <label title="Danger zones arrive sooner — crises strike at 20 / 80 instead of 15 / 85."><input type="checkbox" name="modifier" value="crisisHeavy" /> Crisis-prone court</label>
+            <label title="Every stat swing is amplified for a wilder reign."><input type="checkbox" name="modifier" value="volatile" /> Volatile fortunes</label>
+          </fieldset>
+
           <label class="daily-toggle"><input type="checkbox" id="daily-toggle" /> Daily reign &mdash; the same deck for every player today</label>
         </div>
         <div class="intro-actions">
