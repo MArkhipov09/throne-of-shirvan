@@ -457,11 +457,11 @@ if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
 function emblemForCard(card) {
   if (!card) return null;
   if (CHARACTER_KEYS.includes(card.speakerType)) {
-    return { kind: "portrait", src: `assets/portraits/${card.speakerType}.svg` };
+    return { kind: "portrait", src: `assets/portraits/${card.speakerType}.png` };
   }
   const category = SPEAKER_CATEGORY[card.id];
   if (category) {
-    return { kind: "icon", src: `assets/icons/${category}.svg` };
+    return { kind: "icon", src: `assets/icons/${category}.png` };
   }
   return null;
 }

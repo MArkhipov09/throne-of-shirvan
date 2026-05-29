@@ -50,10 +50,10 @@ throne-of-shirvan/
 │   ├── crises.js       # 7 crisis cards
 │   └── concepts.js     # one-line Codex definition per concept
 ├── assets/
-│   ├── portraits/      # SVG character portraits (5)
-│   ├── icons/          # SVG speaker-category icons (6)
+│   ├── portraits/      # character portraits (5) — PNG used in-game; SVG drafts kept
+│   ├── icons/          # speaker-category icons (6) — PNG used in-game; SVG drafts kept
 │   ├── sounds/         # optional; game runs silent if absent
-│   ├── intro-scene.svg # Caspian coast title illustration
+│   ├── intro-scene.png # Caspian coast title illustration
 │   └── preview.html    # open in a browser to eyeball all icons + portraits
 ├── POLISH_REPORT.md    # design / a11y / balance audit
 └── README.md

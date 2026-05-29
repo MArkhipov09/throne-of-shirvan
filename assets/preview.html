@@ -25,16 +25,19 @@
   </head>
   <body>
     <h1>Throne of Shirvan — asset preview</h1>
-    <p class="note">Open this file in a browser. The category icons render at 44&nbsp;px in the game (shown left), with a 2&times; version for detail. Portraits render at 96&nbsp;px.</p>
+    <p class="note">Open this file in a browser. These are the final OpenAI-generated images (Persian illuminated-miniature house style). The category icons render at 44&nbsp;px in the game (shown left), with a 2&times; version for detail. Portraits render at 96&nbsp;px.</p>
 
-    <h2>Category icons (redesigned)</h2>
+    <h2>Category icons</h2>
     <div class="row" id="icons"></div>
 
     <h2>Icons at in-game size (44&nbsp;px)</h2>
     <div class="row" id="icons-small"></div>
 
-    <h2>Character portraits (current drafts, 96&nbsp;px)</h2>
+    <h2>Character portraits (96&nbsp;px)</h2>
     <div class="row" id="portraits"></div>
+
+    <h2>Intro scene</h2>
+    <div class="row" id="intro"></div>
 
     <script>
       const icons = ["merchant", "official", "peasant", "religious", "soldier", "foreign"];
@@ -43,15 +46,17 @@
       const small = document.getElementById("icons-small");
       for (const i of icons) {
         big.insertAdjacentHTML("beforeend",
-          `<div class="cell"><img src="icons/${i}.svg" width="88" height="88" alt="${i}"><div class="label">${i}</div></div>`);
+          `<div class="cell"><img src="icons/${i}.png" width="88" height="88" alt="${i}"><div class="label">${i}</div></div>`);
         small.insertAdjacentHTML("beforeend",
-          `<div class="cell"><img src="icons/${i}.svg" width="44" height="44" alt="${i}"><div class="label">${i}</div></div>`);
+          `<div class="cell"><img src="icons/${i}.png" width="44" height="44" alt="${i}"><div class="label">${i}</div></div>`);
       }
       const port = document.getElementById("portraits");
       for (const p of portraits) {
         port.insertAdjacentHTML("beforeend",
-          `<div class="cell"><img src="portraits/${p}.svg" width="96" height="96" alt="${p}"><div class="label">${p}</div></div>`);
+          `<div class="cell"><img src="portraits/${p}.png" width="96" height="96" alt="${p}"><div class="label">${p}</div></div>`);
       }
+      document.getElementById("intro").insertAdjacentHTML("beforeend",
+        `<div class="cell"><img src="intro-scene.png" width="480" alt="intro scene"><div class="label">intro-scene</div></div>`);
     </script>
   </body>
 </html>
