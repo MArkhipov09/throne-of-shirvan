@@ -66,8 +66,9 @@
   <!-- Scar across cheek -->
   <path d="M 142 138 L 148 152" stroke="#2c1810" stroke-width="1.2" fill="none"/>
 
-  <!-- Heavy eyebrow, severe -->
-  <path d="M 108 122 Q 122 116 134 122" fill="none" stroke="#2c1810" stroke-width="3" stroke-linecap="round"/>
+  <!-- Heavy furrowed brows (inner ends low — stern/angry) -->
+  <path d="M 106 120 L 123 127" fill="none" stroke="#2c1810" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M 133 127 L 150 120" fill="none" stroke="#2c1810" stroke-width="3.4" stroke-linecap="round"/>
 
   <!-- Almond eye -->
   <path d="M 112 132 Q 122 128 132 132 Q 122 135 112 132 Z" fill="#2c1810"/>
