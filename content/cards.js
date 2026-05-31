@@ -1043,4 +1043,553 @@ export const cards = [
     ],
     tags: ["arc", "punitive-campaign", "geopolitics"],
   },
+  {
+    "id": "astronomer-observatory",
+    "speaker": "Astronomer Bahram",
+    "speakerType": "astronomer",
+    "concept": "Research and development",
+    "scenario": "Shah, give me a house for the sky at Shamakhi — brass instruments, a library worth the name, and students kept on a wage so they need not beg or flee. I will not lie to you about the harvest: it is dear today, and what it yields will not come for years, nor can I swear what shape it takes when it comes.",
+    "options": [
+      {
+        "label": "Fund the observatory.",
+        "effects": {
+          "treasury": -10,
+          "faith": 3,
+          "people": 2
+        },
+        "explanation": "Ask yourself who else would ever pay for this, Shah, and you will find the answer is no one. A merchant lays out silver only for the gain he can carry home in his own lifetime, in his own purse. But the worth of a house for the sky does not stay in the hands that built it. Corrected tables for the stars guide a pilot in the dark off Derbent who never heard Bahram's name; a truer calendar settles a hundred disputes over when the tithe falls due; a youth trained at the brass instruments goes off and teaches ten more. The harvest scatters across the whole realm and across years you will not see, and no clerk can ever send a bill for it. That is precisely why it falls to a sovereign and to no smaller man.\n\nConsider what Hulagu the Ilkhan did, a conqueror with no softness in him. In the year 1259 he let Nasir al-Din al-Tusi raise the observatory at Maragheh, and paid for it not from plunder but from the revenues of the religious endowments — turning rents meant for prayer toward the measurement of the heavens. A hard prince saw what the soft ones miss: that knowledge is a kind of treasure a city cannot be sacked of. The star-tables made there were still in working use a hundred years on, long after the men who cut them were dust, and long after Maragheh itself had faded.\n\nSo weigh it honestly. The cost is real and it is now; the return is real and it is later, and I will not pretend to know its exact face. But a thing that pays everyone and bills no one will never be built by men who must balance their own books by spring. It waits for a ruler who can afford to be patient with the future. Be that ruler, and let Shamakhi keep the sky.",
+        "affinityEffects": {
+          "astronomer": 4
+        }
+      },
+      {
+        "label": "Spend it on the walls instead.",
+        "effects": {
+          "treasury": -2,
+          "military": 6,
+          "faith": -3
+        },
+        "explanation": "A wall is an honest thing, Shah. You can walk its length, lay your hand on the stone, count the courses your silver bought. When the season turns and riders are seen on the ridge, every coin you spent stands up and answers for itself. There is no such comfort in a house for the sky. Bahram asks you to buy a promise — that some year, from some measurement, some good will come whose shape he cannot draw for you today. The mason swears his rampart will turn an arrow. The astronomer can swear to nothing but the labor.\n\nThis is the oldest pull on a ruling mind, and it is not foolish: we trust what we can see and doubt what we cannot, and we would rather hold a small certain thing than a large thing made of maybe. The watch on the gate is fed tonight from the same chest Bahram wants for his brass and his salaried students. Spend it on stone and the realm is safer by spring, plainly and at once. Spend it on the sky and you have a heavy hole in the treasury and, for years, only the patience to show for it.\n\nYet hear the cost buried in this caution, for it is real. Follow it always and you will starve every slow and uncertain good your reign might have fathered. Walls you can point to will win every contest against discoveries you cannot, not because they are worth more but because they are easier to believe — and so the knowledge never gets made, in your court or any other, by the same prudence repeated a thousand times. Build the wall this year if the ridge is dark with enemies; need decides that. But know what the choosing costs, and do not mistake the thing you can see for the only thing worth having.",
+        "affinityEffects": {
+          "astronomer": -3
+        }
+      }
+    ],
+    "tags": [
+      "astronomer",
+      "decision"
+    ]
+  },
+  {
+    "id": "astronomer-calendar",
+    "speaker": "Astronomer Bahram",
+    "speakerType": "astronomer",
+    "concept": "Coordination problem",
+    "scenario": "Shah, the land-tax falls earlier each year, chasing the moon backward through the seasons until your collectors stand in the fields before a single sheaf is cut. I have reckoned a solar count, true to the sun and the harvest, that would set the assessment where it belongs. The clerks know only the old months, and the clergy hold them sacred, so the order must come from your throne or it will not come at all.",
+    "options": [
+      {
+        "label": "Adopt the solar calendar for the land-tax.",
+        "effects": {
+          "treasury": 8,
+          "people": 3,
+          "faith": -5
+        },
+        "explanation": "Watch what the moon does to your collectors, Shah. The lunar year runs short of the sun's by eleven days, so the tax-month creeps backward through the seasons. This year your men ride out a fortnight after the threshing; in a decade they will arrive before the grain has filled the ear, demanding from a peasant a share of wheat that is still green in the field. He pays in promises or in nothing. The drift is silent and it never rests, and every year it carries a little more of your revenue off into the gap between the two counts.\n\nThe remedy is plain, yet no one will reach for it alone. A calendar is only worth what others keep it by. A single estate that reckons by the sun while every neighbor reckons by the moon gains nothing but confusion at the granary door, so the prudent man waits, and because all are prudent, all wait, and the worse reckoning holds simply because it already holds. This is the knot that only a throne can cut. You need not persuade ten thousand clerks one by one; you need only declare the day, and on that day they all turn together, because each knows the others have been made to turn.\n\nBahram brings you a count already proven. The Jalali solar calendar that Omar Khayyam and his colleagues computed for the Seljuk sultan Malik-Shah in 1079 was more accurate than the one Europe used until the 1500s; while their priests let Easter wander, the sultan's tax fell true to the season for four centuries. He did not wait for consensus. He fixed the day and the realm kept it.\n\nThe clergy will grumble that you have touched the months. Let them keep the moon for the feast and the fast, where it belongs; give the sun to the harvest and the ledger, where it belongs. Set the date once, and the books will stop bleeding through a wound no clerk can name.",
+        "affinityEffects": {
+          "astronomer": 3
+        }
+      },
+      {
+        "label": "Keep the lunar reckoning.",
+        "effects": {
+          "treasury": -4,
+          "faith": 4
+        },
+        "explanation": "Before you sign away the months, Shah, consider what a calendar truly is. It is not the astronomer's table; it is the agreement in ten thousand heads that next Tuesday is next Tuesday. Your clerks were trained on the lunar count as boys. The mosque calls the year by it, the contracts are dated by it, the grandmother in the village knows the fast is near because she has always known. A reckoning held by that many hands is not merely a habit. It is a piece of the realm's furniture, and you propose to pull it out from under everyone at once.\n\nBahram is right that the sun keeps better time. He is right as the men who built the Jalali solar calendar that Omar Khayyam and his colleagues computed for the Seljuk sultan Malik-Shah in 1079 were right, more accurate than the one Europe used until the 1500s. And yet ask where that finer count is kept today. It was the better instrument, and still the lunar months outlived it in the mouths of the people, because being correct was never the same as being kept. The crowd does not gather where the truth is; it gathers where the crowd already is, and it is costly to be the first to stand somewhere else.\n\nReckon the price of the leap. Every scribe retrained, every old contract disputed, every collector arguing with a farmer over which year is owed. For a season the realm would not know what day it is, and in that fog the taxes you hope to save would slip through hands that no longer trust the count. The clergy would not merely grumble; they would name it impiety, and a throne spends its standing dearly to buy a fortnight of the harvest.\n\nThe drift is real, I grant it. But a slow leak you can plan around is cheaper than a flood you cannot. Trim the count quietly at the edges if you must, and leave the months where the people already keep them. A standard everyone obeys, even an imperfect one, is worth more than a perfect one nobody yet trusts.",
+        "affinityEffects": {
+          "astronomer": -2
+        }
+      }
+    ],
+    "tags": [
+      "astronomer",
+      "decision"
+    ]
+  },
+  {
+    "id": "arc-astronomer-school",
+    "speaker": "Astronomer Bahram",
+    "speakerType": "astronomer",
+    "concept": "General-purpose technology",
+    "scenario": "Shah, my school now seats boys from Tabriz to Bukhara, and already the shipwrights and the surveyors copy my tables of angles and tides for their own work. Tell me plainly: shall the brass instrument and the columns of figures go out to whoever can read them, or shall they stay sealed within these walls?",
+    "options": [
+      {
+        "label": "Let the school publish freely.",
+        "effects": {
+          "faith": 4,
+          "people": 4,
+          "treasury": -3
+        },
+        "explanation": "A table of angles is not a cargo, Shah. Sell a bale of silk and it is gone from your hold; let a surveyor copy my columns and I still hold them whole. That is the strange thing about a method. It does not divide when it is shared; it multiplies.\n\nConsider what a single instrument has already become in other men's hands. The astrolabe and the tables of sines were ground out in the observatories of our faith to fix the hour of prayer and the direction of Mecca, no grander purpose than that. Yet the pilot now takes his latitude by the same brass disc, the tax-surveyor lays out a flooded field by the same trigonometry, the mason raises a true dome by it. None of those trades was foreseen by the men who first set the figures down. The knowledge was made for the heavens and it came to earth in a hundred shops at once.\n\nThis is the mark of a method that is general rather than particular. Its worth is not in the one use you can name but in the uses you cannot. Seal it in your treasury and you have one clever advantage, kept jealously, spent once. Open it and the gain scatters where you never aimed it: the harbour-master reckons truer, the caravan plots a shorter road, the well-digger sights his level. You will not see a coin of it on your ledger, and that is precisely why a lesser prince keeps it locked.\n\nThe ruler who measures by the ledger alone will always undervalue the thing whose return lands in another man's purse. But those purses are your coast, and a coast that reckons better is a coast that pays better, in time, through every gate you do own. Let the school publish. You forgo the rent. You buy a country that is cleverer than it was, which is the only wealth that breeds more of itself."
+      },
+      {
+        "label": "Keep the findings for the court.",
+        "effects": {
+          "treasury": 5,
+          "military": 3,
+          "faith": -2
+        },
+        "explanation": "Before you give it away, Shah, ask what you are giving. A man labours years over a method and the moment it is spoken aloud, any idler may have it for nothing, having paid nothing. There is no fence around a number. This is the hard truth of any technique worth the name: it is dear to make and cheap to copy, and the gap between those two prices is where a prince either profits or is robbed.\n\nThink of what fell to other hands when our observatories let their work drift loose. The astrolabe and the trigonometric tables, refined at great cost under our own astronomers, passed out into the wide world, into the navigation of Frankish pilots and the surveying of rival courts, and we were not paid a grain for the teaching. The labour was ours. The advantage spread to every shore that could read a copy. A method that is good for everything is, by that same breadth, good for your enemies too.\n\nSo there is reason to draw the knowledge close. Keep Bahram's tables for the court and you hold a true rent: your gunners range their shot where others guess, your surveyors lay your taxes exact while the neighbour squints, your fleet sails sure while his hugs the coast. Knowledge that no rival owns is an edge that does not blunt with one battle. The treasury keeps it; the army wields it; the throne alone decides who may learn.\n\nI will not pretend the price is nothing. Hoard the technique and you starve the very spreading that makes such a method great, the hundred small trades that would have quickened had you let them. You trade the wide slow harvest for the near sure one. But a throne is not a charity to the age, and the prince who cannot capture the fruit of what he funds will soon fund nothing at all. Keep it close, and let the advantage be yours to spend."
+      }
+    ],
+    "tags": [
+      "astronomer",
+      "arc"
+    ],
+    "arcCharacter": "astronomer",
+    "arcAffinityDirection": "high"
+  },
+  {
+    "id": "arc-astronomer-heresy",
+    "speaker": "Astronomer Bahram",
+    "speakerType": "astronomer",
+    "concept": "Human capital flight",
+    "scenario": "Shah, they name my measuring of the stars impiety, and the crowd outside grows by the hour. I will say only this: should you find no place for me here, there are courts that would seat me and my pupils at their own table tomorrow.",
+    "options": [
+      {
+        "label": "Defend him; forbid only fortune-telling.",
+        "effects": {
+          "faith": -4,
+          "people": 2
+        },
+        "explanation": "Hear the difference before you judge, Shah, for the clerics have folded two trades into one word. One man charts where the moon will stand at the next fast, so the muezzin calls true and the pilgrim sets out on the right morning. Another sells a frightened mother the promise that her son will not die in spring. The first measures what God has fixed and does not pretend to move it; the second peddles fortunes for coin. Bind only the second, and you have not insulted the faith. You have defended it from its counterfeit.\n\nThe price of this will be plain by tomorrow. The prayer-leaders will feel slighted, and slighted men remember. You will spend something with them that does not come back cheaply, and I will not dress that loss as a gain. But weigh against it what you keep. A man who can read the heavens was not made in a season. He was twenty years in the making, and the boys at his knee are ten years more. Knowledge of that kind is not stored in your treasury; it is carried in skulls that have legs and can walk to another gate.\n\nThis is the harder truth a Shah must hold: the most valuable thing your realm owns is the one thing you cannot lock in a vault. You can seize a man's house and his herds. You cannot seize what he knows, and if you make his home unbearable he simply takes it elsewhere, and your rival inherits a school you paid to build. Protecting an unpopular craft costs you the favour of a loud faction now. Losing the craft costs you every harvest of learning it would have yielded for a generation. Draw the line at fortune-telling, Shah. Keep the man who measures, and put out only the man who lies."
+      },
+      {
+        "label": "Dismiss him to calm the clerics.",
+        "effects": {
+          "faith": 6,
+          "people": -3
+        },
+        "explanation": "Send him off, Shah, and you will sleep well tonight. The crowd disperses, the prayer-leaders bless your name, and a quarrelsome stargazer is no longer your trouble. I will grant you all of that, because it is true, and because the rest of what I have to say is not nearly so pleasant.\n\nWhat you cannot see from the throne is the road north out of the gate. A trained man does not protest a dismissal; he packs. He takes his instruments, his tables, and the half-dozen pupils who learned the craft at his side, and he carries the whole of it to a court that will house him gladly. You have not destroyed the knowledge. You have made a gift of it to whoever rules next door, and they did not pay a coin for the twenty years it took to grow.\n\nThe world has already shown a Shah what this looks like at full flood. When the Mongols sacked Baghdad in 1258, the learned men who lived through it did not vanish with the libraries. They carried their craft to Maragheh, to Cairo, and beyond, and those cities rose on borrowed brilliance while the ruin behind them stayed ruined. A house need not be burned to be emptied; it is enough to make the clever unwelcome, and they leave on their own feet.\n\nHere is the cruelty of the ledger. The cost of keeping this man is loud and arrives today: an angry faction, a restless square. The cost of losing him is silent and arrives slowly, an absence no clerk can enter in a column. There will be no almanac next year, no boy grown into a master the year after, no school for your grandson to inherit. You will have bought a quiet evening with a generation's worth of skill, and the price will not present itself until you can no longer pay it back."
+      }
+    ],
+    "tags": [
+      "astronomer",
+      "arc"
+    ],
+    "arcCharacter": "astronomer",
+    "arcAffinityDirection": "low"
+  },
+  {
+    "id": "spymaster-loyalty",
+    "speaker": "The Spymaster",
+    "speakerType": "spymaster",
+    "concept": "Costly signaling",
+    "scenario": "The governor of the eastern marches sends sweet letters and keeps his gates shut, Shah, and I cannot read a man's heart through a sealed door. Let me set him a price only an honest man would pay: his son to your court, his strongest fortress to your garrison for one season. What he does with that demand will tell us more than a year of his vows.",
+    "options": [
+      {
+        "label": "Demand the pledge.",
+        "effects": {
+          "military": 5,
+          "people": -3,
+          "treasury": 2
+        },
+        "explanation": "Any man will swear he loves you, Shah. The traitor swears it most warmly of all, for he has the most to gain by the lie and nothing in his mouth costs him a coin. So a vow tells you nothing, and you have always known this in your gut even when your ears were flattered. The trick is to ask for something the two men cannot both afford.\n\nDemand the son and the fortress. To the loyal governor this is an insult and a season's inconvenience; he grumbles, he obeys, because he means to grow old in your service and a year's discomfort is a cheap price for that long peace. To the man already weighing rebellion, the same demand is ruin. His son becomes your hostage against the very rising he is planning; his fortress, his one redoubt, passes into your garrison's hands the season before he meant to use it. He cannot pay and keep his treason both. So he balks, he delays, he finds reasons, and in the finding he tells you what no informer could.\n\nThis is the whole craft of it: a pledge is worth believing only when it would break a false man to give it. The Ilkhans and after them the Timurids understood the principle to the marrow. They held noble hostages and demanded that vassals send their sons to court, not from cruelty but as a sieve, knowing the faithful would send the boy and the faithless would suddenly discover they could not spare him.\n\nWeigh the cost honestly. You will offend a loyal man, and offended loyalty is a real wound; some good governor will remember this slight for years. The people on that frontier will mutter that you trust no one. But you will have bought certainty, and certainty about who holds your border is the one thing flattery can never sell you. Set the price. Watch who pays it.",
+        "affinityEffects": {
+          "spymaster": 4
+        }
+      },
+      {
+        "label": "Trust his word.",
+        "effects": {
+          "people": 3,
+          "military": -4
+        },
+        "explanation": "Before you seize a man's child to learn his heart, Shah, ask yourself what the seizing actually proves, and what it costs. A governor who would never have lifted a hand against you is now taught that his service earns suspicion and his son a cell. You may make the rebel you feared by treating the faithful man as one.\n\nThere is a real danger in the other path, and I will not pretend otherwise. A vow of loyalty is cheap. It costs the traitor exactly what it costs your truest friend, which is to say nothing at all, so the words alone leave you precisely as blind as you were before he spoke them, only now you are blind and comforted. To take his word is, in plain truth, to choose hope over knowledge.\n\nYet knowledge bought by the hostage's road is dearer than it looks. The Ilkhanid and Timurid courts that held noble sons as pledges did not buy quiet borders with the practice; they bought resentment that smouldered for generations, vassals who served with one eye always on the captive in the capital, and frontiers held by fear rather than fondness. Fear is loyal only while the grip is strong. Loose it for one bad season and every hostage-holder's son becomes a banner for revolt.\n\nThere is a cheaper coin than a child. Bind the governor with what he already wants to keep: a share of the silk-toll that flows only while he is faithful, marriages, honours, a stake in your fortune so woven into his own that betrayal would cost him more than rebellion could ever win. Make loyalty the profitable course and you need not test for it. A man does not flee a house that pays him well.\n\nTrust his word this once, and watch. If the deeds match the words through a hard season, you have a friend and not a grudge. If they do not, you will have lost a little time, and time you can recover. A son's hatred you cannot.",
+        "affinityEffects": {
+          "spymaster": -3
+        }
+      }
+    ],
+    "tags": [
+      "spymaster",
+      "decision"
+    ]
+  },
+  {
+    "id": "spymaster-taxfarm",
+    "speaker": "The Spymaster",
+    "speakerType": "spymaster",
+    "concept": "Moral hazard",
+    "scenario": "Shah, your governors have learned a sweet arithmetic: when their accounts fall short, your treasury makes them whole, and so they wager your silver on doomed campaigns and feasts that feed no one but their own table. I have watched it from the shadows for a season, and I tell you their boldness grows with every quiet rescue.",
+    "options": [
+      {
+        "label": "Make each governor bear his own losses.",
+        "effects": {
+          "treasury": 6,
+          "people": -2,
+          "military": -2
+        },
+        "explanation": "A man rides carefully along the cliff road when the fall is his to take. Promise to catch him at the bottom, and watch how he begins to gallop. Your governors have learned that you stand below with open arms, and so they spur toward every cliff in the province. The remedy is not a sermon on prudence; it is to step back from the edge.\n\nLet each governor carry his own shortfall. When the harvest fails or the campaign collapses, let it be his coffer that empties, his creditors who come knocking, his name that the bazaar repeats with a sour mouth. A loss that lands on the man who chose it teaches faster than any decree you could draft. The careful steward, who hedged and held a reserve, will keep what he saved. The gambler will be ruined by his own dice, as he ought to be.\n\nConsider what the Ilkhans built and what it cost them. Their moqata'a tax-farming sold a district to a contractor for a fixed sum paid in advance; once the treasury had its money, the man bore none of the loss if he wrung the district dry. Whatever he could squeeze beyond his price was his to keep, and so he squeezed until the fields lay barren. That was the same disease in a different cloak: the one who reaps the gain does not feel the wound. You can refuse to repeat it. Bind reward and ruin to the same hand and the hand grows steady.\n\nI will not pretend the cure is gentle. Some governors will fall outright, and a fall is loud. Peasants in a misruled district may suffer before a ruined lord is replaced, and a captain stripped of your purse may field fewer spears next spring. Expect the complaint and let it come. A throne that swallows every defeat trains its servants to manufacture defeats. Make each man the owner of his own downside, and his recklessness quietly dies for want of your subsidy.",
+        "affinityEffects": {
+          "spymaster": 3
+        }
+      },
+      {
+        "label": "Keep covering them to keep them loyal.",
+        "effects": {
+          "treasury": -6,
+          "military": 3,
+          "people": 1
+        },
+        "explanation": "A governor who fears his own ruin is a governor who one morning weighs the ruin against the rebellion and chooses the rebellion. That is the danger you do not see when you reckon only the silver. The men who hold your distant provinces are held to you by a thread, and the thread is partly this: that the throne stands behind them when the ground gives way. Cut it to save a season's coin and you may find the next campaign fought by lords who no longer believe you are theirs.\n\nSo keep covering them. Yes, the cost is real and it is double. You pay once for the protection itself, the shortfalls quietly made good, and you pay again for the carelessness that protection invites, because a man insured against his own folly will commit a little more of it. The Ilkhans saw the shape of this in their moqata'a tax-farming, where a contractor who had already paid the treasury its fixed sum bore none of the loss if he wrung a district dry. Shield a man from the downside and his hand grows loose. I do not deny it; I ask only what the looseness buys you.\n\nIt buys a frontier that holds. It buys captains who muster eagerly because they know a bad year will not end their house, and so they spend boldly on your wars rather than hoarding against the day you abandon them. The people of a steady province eat through a poor harvest because the lord was not driven to flay them for his own survival.\n\nWeigh it plainly. The careful course empties no treasury but it makes every governor a merchant first and a vassal second, loyal only while the figures favor you. The generous course bleeds your coffers and feeds some waste, but it knits the realm's great men to your person with a bond that silver alone cannot fray. A king is not only a clerk balancing a ledger. Sometimes the wiser purchase is the loyalty, and you buy the carelessness because it comes stitched to the same cloth.",
+        "affinityEffects": {
+          "spymaster": -2
+        }
+      }
+    ],
+    "tags": [
+      "spymaster",
+      "decision"
+    ]
+  },
+  {
+    "id": "arc-spymaster-network",
+    "speaker": "The Spymaster",
+    "speakerType": "spymaster",
+    "concept": "Principal and agent",
+    "scenario": "I confess it freely, Shah: there is no corner of your realm whose secrets do not pass first through my hands, and I have grown rather fond of the arrangement. Say the word and I will keep it so, your one true window upon the dark — or, if it please you, I shall school a few apt boys to peer through windows of their own.",
+    "options": [
+      {
+        "label": "Insist he train rivals to check him.",
+        "effects": {
+          "treasury": -3,
+          "military": 2,
+          "people": 2
+        },
+        "explanation": "A man who alone knows where the bodies lie does not serve you; he serves himself, and lets you imagine the two are the same so long as they happen to run together. They will not run together forever. The day his interest parts from yours, the secrets bend his way, and you will be the last in the palace to learn of it. So train the boys he so dislikes. Set three pupils where there is now one master, and let each carry only a portion of the dark.\n\nYou will pay for this in coin and in speed. A single intelligencer is swift; he need consult no one, second-guess no one. Three watchers will quarrel, duplicate the same errand, demand the same silver twice. The errand will be slower and dearer. Yet consider what slowness buys. No one of the three can sell you whole, for no one of them owns the whole. To betray you, they must first conspire among themselves, and conspiracy among rivals is a fragile thing that leaks.\n\nRulers have leaned, time out of mind, on one trusted intelligencer or vizier whose private knowledge made him at once indispensable and dangerous. Indispensable they noticed at once. The danger they noticed only when the knife was already drawn, because the one man who would have warned them was the man holding it. The lesson is not that loyal servants are scarce. It is that any servant, however loyal at dawn, will reckon his own gain by dusk, and a wise master arranges his house so that gain is never had by selling the master.\n\nSplit the knowledge. Let your watchers watch each other before they watch your enemies. You will sleep worse for the bickering and lighter for the safety. I would not pretend the ledger comes out even; it does not. But a throne is not held by the cheapest method. It is held by the method that leaves no single hand upon your throat."
+      },
+      {
+        "label": "Let him keep his monopoly on secrets.",
+        "effects": {
+          "military": 4,
+          "faith": -2,
+          "people": -2
+        },
+        "explanation": "There is a plainness to one sharp instrument that the cautious never taste, because they are forever blunting their tools against one another. Leave the Spymaster his monopoly and you keep that sharpness. One man, knowing all, moves at the speed of his own thought. No rival to brief, no portion withheld, no errand run twice for the sake of mistrust. When the courier rides at midnight, he rides for one purpose, and the purpose is yours.\n\nWeigh honestly what this efficiency is bought with. A servant who knows everything and answers to no one is not merely useful; he is unaccountable in exactly the measure that he is useful. The same private knowledge that lets him guard you so well lets him, should he ever wish it, turn in your hand. You will not see the turn coming, for the eyes you would use to watch him are his own. You are handing one man both the blade and the sole knowledge of where it points.\n\nThis is the bargain rulers have struck for centuries, leaning on a single trusted intelligencer or vizier whose private knowledge made him both indispensable and dangerous. Most who struck it died in their beds, well served. A few did not, and those few are the ones the chroniclers remember, because a vizier's treachery makes a better tale than a vizier's long fidelity. Do not let the rare disaster blind you to the common bargain. The instrument is real, the danger is real, and a Shah who wants a keen edge must consent to be cut now and again.\n\nKeep him, then, and keep him close. Reward his silence so richly that betrayal costs him more than loyalty ever could; bind his fortune so tightly to yours that to ruin you is to ruin himself. You cannot watch such a man. You can only make it unprofitable for him to wish you harm. That is a thinner safety than three squabbling watchers would give. It is also a sharper sword."
+      }
+    ],
+    "tags": [
+      "spymaster",
+      "arc"
+    ],
+    "arcCharacter": "spymaster",
+    "arcAffinityDirection": "high"
+  },
+  {
+    "id": "arc-spymaster-mercenaries",
+    "speaker": "The Spymaster",
+    "speakerType": "spymaster",
+    "concept": "Adverse selection",
+    "scenario": "Shah, you have put out an open call for swords and the courtyard is already full of them. I would only ask this: that you let me look at the men before your coin does, for the ones who come running to a call like ours are seldom the ones a wise captain would have chosen.",
+    "options": [
+      {
+        "label": "Pay to vet every company first.",
+        "effects": {
+          "treasury": -5,
+          "military": 5
+        },
+        "explanation": "Consider who stands at the gate when you cry for soldiers and ask no questions. The steady man already has a banner; the honest one is owed wages elsewhere and means to collect them. So the courtyard fills first not with the best swords but with the loosest: the man cast out of his last company, the one who left a debt in the next town, the one nobody kept because nobody trusted him. You did not summon them by name. You summoned a kind, and this is the kind that answers.\n\nThe trouble is plain once said. You cannot tell the seasoned from the savage by the look of a beard, and the worst of them know it, so they smile widest. Where you cannot see a man's quality before you pay, your open hand reaches into the bottom of the barrel. Coin spent blind buys mostly what others refused.\n\nRemember the free companies and mercenary bands of the fourteenth century, who sold their swords to the highest bidder and deserted when a better offer came. A prince could fill his ranks in a week, and lose half of them the morning a richer prince rode by. They were not loyal to the cause; they were loyal to the purse, and the purse is fickle.\n\nSo pay to look first. Send my men ahead to ask in the towns these companies last drank in, to count their dead and weigh their captains, to learn which band held a line and which one fled and called it cunning. It is dear, this looking. You will grumble at the cost. But it is cheaper than a wall held by men who melt at the first true charge, and far cheaper than buying the same army twice. The fee for sight is small beside the price of blindness."
+      },
+      {
+        "label": "Hire whoever comes, cheaply.",
+        "effects": {
+          "treasury": 3,
+          "military": -5,
+          "people": -2
+        },
+        "explanation": "There is a temptation in plenty, Shah, and the courtyard is full of it. Why pay my agents to squint at every captain's history when swords stand before you now, cheap and willing? Take them all, the reasoning goes; numbers are their own argument, and a saved coin is a coin in the vault. It sounds like thrift. It is the most expensive thrift you will ever practise.\n\nAsk the simpler question: why are these men cheap? A good company that held a wall and kept its word does not loiter at strange gates begging for hire at any price. It is already retained, already fed, already chosen by some careful lord who looked before he leapt. The swords still loose in the market are loose because someone who could see them clearly chose to let them go. Your cheap field is cheap for that reason and no other. You will be hiring precisely the men no prudent captain kept.\n\nThe free companies and mercenary bands of the fourteenth century, who sold their swords to the highest bidder and deserted when a better offer came, taught this lesson in blood. The lords who took whoever came, and took them low, learned that a man bought for nothing is loyal to nothing. He pillages your own villages when wages run short, and your people pay the levy you thought you had spared the treasury. The coin you saved at the gate is collected later, with interest, from the realm.\n\nSo yes, you may keep five purses in the vault tonight by hiring blind. But a frightened province and a wall that breaks will cost you fifty, and the breaking comes at the worst hour, never a convenient one. Cheapness that selects for the treacherous is not a saving. It is a debt taken out against your own walls, and the collector is the enemy."
+      }
+    ],
+    "tags": [
+      "spymaster",
+      "arc"
+    ],
+    "arcCharacter": "spymaster",
+    "arcAffinityDirection": "low"
+  },
+  {
+    "id": "queenmother-marriage",
+    "speaker": "Dowager Banu",
+    "speakerType": "queenmother",
+    "concept": "Coalition formation",
+    "scenario": "My Shah, the boy is of an age to be promised, and the Georgian house has let it be known a daughter of the Bagrationi line might be his. Their horsemen guard the same passes the steppe raiders ride down; a wedding could make that wall ours as well as theirs. I would have your leave to send word before another suitor does.",
+    "options": [
+      {
+        "label": "Make the Georgian match.",
+        "effects": {
+          "military": 5,
+          "faith": -2,
+          "treasury": 3
+        },
+        "explanation": "When you weigh this match, do not weigh the bride. Weigh the horsemen who come with her, and the horsemen who will not now ride against you. A pact between crowns is not a friendship; it is an arithmetic. On one side of the ledger stand the foes it frightens off, and on the other the partners you can no longer take. The Georgian alliance pays well on the first column and dearly on the second, and an honest counsellor names both before you sign.\n\nBound to the Bagrationi, your northern flank ceases to be a wound. The steppe captains who reckon a raid by the weakness of the man they raid will see a wall of Georgian lances behind your own and look for easier plunder elsewhere. Your house has walked this road before to good effect: the marriage ties the Shirvanshahs wove with the Georgian Bagrationi crown, including the dynasty's links to Queen Tamar's house around 1200, to steady their northern flank. It bought quiet on the passes when quiet could not be bought with silver, and silver we always lacked.\n\nBut a wall faces only one way. Bind yourself to Georgia and you have spent the freedom to stand with Georgia's enemies, whatever they might one day offer for it. Should a richer suitor come knocking from the lands the Bagrationi count as rivals, your door is already shut, and your son's hand already given. The mullahs, too, will mutter at a Christian match, and their muttering is a cost you will hear in the mosque before you feel it in the field.\n\nSo: stronger against the steppe, poorer in choices, a little out of favour with the faithful. I judge the deterred enemy worth more than the foregone friend, because the steppe comes every spring and the rival's gold comes only once, if ever. Bind the north. Just know what you have tied down with it.",
+        "affinityEffects": {
+          "queenmother": 4
+        }
+      },
+      {
+        "label": "Keep the heir unpromised.",
+        "effects": {
+          "treasury": -2,
+          "people": 2
+        },
+        "explanation": "A man with no allies has no debts, and a crown with no pacts owes no one a war. Keep the heir unpromised and you keep something the bound princes around you have already sold: the freedom to choose your friend on the morning the trouble actually arrives, rather than years before, blind to who the enemy will be.\n\nConsider what a pledge to Georgia spends. It is not only the dowry and the wedding. It is every other match you might have made, every rival of the Bagrationi you might have courted with that same unspent hand. Promise the boy now and you have wagered the whole reign on one neighbour staying strong and staying friendly. Crowns do neither forever. Tie yourself to a house and you inherit its quarrels, its enemies, its bad seasons; you are dragged into wars that were never yours, for a wall that guards their border as much as it guards yours.\n\nYet I will not flatter you that waiting is free. It is the most expensive patience a throne can buy. The friends you do not make while you wait are friends who go elsewhere, and they remember the door that stayed shut. When the blow finally falls, and on this coast it always falls, you may look north for the lances and find only the cold you refused to warm. Flexibility is real, and it is paid for in solitude. The man who keeps every option open often discovers, on the worst day, that he kept them open for no one.\n\nSo weigh it plainly. To stay unpledged is to hold your hand free and your house alone. If you trust your own silver and your own walls to outlast the seasons, and you would rather face one bad year unbound than ten good ones harnessed to another man's fate, keep the boy free. Only count the empty chairs at the council the day you finally need them filled.",
+        "affinityEffects": {
+          "queenmother": -3
+        }
+      }
+    ],
+    "tags": [
+      "queenmother",
+      "decision"
+    ]
+  },
+  {
+    "id": "queenmother-heir",
+    "speaker": "Dowager Banu",
+    "speakerType": "queenmother",
+    "concept": "Time inconsistency",
+    "scenario": "My son, the court has begun to count your sons under its breath, and a counting court is a dividing one. Name your heir while you are strong enough to make the naming stick, and let the whole hall hear you swear it.",
+    "options": [
+      {
+        "label": "Name the heir and bind yourself.",
+        "effects": {
+          "people": 5,
+          "military": 2,
+          "treasury": -2
+        },
+        "explanation": "Your mother sees what you do not yet feel, Shah: a court that does not know who comes after you has already begun to choose for itself. While the question stays open, every amir keeps a candidate in his sleeve, and a man who is grooming a candidate is not serving you. So name the boy. Say it in the great hall, before the qadis and the captains, and let no escape be left in the wording.\n\nHere is the hard part, and the reason your stewards will counsel delay. Naming the heir is wise to promise today and will be bitter to keep tomorrow. The boy may grow weak; a younger son may grow brilliant; your own judgement, which is sound this morning, may turn next year and beg you to reconsider. Every one of those mornings you will be right to want the question back. And that is exactly why you must put it beyond your own reach now. A promise you can revisit is a promise the amirs know you can revisit, and so they go on plotting, waiting for the day your fancy shifts toward their man.\n\nConsider what happened to the Ilkhanate. When Abu Sa'id died without a clear heir in 1335, every amir backed a different puppet, and the realm that Hulagu's house had held for eighty years came apart in a season of murdered claimants. They did not lack candidates. They lacked one candidate that no faction could hope to dislodge. A throne is held not by the strength of the man on it but by the belief of everyone around it that the matter is settled.\n\nSo bind your own hands, my son. Spend the certainty into the court while you can still mint it. Yes, you forfeit the freedom to change your mind, and yes, a wiser thought may come to you too late to use. That is the price. You are not buying the best heir. You are buying the one thing no clever amir can buy from under you: an ending everyone already believes in.",
+        "affinityEffects": {
+          "queenmother": 3
+        }
+      },
+      {
+        "label": "Keep your options open.",
+        "effects": {
+          "treasury": 2,
+          "military": -3,
+          "people": -2
+        },
+        "explanation": "A ruler who has not spoken keeps every door in the palace ajar, Shah, and there is a real comfort in that. Name no one, and you owe no faction your hand; you can weigh your sons as they ripen, lean toward the one who proves himself, and let the treasury swell while you are not paying out favours to settle a question that can wait. Flexibility is a kind of wealth. A king who has promised nothing has spent nothing.\n\nBut count what that open door truly costs, because your mother is not wrong about the danger, only about the cure she names. While you stay unbound, every amir reads your silence as an invitation. Each keeps his own candidate fed and flattered, because each believes that if he waits, and pushes, and removes a rival or two, your unfixed favour might yet fall on his man. Your openness does not cool their ambition. It is the fuel. The very thing that feels like prudence to you feels like an open contest to them, and an open contest is run with knives.\n\nLook at the Ilkhanate to see where the unfixed throne leads. When Abu Sa'id died without a clear heir in 1335, every amir backed a different puppet, and the empire dissolved into rival camps within the year. The amirs were not loyal to the realm; they were loyal to whichever boy might make them kingmaker. That fate was not sealed at his deathbed. It was prepared in all the years the succession was left a thing men could still dream of winning.\n\nSo keep your options if you must, but know what you are keeping. You hold the freedom to choose well, late, and you trade for it the certainty that would have kept the daggers sheathed. An unbound king is a flexible king right up to the morning he dies, and on that morning his flexibility becomes a war. The cheaper road now is very often the one that empties the treasury you were guarding, in armies, after you are gone.",
+        "affinityEffects": {
+          "queenmother": -2
+        }
+      }
+    ],
+    "tags": [
+      "queenmother",
+      "decision"
+    ]
+  },
+  {
+    "id": "arc-queenmother-waqf",
+    "speaker": "Dowager Banu",
+    "speakerType": "queenmother",
+    "concept": "Endowment as commitment",
+    "scenario": "My son, I have set aside a tract of crown land for a college and an infirmary, and I would have it sealed as waqf — past my reach, past yours, past every Shah who comes after. Let the deed be drawn so that no hand, however needful, can ever pull these stones down for coin.",
+    "options": [
+      {
+        "label": "Found the endowment.",
+        "effects": {
+          "faith": 5,
+          "people": 4,
+          "treasury": -5
+        },
+        "explanation": "Your mother asks you to give away a thing in such a manner that you can never take it back. Hear the strangeness of it before you refuse: she does not fear your enemies. She fears you. She fears the Shah you will be in a year of failed harvest, when the granaries echo and a college full of fed scholars looks, to a hungry treasury, like a feast laid out and untouched.\n\nAnd she is right to fear that man, for he is real, and he will sit where you sit. The whole worth of the waqf is that it ties his hands along with yours. Make these lands inalienable in the eyes of the law, and they cannot be sold, cannot be seized, cannot be reasoned away by any clever vizier with a ledger and a famine to point at. The lock is the gift. A promise you may break in the bad season is no promise; it is only a mood that has not yet been tested.\n\nConsider what such bonds have already raised. The waqf, the inalienable religious endowment of Islamic law, has fed mosques and colleges for centuries on lands no ruler could touch, and your own house knows the fruit of it: the Shirvanshahs' Palace complex at Baku grew such foundations around itself, stone drawing stone across generations. None of that endures because a Shah remembered to be generous each year. It endures because no Shah was permitted to forget.\n\nA scholar wants to know that the bread will be there next winter before he gives his life to the next thirty winters of study. Tie the land down and you have told him so, in a language stronger than your word. You will lose the use of it. That is precisely the price of building something that will not die when you do."
+      },
+      {
+        "label": "Keep the lands liquid for the treasury.",
+        "effects": {
+          "treasury": 6,
+          "faith": -3
+        },
+        "explanation": "Your mother offers you a beautiful chain and asks you to lock it about your own wrist. Refuse her gently, but refuse. A Shah who cannot answer his realm's worst hour has already lost the realm; he has merely not been told yet.\n\nThink on what she would forbid you. Not waste — she would forbid you the harvest that fails, the army that must be paid before the frost, the plague that empties a quarter of Baku and asks for grain you no longer command because grain was turned to stone a generation ago. Land you may sell is land that answers when the realm cries out. To seal it away forever is to swear that no future year will ever be desperate enough to need it, and you cannot swear that. No one who has watched a hard winter can swear that.\n\nShe will tell you the college outlives the dynasty. Ask her what the college eats when the dynasty cannot defend it. Endowments do not garrison walls or break sieges. The pious deed survives only so long as a living power stands over it, and that power must keep something in its hand. A ruler stripped of his last reserves is not virtuous; he is merely poor, and a poor crown buries scholars beside everyone else.\n\nKeep the lands liquid. Build your college, yes, but build it from revenue you choose to give each year, freely, as a man gives who could have chosen otherwise. That gift is worth more than one wrung from a document, because it is renewed by judgment rather than enforced against it. The waqf binds the wise Shah and the fool alike. Better to remain a Shah who can still decide — and to be judged, each year, by what he decides."
+      }
+    ],
+    "tags": [
+      "queenmother",
+      "arc"
+    ],
+    "arcCharacter": "queenmother",
+    "arcAffinityDirection": "high"
+  },
+  {
+    "id": "arc-queenmother-faction",
+    "speaker": "Dowager Banu",
+    "speakerType": "queenmother",
+    "concept": "Collective action problem",
+    "scenario": "I have watched this court longer than any of them, my son, and I tell you the harem and the nobles have stopped fighting over you and begun feeding on the realm itself. Every house would prosper if all kept their hands still, yet not one will be the first to fold its fingers while the others reach.",
+    "options": [
+      {
+        "label": "Impose a shared settlement on the factions.",
+        "effects": {
+          "treasury": -3,
+          "military": 2,
+          "people": 3
+        },
+        "explanation": "Look at what each house wants, and you will see why none will give it up. If every faction held its hand, the granaries would fill, the roads would stay open, and all of them would eat well from a fat and quiet realm. They know this. Yet set that against what a single house gains by reaching while its rivals sit on their hands: it takes the contract, the salt-farm, the border command, and grows great on the others' patience. So no house dares be the patient one. The reward for restraint, offered to all, is never as sweet as the reward for grasping first. Thus the good arrangement everyone would prefer is the one arrangement that never arrives by itself.\n\nThis is not a failing of bad men. It is a trap that catches good men too. Each acts wisely for his own house and the whole sinks beneath them all. You have seen where it ends. In the dying years of the Ilkhanate, each amir grasped for private gain while the realm they all depended on fell to pieces around them, and not one of them was a fool. Every one calculated correctly. They simply calculated alone.\n\nA bargain that no party will keep first must be kept for them, from above. You are the power that sits over all the houses, and only such a power can make restraint safe by making grasping costly. Bind them to a shared settlement and hold the rod that enforces it. Yes, the treasury will pay for the holding of it, and the favours you withdraw will earn you sour faces in the harem. But a court that does not devour itself can be marched and can be fed, and that is worth a thinning purse. The houses cannot trust one another. They can be made to trust your hand. Be the hand."
+      },
+      {
+        "label": "Let them fight it out.",
+        "effects": {
+          "treasury": 2,
+          "military": -4,
+          "people": -3
+        },
+        "explanation": "There is a comfort in standing back and letting them tire themselves out. Let the houses claw, the reasoning goes, and the strong will rise, the weak will fold, and a settled order will be left when the dust drops. The treasury even gains in the meantime, for a Shah who hands out nothing spends nothing, and the rivals court you with gifts to win your weight on their side. I understand the appeal of folded arms. I am asking you to look past it to what folded arms actually buy.\n\nA quarrel like this does not solve itself, because each house is right to keep grabbing. The very thing that makes the fight ruinous is the thing that keeps it going: while any rival still reaches, the prudent move for every other is to reach faster. So the grabbing does not slow as the realm thins; it quickens. The common ground they all stand on, the granaries, the garrisons, the loyalty of the provinces, is eaten from beneath their feet, and it is eaten precisely by their own good sense.\n\nRemember the late Ilkhanate, where each amir grasped for private gain while the realm they all depended on fell to pieces around them. No outside enemy broke that house. The amirs did, each pulling his own way, until there was no realm left worth the pulling and they inherited a ruin. Their treasuries swelled for a season and bought them a kingdom of ash.\n\nYour walls will feel the cost first. Soldiers serve a paymaster, not a brawl, and when the great houses make war on one another the spears answer to whoever shouts loudest that morning. The people, who never asked to be the field this is fought across, will pay in grain and in blood. The coins you keep by staying out will not raise the men you lose. Standing back is not neutrality. It is choosing the ending where everyone loses together, and you among them."
+      }
+    ],
+    "tags": [
+      "queenmother",
+      "arc"
+    ],
+    "arcCharacter": "queenmother",
+    "arcAffinityDirection": "low"
+  },
+  {
+    "id": "caravan-entrepot",
+    "speaker": "Caravan-Master Eldar",
+    "speakerType": "caravan",
+    "concept": "Agglomeration economies",
+    "scenario": "Shah, the silk comes down from the hills in a hundred thin trickles, and each village square swallows a little and tells me nothing. Bind every caravan to break its bales at Shamakhi, and the trade will thicken until it feeds itself. A market grows by being a market.",
+    "options": [
+      {
+        "label": "Make Shamakhi the compulsory staple.",
+        "effects": {
+          "treasury": 8,
+          "people": -3,
+          "military": 2
+        },
+        "explanation": "Picture two squares on a feast day. In the first, one bale of silk and one buyer who names whatever price he likes, for there is no other to outbid him. In the second, fifty bales and fifty buyers, with money-changers along the wall, brokers who know last week's price in three cities, and a porter for hire at any hour. A seller carries his silk to the second square though it lie a week farther off, because there he is paid more for less trouble. That is the whole secret of Shamakhi, Shah, and it is worth your understanding before you sign anything.\n\nA merchant is worth more where the other merchants already are. Each one who comes makes the place a little more worth coming to: another purse to bid against, another scale to weigh by, another warehouse to store a winter's stock until the price turns. The Genoese came, and the Venetians came after them because the Genoese were there, and the Russians came because all three could be bargained against at once. By the time an agent of the English Muscovy Company reached the town in the 1560s, no decree had drawn that crowd. The crowd had drawn itself. One buyer is bait for the next.\n\nSo I would bind every bale to break at Shamakhi. Forbid the village markets the silk trade and force the caravans to one floor, and you do not merely tax them passing through. You thicken the floor itself, and a thick floor pays better than ten thin ones ever could. The credit gathers there. The skilled men settle there. Your customs house counts coin in one room instead of chasing it through forty.\n\nKnow the price, for there is one. The villages that handled silk will hate the order, and the toll at the staple gate will be cursed by men who must now go a long way round to obey it. You buy a richer emporium with their grumbling. I think it a fair trade. I would still have a guard or two at that gate before the first season is out.",
+        "affinityEffects": {
+          "caravan": 4
+        }
+      },
+      {
+        "label": "Let trade flow where it will.",
+        "effects": {
+          "people": 4,
+          "treasury": -4
+        },
+        "explanation": "A decree can command where a caravan must stop. It cannot command that the stop be worth the merchant's while. Bind the silk to one town by your seal, Shah, and you will have built the form of a great market without its substance: the gate, the toll-house, the clerks, and underneath them the same trade you had before, only angrier.\n\nWeigh what the village squares do now. The silk comes down in many small streams and is sold near where it is grown, so the grower keeps the saving of the short road, and the small man with three bales is not lost among the great houses. Spread thin, yes. But spread is its own kind of mercy. No single toll-keeper holds the whole country's silk in his fist, and no single fire or feud or plague can stop the trade of a whole season. Many doors are harder to shut than one.\n\nGrant me the other side honestly. Shamakhi did become the silk emporium of the eastern Caucasus, drawing Genoese, Venetian and Russian buyers, until the English Muscovy Company's agent found his way there in the 1560s. The dense hub is the place where brokers gather and credit can be had, and scattered trade never grows those things; the coast stays a road that caravans pass along rather than a place they halt and unpack. I will not pretend the village market gives you a banking house.\n\nBut a market of that kind is grown, not conscripted. It came because merchants chose it, and a thing men choose they also defend and improve. Force them, and you teach them instead to evade you: to sell quietly short of the gate, to bribe the clerk, to curse your name on the road. The toll you imagine swelling your treasury will leak out the sides. Let the trade pool where it finds its own level. Lighten the road to Shamakhi instead of barring every other road, and you may yet draw the crowd that a decree can only pretend to summon.",
+        "affinityEffects": {
+          "caravan": -3
+        }
+      }
+    ],
+    "tags": [
+      "caravan",
+      "decision"
+    ]
+  },
+  {
+    "id": "caravan-contracts",
+    "speaker": "Caravan-Master Eldar",
+    "speakerType": "caravan",
+    "concept": "Transaction costs",
+    "scenario": "Shah, I have ridden roads where a bargain holds only because both men fear the same blade, and roads where it holds because both men know the same law. I ask you to raise within your caravanserai a court with true weights, a scribe for written contracts, and a judge to settle quarrels before the dust of the quarrel settles. Let a deal rest on something firmer than whether two strangers happen to like each other's faces.",
+    "options": [
+      {
+        "label": "Build the caravanserai court.",
+        "effects": {
+          "treasury": -6,
+          "people": 4,
+          "military": 1
+        },
+        "explanation": "Watch a deal that has no court behind it, Shah, and you will see where the money truly goes. The bale of silk changes hands in a moment, but the hours before it do not: the weighing and reweighing on scales each man suspects, the haggling that is half about price and half about the fear of being skinned, the guards hired against the partner as much as against the bandit. The silk is cheap beside the suspicion. Most of what a merchant pays is not for the goods at all; it is the price of dealing with a stranger he has no reason to trust.\n\nA court at the caravanserai does not lower the price of silk. It lowers that other price, the hidden one. Set a single sealed weight that all must use, and the quarrel over the scales dies before it is born. Write the contract down, and let a judge stand ready to enforce it, and a man from Tabriz may trade with a man from Astrakhan whom he will never see again, because both answer to the same seal. The trust no longer lives in the two men; it lives in your court, and so it need not be earned afresh each morning.\n\nThis is the gift of the great trading inns of the roads, the caravanserai and the funduq, which did more than shelter beasts and bales. They housed merchants under one roof, warehoused goods under guard, and ran courts to settle disputes on the spot under known rules, so a foreigner could enter, sell, and ride on without first making friends. That is what built the volume.\n\nThe treasury will spend to raise it, true. But count what it buys: every exchange that was not worth the trouble before, every cautious man who stayed home rather than risk the unknown, now comes through your gate. Reduce the friction and the wheel turns faster on the same axle. You are not taxing trade harder. You are making more of it happen, then taking your modest share of the larger sum.",
+        "affinityEffects": {
+          "caravan": 3
+        }
+      },
+      {
+        "label": "Leave merchants to their own bargains.",
+        "effects": {
+          "treasury": 2,
+          "people": -3
+        },
+        "explanation": "Save the silver, Shah, and let merchants strike their own bargains as they always have. A trader knows his trade better than any judge you might appoint; he chooses his partners, sets his own weights, and guards his own bales. Why should your treasury pay for a roof over quarrels that the quarrelers can settle themselves? The market found its own order long before clerks were invited to improve it.\n\nYet hear what that thrift truly costs, for it is dearer than it looks. Where there is no shared rule, every deal carries an unseen tax: the tax of distrust. An honest man, lacking any court to appeal to, trades only with kin and with faces he already knows, because only with them is his word safe. The stranger arriving with good goods and a fair price is turned from the door, not because he is dishonest, but because there is no way to know that he is not. So commerce shrinks to the size of a family.\n\nThink of the inns the caravans actually relied upon, the caravanserai and the funduq, which housed merchants, stored their goods, and kept courts to settle disputes on the spot under known rules. Strip those courts away and the inn becomes a mere stable. The Tabrizi and the Astrakhani, who under a common seal would have dealt freely, now eye each other and walk apart. A hundred profitable exchanges that wanted only an enforceable promise simply never occur. No ledger records them, because they leave no trace; the loss is invisible, which is precisely why it is so easy to choose.\n\nYou will keep your coin and the people will feel the cold of it. The road grows quieter, the gate earns less, and the merchants who might have made Shirvan their crossroads make it elsewhere. Friction left in the wheel does not vanish for being unpaid. It merely grinds the trade away, slowly, where no one thinks to look.",
+        "affinityEffects": {
+          "caravan": -2
+        }
+      }
+    ],
+    "tags": [
+      "caravan",
+      "decision"
+    ]
+  },
+  {
+    "id": "arc-caravan-holdup",
+    "speaker": "Caravan-Master Eldar",
+    "speakerType": "caravan",
+    "concept": "Hold-up problem",
+    "scenario": "Shah, all the coast's silk now rides on my caravans, and they ride well. I come only to ask, with every respect, for a somewhat larger share of what we carry together.",
+    "options": [
+      {
+        "label": "Break his grip; back a second carrier.",
+        "effects": {
+          "treasury": -4,
+          "military": 2,
+          "people": 2
+        },
+        "explanation": "Eldar smiles as he asks, and the smile is the trap. He is not pricing his camels or his guards; he is pricing your inability to do without him. When the silk moved by three roads, no carrier could lean on you, for you could always send the next bale by the next man. You let two of those roads wither because his was cheaper, and now there is one, and the one belongs to him. What he charges today is not the worth of carriage. It is the worth of your having nowhere else to turn, and that worth he will collect to the last dirham.\n\nThis is the lesson the Silk Road powers learned and relearned across the centuries: once a ruler's revenue depends wholly on a single route, the master of that route can throttle every other. He need not raise an army. He raises a tariff, and the bales that will not pay simply do not move, and the treasury that lives on their passage goes quiet. The carrier who can stop the silk owns a share of the throne he never had to conquer.\n\nThe cure is not to plead with him, for pleading confirms your weakness and invites the next demand. The cure is the rival you should have kept all along. Find a second caravan-master, a lesser house hungry for the trade, and fund his first hard seasons from your own purse. Yes, it costs you now, and his road will be rough before it is smooth. But the day a bale can again choose between two roads, Eldar's smile changes. He stops pricing your helplessness, because you are no longer helpless. Pay, then, to build the competitor you failed to build in easier years. It is the dearest lesson a Shah buys, and the only one that stays bought."
+      },
+      {
+        "label": "Pay his price; you need the road.",
+        "effects": {
+          "treasury": -6,
+          "people": 1
+        },
+        "explanation": "Refuse him and the silk stops. That is the whole of it, and a Shah must look at the whole of it before he reaches for his pride. The caravans are loaded, the season is short, the merchants of Baku have already promised the bales to Tabriz and beyond. Eldar knows the calendar as well as you do. He has chosen this week to ask precisely because there is no other road by which the silk can leave, and no time to cut one before the snows close the passes. Pay his price, and the trade flows, and the treasury, lighter than you would wish, is at least fed.\n\nLook honestly, though, at what you are paying for. You are paying because your own dependence has become the weapon in his hand. He did not forge it; you handed it to him, season by season, every time you let an alternative die because his road was a touch cheaper. The Silk Road powers learned this in their bones: when one route's master can throttle the rest, the ruler who lives off that route lives at the master's pleasure, and pays whatever pleasure asks.\n\nAnd here is the bitter arithmetic of it. Every season you pay, the dependence does not lessen; it deepens. The rival houses you might have nurtured grow fainter, the merchants forget there was ever another road, and Eldar learns that his asking works. So the next demand comes higher, and the one after higher still, each justified by the same logic that justifies this one. You buy a quiet year and sell a louder decade. Pay him now if you must save this season's silk. But do not tell yourself you have settled the matter. You have only agreed to the first installment of a debt that compounds in his favor for as long as the road is his alone."
+      }
+    ],
+    "tags": [
+      "caravan",
+      "arc"
+    ],
+    "arcCharacter": "caravan",
+    "arcAffinityDirection": "high"
+  },
+  {
+    "id": "arc-caravan-rival",
+    "speaker": "Caravan-Master Eldar",
+    "speakerType": "caravan",
+    "concept": "Trade diversion",
+    "scenario": "My bales used to come to your gate as water runs downhill, Shah, by old habit and no other reason. Now Tabriz takes lighter tolls and keeps its roads clear of brigands, and I tell you plainly: the drivers I once led to you are already turning their mules that way.",
+    "options": [
+      {
+        "label": "Cut tolls and improve the road to compete.",
+        "effects": {
+          "treasury": -5,
+          "people": 3,
+          "military": 1
+        },
+        "explanation": "Ask any driver why he chose a road and he will not speak of love. He counts. He adds the toll at your gate to the days lost to bad track, to the bribe at the ford, to the chance of losing a bale to brigands, and he takes whichever sum comes out smaller. Your harbour is one number in his reckoning, no more. When Tabriz lowers its number, his arithmetic changes and his mules change with it, and no command of yours will alter a column he adds in his own head on a cold morning a hundred farsakhs away.\n\nSo you cannot order the caravans to stay. You can only make your number the smaller one. Shave the levy and mend the road, post riders to clear the passes, and you are not bowing to Tabriz; you are competing on the only ground the trade respects. The bale that would have turned east now finds your gate cheaper all told, and it comes.\n\nRemember what the silk routes have already done to men who thought a road was theirs by right. The trade once ran where it ran, then Tabriz, Bursa and later the Cape sea-route pulled it onto newer paths, and the old waystations that had grown fat on passage were left to wither with their toll-books still open and nothing crossing to fill them. Their lords had not lost a war. They had simply asked for more than the passage was worth, and the passage went elsewhere.\n\nThe cost of this is real and I will not hide it. The treasury feels every coin you do not take, and a road does not mend itself for nothing. But you are spending to keep a living stream, not hoarding the last drops of a dying one. A toll on ten crossings at a softer rate outweighs a proud toll on two. Match the rival's terms now, while the drivers still remember the way to your gate."
+      },
+      {
+        "label": "Hold your tolls and trust your harbour.",
+        "effects": {
+          "treasury": 3,
+          "people": -4
+        },
+        "explanation": "Eldar comes to you sore, Shah, and a sore man counsels his grievance before your good. He would have you fling open the treasury and grovel to every mule-driver who hears a rumour from the east. Before you empty the coffers, consider what you are being asked to chase.\n\nYou hold a harbour. Tabriz holds a promise. A road can be made safe one season and turn deadly the next when a new amir forgets to pay his guards; a toll cut to win custom can be raised again the moment the custom arrives. Lower yours to match every boast from a rival, and you teach the drivers a costly lesson: that your gate yields to pressure. Next year another hub undercuts the both of you, and Eldar returns asking you to cut deeper still. There is no floor to that descent but ruin.\n\nHold, then, and let your true advantages speak. A harbour is not a track that any prince may dig; it is a thing of coast and water that Tabriz, sitting inland, cannot conjure. Keep the toll firm, take the steady coin, and trust that men still need the sea.\n\nYet I would not have you mistake my counsel for comfort. Hear the warning inside it. A hub that rests on its old advantage while a rival undercuts it watches the trade divert by quiet degrees, never in a single season you might notice and answer. Your toll stays proud upon a stream that thins year by year, and the books read rich while the wharves stand idle. That is exactly how the great waystations died when the silk routes shifted to Tabriz, Bursa and later the Cape sea-route: not stormed, but slowly forgotten, wealthy on paper and empty in fact. Choose to hold, and you wager that your sea-gate is worth more than Eldar's drivers think. Keep your own eyes on the wharf, not the ledger, and be ready to move before pride becomes the thing that empties it."
+      }
+    ],
+    "tags": [
+      "caravan",
+      "arc"
+    ],
+    "arcCharacter": "caravan",
+    "arcAffinityDirection": "low"
+  }
 ];
