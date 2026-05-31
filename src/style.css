@@ -1312,6 +1312,55 @@ h3,
 .codex-endings .codex-item.locked {
   background: var(--parchment);
 }
+.codex-source {
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--silk-text);
+  margin-top: 0.2rem;
+}
+.codex-related {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+.codex-related-label {
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  letter-spacing: 0.06em;
+  color: var(--caspian);
+}
+.codex-rel {
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  background: var(--stone);
+  border: 1px solid var(--naphtha);
+  color: var(--ink);
+  padding: 0.05rem 0.5rem;
+  border-radius: 2px;
+}
+.codex-rel:hover,
+.codex-rel:focus-visible {
+  background: var(--saffron);
+  color: var(--naphtha);
+}
+.codex-rel-locked {
+  color: var(--caspian);
+  opacity: 0.7;
+  font-style: italic;
+}
+.codex-flash {
+  animation: codexFlash 1.2s ease;
+}
+@keyframes codexFlash {
+  0% {
+    background: rgba(200, 155, 60, 0.45);
+  }
+  100% {
+    background: transparent;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .stat.pulse .stat-track {
@@ -1319,6 +1368,9 @@ h3,
   }
   .tl-notch {
     transition: none;
+  }
+  .codex-flash {
+    animation: none;
   }
 }
 

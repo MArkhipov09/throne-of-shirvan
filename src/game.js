@@ -1,6 +1,6 @@
 import { cards } from "../content/cards.js";
 import { crises } from "../content/crises.js";
-import { concepts as CONCEPT_DEFS } from "../content/concepts.js";
+import { concepts as CONCEPT_DEFS, conceptMeta as CONCEPT_META } from "../content/concepts.js";
 
 const decisionCards = cards.filter((c) => !c.arcCharacter);
 
@@ -47,6 +47,9 @@ const SPEAKER_CATEGORY = {
   "crisis-military-low": "soldier",
   "crisis-naphtha-low": "official",
   "genoese-return": "foreign",
+  "recoinage-reckoning": "official",
+  "monopoly-reckoning": "merchant",
+  "open-port-rivals": "official",
 };
 
 const STAT_DESCRIPTIONS = {
@@ -1728,6 +1731,20 @@ function init() {
   els.codex?.addEventListener("click", (e) => {
     if (e.target === els.codex) closeCodex();
   });
+  // Click a related-concept chip to jump to that entry in the Codex.
+  els.codexBody?.addEventListener("click", (e) => {
+    const chip = e.target.closest && e.target.closest("[data-goto]");
+    if (!chip) return;
+    const target = document.getElementById("codex-c-" + chip.dataset.goto);
+    if (!target) return;
+    target.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "center" });
+    if (!reducedMotion()) {
+      target.classList.remove("codex-flash");
+      void target.offsetWidth; // restart the animation
+      target.classList.add("codex-flash");
+      target.addEventListener("animationend", () => target.classList.remove("codex-flash"), { once: true });
+    }
+  });
 
   setupSwipe();
 
@@ -2055,6 +2072,11 @@ function escHtml(s) {
   return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+// Stable id-safe slug for a concept name, used to link related concepts in the Codex.
+function conceptSlug(name) {
+  return String(name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
 function buildCodex() {
   if (!els.codexBody) return;
   const totalConcepts = Object.keys(CONCEPT_DEFS).length;
@@ -2063,10 +2085,28 @@ function buildCodex() {
   const conceptItems = conceptNames
     .map((name) => {
       const found = progress.concepts.includes(name);
-      if (found) {
-        return `<li class="codex-item found"><span class="codex-name">${escHtml(name)}</span><span class="codex-def">${escHtml(CONCEPT_DEFS[name])}</span></li>`;
+      if (!found) {
+        return `<li class="codex-item locked"><span class="codex-name">？？？</span><span class="codex-def">Encountered when you play the card that teaches it.</span></li>`;
       }
-      return `<li class="codex-item locked"><span class="codex-name">？？？</span><span class="codex-def">Encountered when you play the card that teaches it.</span></li>`;
+      const meta = CONCEPT_META[name];
+      let extra = "";
+      if (meta) {
+        if (meta.source) extra += `<span class="codex-source">${escHtml(meta.source)}</span>`;
+        const rel = (meta.related || []).filter((r) => CONCEPT_DEFS[r]);
+        const relFound = rel.filter((r) => progress.concepts.includes(r));
+        const relLocked = rel.length - relFound.length;
+        if (relFound.length || relLocked) {
+          const chips = relFound
+            .map((r) => `<button type="button" class="codex-rel" data-goto="${conceptSlug(r)}">${escHtml(r)}</button>`)
+            .join(" ");
+          const hint = relLocked
+            ? `<span class="codex-rel-locked">+${relLocked} to discover</span>`
+            : "";
+          const sep = relFound.length && relLocked ? " · " : "";
+          extra += `<span class="codex-related"><span class="codex-related-label">Related:</span> ${chips}${sep}${hint}</span>`;
+        }
+      }
+      return `<li class="codex-item found" id="codex-c-${conceptSlug(name)}"><span class="codex-name">${escHtml(name)}</span><span class="codex-def">${escHtml(CONCEPT_DEFS[name])}</span>${extra}</li>`;
     })
     .join("");
 
