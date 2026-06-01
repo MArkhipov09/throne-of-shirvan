@@ -1,6 +1,7 @@
 import { cards } from "../content/cards.js";
 import { crises } from "../content/crises.js";
 import { concepts as CONCEPT_DEFS, conceptMeta as CONCEPT_META } from "../content/concepts.js";
+import { glossary, glossaryAliases } from "../content/glossary.js";
 
 const decisionCards = cards.filter((c) => !c.arcCharacter);
 
@@ -898,7 +899,7 @@ function renderCardImmediate(card) {
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   renderAffinity(card);
-  els.scenario.textContent = card.scenario;
+  els.scenario.innerHTML = glossify(card.scenario);
   els.explanation.hidden = true;
   els.explanation.textContent = "";
   setConceptChip(null);
@@ -946,8 +947,8 @@ function renderResultViewImmediate(card, explanationText) {
   els.speaker.textContent = card.speaker;
   els.speaker.dataset.speakerType = card.speakerType ?? "one-off";
   renderAffinity(card);
-  els.scenario.textContent = card.scenario;
-  els.explanation.textContent = state.viewExplanation;
+  els.scenario.innerHTML = glossify(card.scenario);
+  els.explanation.innerHTML = glossify(state.viewExplanation);
   els.explanation.hidden = false;
   setConceptChip(card);
   renderPredictFeedback();
@@ -1038,7 +1039,7 @@ function renderEndingImmediate(ending, firstTime = false) {
 
   els.scenario.textContent = reignSummary();
 
-  els.explanation.textContent = ENDING_FLAVOUR[kind];
+  els.explanation.innerHTML = glossify(ENDING_FLAVOUR[kind]);
   els.explanation.hidden = false;
 
   renderReignReport(kind, firstTime);
@@ -1320,7 +1321,7 @@ function chooseOption(index) {
 
   state.view = "result";
   state.viewExplanation = option.explanation ?? "";
-  els.explanation.textContent = state.viewExplanation;
+  els.explanation.innerHTML = glossify(state.viewExplanation);
   els.explanation.hidden = false;
   setConceptChip(card);
   renderPredictFeedback();
@@ -1747,6 +1748,7 @@ function init() {
   });
 
   setupSwipe();
+  setupGlossary();
 
   document.addEventListener("keydown", onKeydown);
 
@@ -1774,10 +1776,12 @@ function setConceptChip(card) {
   const def = CONCEPT_DEFS[concept] || "";
   els.conceptChip.title = def;
   els.conceptChip.hidden = false;
-  els.conceptChip.setAttribute("aria-expanded", "false");
+  // The pure definition is shown by default alongside every explanation; the
+  // chip stays clickable so a player can collapse it if they wish.
+  els.conceptChip.setAttribute("aria-expanded", "true");
   if (els.conceptDef) {
     els.conceptDef.textContent = def;
-    els.conceptDef.hidden = true; // revealed when the chip is tapped/clicked
+    els.conceptDef.hidden = false;
   }
 }
 
@@ -2077,6 +2081,124 @@ function conceptSlug(name) {
   return String(name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+// --- Historical-term glossary (hover / tap / focus to define) ---
+const GLOSS_BY_SLUG = {}; // slug -> { term, def }
+const GLOSS_LC = {}; // lowercased surface form -> { slug, term, def }
+(() => {
+  const add = (surface, displayTerm, def) => {
+    const slug = conceptSlug(displayTerm);
+    GLOSS_BY_SLUG[slug] = { term: displayTerm, def };
+    GLOSS_LC[surface.toLowerCase()] = { slug, term: displayTerm, def };
+  };
+  for (const [term, def] of Object.entries(glossary)) add(term, term, def);
+  for (const [variant, canonical] of Object.entries(glossaryAliases)) {
+    const def = glossary[canonical];
+    if (def) add(variant, canonical, def);
+  }
+})();
+// Longest surface forms first so multi-word terms win over their substrings.
+const GLOSS_RE = (() => {
+  const surfaces = Object.keys(GLOSS_LC).sort((a, b) => b.length - a.length);
+  const esc = surfaces.map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  return new RegExp("\\b(" + esc.join("|") + ")('s|s)?\\b", "gi");
+})();
+
+// Wrap the first occurrence of each known historical term in `text` so it can be
+// hovered/tapped for a definition. Escapes HTML first, so the result is safe to
+// assign as innerHTML. Paragraph breaks (\n\n) survive via CSS white-space.
+function glossify(text) {
+  const seen = new Set();
+  return escHtml(String(text)).replace(GLOSS_RE, (whole, core) => {
+    const entry = GLOSS_LC[core.toLowerCase()];
+    if (!entry || seen.has(entry.slug)) return whole;
+    seen.add(entry.slug);
+    return `<span class="gloss" tabindex="0" data-term="${entry.slug}" aria-describedby="gloss-pop">${whole}</span>`;
+  });
+}
+
+// One shared tooltip popover, shown on hover/focus/tap of a .gloss term.
+function setupGlossary() {
+  let pop = document.getElementById("gloss-pop");
+  if (!pop) {
+    pop = document.createElement("div");
+    pop.id = "gloss-pop";
+    pop.className = "gloss-pop";
+    pop.setAttribute("role", "tooltip");
+    pop.hidden = true;
+    document.body.appendChild(pop);
+  }
+  let pinned = false;
+  let current = null;
+
+  const close = () => {
+    pinned = false;
+    pop.hidden = true;
+    current = null;
+  };
+  const place = (el) => {
+    const r = el.getBoundingClientRect();
+    pop.hidden = false;
+    const pr = pop.getBoundingClientRect();
+    const m = 8;
+    let left = r.left + r.width / 2 - pr.width / 2;
+    left = Math.max(m, Math.min(left, window.innerWidth - pr.width - m));
+    let top = r.bottom + 6;
+    if (top + pr.height > window.innerHeight - m) top = r.top - pr.height - 6;
+    pop.style.left = left + "px";
+    pop.style.top = Math.max(m, top) + "px";
+  };
+  const show = (el) => {
+    const entry = GLOSS_BY_SLUG[el.dataset.term];
+    if (!entry) return;
+    current = el;
+    pop.innerHTML = `<strong class="gloss-term">${escHtml(entry.term)}</strong> ${escHtml(entry.def)}`;
+    place(el);
+  };
+  const glossTarget = (e) => (e.target.closest ? e.target.closest(".gloss") : null);
+
+  document.addEventListener("pointerover", (e) => {
+    const t = glossTarget(e);
+    if (t && !pinned) show(t);
+  });
+  document.addEventListener("pointerout", (e) => {
+    if (glossTarget(e) && !pinned) {
+      pop.hidden = true;
+      current = null;
+    }
+  });
+  document.addEventListener("focusin", (e) => {
+    const t = glossTarget(e);
+    if (t) {
+      pinned = false;
+      show(t);
+    }
+  });
+  document.addEventListener("focusout", (e) => {
+    if (glossTarget(e) && !pinned) {
+      pop.hidden = true;
+      current = null;
+    }
+  });
+  document.addEventListener("click", (e) => {
+    const t = glossTarget(e);
+    if (t) {
+      if (pinned && current === t) close();
+      else {
+        pinned = true;
+        show(t);
+      }
+      e.stopPropagation();
+      return;
+    }
+    if (pinned) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !pop.hidden) close();
+  });
+  window.addEventListener("scroll", () => !pop.hidden && close(), true);
+  window.addEventListener("resize", () => !pop.hidden && close());
+}
+
 function buildCodex() {
   if (!els.codexBody) return;
   const totalConcepts = Object.keys(CONCEPT_DEFS).length;
@@ -2179,7 +2301,7 @@ function setupSwipe() {
     if (reducedMotion()) return;
     if (codexOpen || !els.intro.hidden || tutorialActive) return;
     if (!(state.view === "question" || state.view === "result" || state.view === "ending")) return;
-    if (e.target.closest && e.target.closest("button")) return; // let buttons be tapped
+    if (e.target.closest && e.target.closest("button, .gloss")) return; // let buttons and glossary terms be tapped
     active = true;
     dragging = false;
     startX = e.clientX;

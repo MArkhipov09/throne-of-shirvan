@@ -1556,15 +1556,74 @@ h3,
 }
 .concept-def {
   margin: 0 0 0.9rem;
-  font-style: italic;
+  font-style: normal;
   font-size: 1rem;
   line-height: 1.45;
   color: var(--naphtha);
   border-left: 3px solid var(--saffron);
   padding-left: 0.75rem;
 }
+/* Label the pure definition so it reads as a definition, distinct from the
+   applied (italic) essay that follows it. */
+.concept-def::before {
+  content: "Definition  ";
+  font-family: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silk-text);
+}
 .concept-def[hidden] {
   display: none;
+}
+
+/* Historical-term glossary: a subtle dotted underline; hover/focus/tap shows a
+   popover defining the term. */
+.gloss {
+  text-decoration: underline dotted var(--silk);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  cursor: help;
+}
+.gloss:hover {
+  text-decoration-color: var(--saffron);
+  background: rgba(200, 155, 60, 0.16);
+}
+.gloss:focus-visible {
+  outline: 2px solid var(--naphtha);
+  outline-offset: 1px;
+  background: rgba(200, 155, 60, 0.16);
+}
+.gloss-pop {
+  position: fixed;
+  z-index: 80;
+  max-width: 19rem;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  background: var(--parchment-hi);
+  color: var(--ink);
+  border: 1px solid var(--naphtha);
+  box-shadow: 0 4px 16px rgba(20, 12, 4, 0.32);
+  font-size: 0.95rem;
+  font-style: normal;
+  line-height: 1.4;
+  pointer-events: none;
+}
+.gloss-pop[hidden] {
+  display: none;
+}
+.gloss-term {
+  color: var(--silk-text);
+  font-weight: 600;
+}
+@media (forced-colors: active) {
+  .gloss {
+    text-decoration-color: LinkText;
+  }
+  .gloss-pop {
+    border: 1px solid CanvasText;
+  }
 }
 
 /* Crisis / arc cards fly a small ribbon (data-card-type set in JS). */

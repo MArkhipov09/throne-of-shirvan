@@ -4,153 +4,153 @@
 
 export const concepts = {
   "Laffer curve":
-    "Past a certain point, raising a tax or toll rate lowers total revenue, because it drives the activity away.",
+    "The relationship between a tax rate and the revenue it raises: beyond an optimal rate, higher rates yield less, because they shrink the taxed activity.",
   "Non-renewable resources":
-    "A finite asset spent today is gone for good; selling it trades a permanent income stream for one-time cash.",
+    "A resource that does not replenish on a human timescale, so a unit used today is permanently removed from future use.",
   "Price ceilings":
-    "A price forced below where supply meets demand creates shortages, queues, and black markets.",
+    "A legal maximum price set below the market-clearing level, which produces shortages, queues, and black markets.",
   "Public goods":
-    "Goods everyone can use without paying (a road, a wall) are underprovided by markets, so the state must fund them.",
+    "A good that is non-excludable and non-rival, so markets underprovide it and it tends to require collective funding.",
   "Debasement & inflation":
-    "Minting coin with less silver pays bills now but raises prices later, as the market notices the lighter metal.",
+    "Reducing the precious-metal content of coinage; the enlarged nominal money stock raises the general price level.",
   "Opportunity cost":
-    "The true cost of any choice is the best thing you gave up to make it.",
+    "The value of the next best alternative forgone when a choice is made.",
   "Comparative advantage":
-    "Specialising in what you do best and trading for the rest maximises output, at the cost of dependence.",
+    "A party gains by specialising in what it produces at the lowest relative (opportunity) cost and trading for the rest.",
   "Monopoly":
-    "A single seller raises prices and captures the surplus that competition would have spread across many.",
+    "A market with a single seller, who restricts output and sets price above marginal cost, capturing surplus that competition would disperse.",
   "Negative externalities":
-    "When a producer doesn't bear the harm he causes others, he produces too much of it.",
+    "A cost an activity imposes on third parties that is not reflected in its price, leading to more of it than is socially optimal.",
   "Tragedy of the commons":
-    "An open-access resource everyone can take from gets depleted, because no one owns the cost of overuse.",
+    "An open-access resource is overused and depleted because each user reaps the full benefit of taking but bears only a fraction of the cost.",
   "Asymmetric information":
-    "When one party to a deal knows more than the other, they can exploit the gap unless it is verified.",
+    "A transaction in which one party holds more relevant information than the other, who can be exploited unless it is verified.",
   "Sunk cost fallacy":
-    "Money and time already spent are gone; only the future return should decide whether to spend more.",
+    "The error of letting unrecoverable past costs, rather than expected future returns, drive a present decision.",
   "Quantity theory of money":
-    "More coin chasing the same goods raises prices; a sudden windfall inflates unless it is saved or spent slowly.",
+    "Other things equal, the general price level moves in proportion to the quantity of money in circulation.",
   "Credible commitment":
-    "A promise that is optimal now becomes tempting to break later; binding yourself is what makes it believed.",
+    "A promise others will believe because the promiser is bound so that keeping it, not breaking it, is in their interest.",
   "Crowding out":
-    "State borrowing absorbs capital that would otherwise have funded private investment.",
+    "Government borrowing or spending that displaces private investment by absorbing the available pool of savings.",
   "Game theory":
-    "In an alliance or rivalry, the best move depends on what you expect the other side to do.",
+    "The study of strategic choices in which each party's best move depends on what the others are expected to do.",
   "Price elasticity":
-    "Demand for necessities barely moves with price (inelastic); for luxuries it moves a lot (elastic). Tax the inelastic for revenue.",
+    "The responsiveness of quantity demanded to a change in price: inelastic demand barely moves, elastic demand moves sharply.",
   "Merit goods":
-    "Goods society underconsumes relative to their wider benefit (schooling, health) are worth subsidising.",
+    "A good society judges to be underconsumed relative to its wider benefit, justifying subsidy or public provision.",
   "Tax incidence":
-    "Who actually bears a tax depends on elasticity, not on who is legally charged it.",
+    "Who actually bears the burden of a tax, determined by relative elasticity rather than by who is legally charged it.",
   "Wage rigidity":
-    "Workers resent a cut to their nominal pay far more than an equivalent loss to inflation.",
+    "The tendency of nominal wages to resist downward adjustment, so labour markets clear slowly when conditions worsen.",
   "Unintended consequences":
-    "Banning a desirable good often raises its status and breeds a black market instead of removing it.",
+    "Outcomes of an action that were neither foreseen nor intended, and which can offset the intended effect.",
   "Economies of scale":
-    "Spreading fixed costs over more output lowers the average cost per unit (against the risk of concentration).",
+    "The fall in average cost per unit as output rises and fixed costs are spread over more units.",
   "Price discrimination":
-    "Charging each buyer closer to what they are willing to pay raises more revenue than one uniform price.",
+    "Charging different buyers different prices for the same good, by willingness to pay, to capture more of the surplus.",
   "Demerit goods":
-    "For goods that harm others (drink, vice), a tax on the harm beats prohibition, which drives it underground.",
+    "A good judged to be overconsumed because its private appeal exceeds its social value or it harms others.",
   "Network effects":
-    "A standard becomes more valuable the more people adopt it; the state can break the deadlock of who moves first.",
+    "A good whose value to each user rises as more people adopt it.",
   "Knowledge spillovers":
-    "Research and learning benefit far beyond whoever paid for them, so private actors underinvest in it.",
+    "Benefits of knowledge that accrue to parties other than its creator, so private actors underinvest in producing it.",
   "Dual-use export controls":
-    "A good sold for profit today may arm a rival tomorrow; some exports are worth restricting.",
+    "Restrictions a state places on goods with both civilian and military uses, to keep a profitable sale from arming a rival.",
   "Non-market value":
-    "Some things are worth more left in place than sold; price does not capture every kind of value.",
+    "Worth not captured by any market price, such as cultural, religious, or existence value.",
   "Compensating wage differentials":
-    "Dangerous or unpleasant work must pay a premium, or no one will do it.",
+    "The extra pay required to induce workers to accept more dangerous, unpleasant, or demanding work.",
   "Optimal extraction":
-    "Pump a finite resource too fast and you trade tomorrow's stock and price for today's cash.",
+    "The rate of using up a finite resource that maximises its total value over time, balancing present against future returns.",
   "Domestic price vs export":
-    "Cheap supply at home or revenue from selling abroad: a resource can serve one or the other, not both.",
+    "The trade-off a producing region faces between cheap supply for its own people and revenue from selling the same good abroad.",
   "Risk pooling":
-    "When many share a rare, ruinous loss, each one's burden becomes small and bearable. This is insurance.",
+    "Combining many independent risks so the average outcome is more predictable and each party's exposure shrinks; the basis of insurance.",
   "Credit & usury":
-    "Bills of exchange and credit free up trade, but sit uneasily against religious bans on interest.",
+    "The lending of money for repayment over time, and the moral and legal limits historically placed on charging interest.",
   "Barriers to entry":
-    "Licences and quotas limit competition: steadier quality and prices, but fewer entrants and higher cost.",
+    "Obstacles such as licences, quotas, or high fixed costs that keep new competitors out of a market.",
   "Labour supply shock":
-    "When workers suddenly grow scarce, their wages rise — unless the ruler suppresses them by force.",
+    "A sudden change in the number of available workers, which shifts the wage.",
   "Gresham's law":
-    "When good and debased coin share a face value, the good coin is hoarded and the bad drives it out of circulation.",
+    "When coins of equal face value but unequal metal content circulate together, the debased coin drives the good coin out of circulation.",
   "Bimetallism":
-    "Fix the official gold-to-silver ratio wrong and traders melt the undervalued metal and flood you with the other.",
+    "A monetary system with a fixed legal ratio between gold and silver; a mispriced ratio drives the undervalued metal out.",
   "State capacity":
-    "Rule-bound, professional institutions outgrow extractive ones over generations, but reform is slow and resisted.",
+    "A state's ability to administer its territory, enforce its rules, and deliver public goods through capable institutions.",
   "Rule of law":
-    "Acting on accusation without trial corrodes the loyalty of every official who hopes to serve and survive.",
+    "The principle that authority is exercised through known, consistent rules that bind even the ruler, not by arbitrary will.",
   "Legitimacy as capital":
-    "A ruler trades resources and access for the legitimacy that religious or popular authority can lend him.",
+    "The widely accepted right of an authority to rule, treated as a resource that can be built up, spent, and exchanged.",
   "Bargaining vs coercion":
-    "Some authority cannot be coerced without destroying its value; it must be negotiated with.",
+    "The choice between securing cooperation through negotiated exchange and securing it through force or threat.",
   "Hold-up problem":
-    "A mobile asset (trade, a merchant fleet) can credibly threaten to leave, and extract concessions for staying.",
+    "Once one party has made an investment tied to a relationship, the other can exploit that dependence to extract better terms.",
   "The price of a threat":
-    "An armed threat negotiates from strength; what you pay to avoid it is measured by how much you fear it.",
+    "The value of avoiding a threatened harm, which sets how much its target will pay to be spared it.",
   "Institutional intermediation":
-    "A formal body that speaks for a whole constituency lowers the cost of governing it, but cedes power to it.",
+    "Dealing with a whole constituency through a formal body that represents it, which lowers the cost of governing it but grants that body power.",
   "Entrenchment":
-    "Hereditary office preserves hard-won expertise, but risks creating a permanent power bloc the throne can't remove.",
+    "The tendency of an office or interest, once established, to become difficult to remove or reform.",
   "Asymmetric integration":
-    "Binding closer to a great power buys security and trade at the cost of your own freedom of action.",
+    "A binding tie between unequal partners in which the weaker gains security and access by ceding autonomy to the stronger.",
   "Coercive diplomacy":
-    "Misjudging a stronger power's tolerance is ruinous; once its army marches, submission still has a price.",
+    "The use of threats or limited force to make an opponent comply without resort to full-scale war.",
   "Emergency transfers":
-    "In famine, handing out grain yields far more welfare than its cost to the storehouse, and forestalls revolt.",
+    "Direct provision of goods or money to relieve acute need, whose welfare value can far exceed its cost in a crisis.",
   "Costly signalling":
-    "An action too expensive to fake (a funded mosque, a recoinage) credibly proves intent in a way words cannot.",
+    "An action expensive enough that only someone with genuine intent or quality would take it, which is what makes it believed.",
   "Risk & safety trade-offs":
-    "Disaster response weighs the asset against the lives at risk; how a ruler weighs them is the choice.",
+    "The balancing of expected output or gain against the probability and severity of harm.",
   "Risk transfer":
-    "Paying off a threat converts an uncertain catastrophe into a smaller, certain loss — the logic of insurance.",
+    "Shifting an uncertain potential loss onto another party, converting it into a smaller, more certain cost.",
   "Emergency finance":
-    "When the treasury is empty, every quick fix — a forced levy, selling offices — mortgages something later.",
+    "Raising funds quickly under fiscal distress, typically by means that impose larger costs later.",
   "Mobilisation costs":
-    "Raising armed force in a hurry is paid for in coin (mercenaries) or in goodwill (conscription).",
+    "The resources and time needed to raise, equip, and field armed force on demand.",
   "Supply shocks":
-    "A sudden shortage of a key good forces a costly choice between expensive substitution and rationing.",
+    "A sudden change in the availability of a key input, which shifts its price and forces costly adjustment.",
   "Path dependence":
-    "Past choices narrow present ones; once you have sold or built something, undoing it costs far more than not doing it would have.",
+    "When the choices available now are constrained by past decisions, so history, not just present conditions, shapes the outcome.",
 
   // --- Astronomer, Spymaster, Queen-Mother, Caravan-Master (court arcs) ---
   "Research and development":
-    "Discovery costs real coin now for a return that is late, uncertain, and mostly reaped by others, so only a patron who can wait will fund it.",
+    "Investment in creating new knowledge or methods, whose returns are uncertain, delayed, and partly captured by others.",
   "Coordination problem":
-    "When all would gain by switching together but no one gains by moving first, the worse arrangement holds until something forces the joint leap.",
+    "A situation where all prefer to act alike but none gains by switching first, so a worse arrangement persists until something moves them together.",
   "General-purpose technology":
-    "A method useful far beyond its first purpose pays off across the whole economy, in uses its makers never foresaw.",
+    "A technology applicable across many sectors that raises productivity broadly, often in uses unforeseen by its makers.",
   "Human capital flight":
-    "Skill lives in people, not vaults; mistreat the skilled and they carry their training to a rival who inherits it for nothing.",
+    "The emigration of skilled or educated people, transferring the value of their training to another economy; brain drain.",
   "Moral hazard":
-    "Shield a man from the cost of his own risks and he takes more of them, because the loss is now yours and the gamble still his.",
+    "When a party shielded from the consequences of its risks takes on more of them than it otherwise would.",
   "Principal and agent":
-    "Whoever acts on your behalf has interests of his own; without a check he serves those first, and you are the last to know.",
+    "The problem that someone acting on another's behalf has interests of their own, and may pursue them when imperfectly monitored.",
   "Adverse selection":
-    "When quality cannot be seen before you buy, an open offer draws the worst — the ones no careful buyer chose to keep.",
+    "When hidden quality means an open offer disproportionately attracts the worst counterparties.",
   "Coalition formation":
-    "An alliance is an arithmetic of whom it deters and whom it forecloses: strength against shared foes, bought with your own free hand.",
+    "How parties combine into alliances, weighing the foes a coalition deters against the partnerships it forecloses.",
   "Time inconsistency":
-    "What is wise to promise today is tempting to break tomorrow; foreseeing that, others discount the promise unless you cannot revise it.",
+    "When a plan that is optimal to announce now becomes suboptimal to carry out later, which undermines its credibility.",
   "Endowment as commitment":
-    "Placing assets past your own reach (a waqf, a trust) makes a vow credible precisely because you can no longer undo it — at the price of the flexibility surrendered.",
+    "Placing assets beyond one's own future control to make a promise credible, at the cost of flexibility.",
   "Collective action problem":
-    "All gain if each holds back, yet each gains more by grasping first, so the good shared outcome never arrives without a power above to enforce it.",
+    "When individuals who would all gain from cooperating each have an incentive to free-ride, so the shared good goes unprovided.",
   "Agglomeration economies":
-    "Activity clusters because each newcomer makes the place worth more to the next — more buyers, deeper credit, skilled hands — so trade thickens where trade already is.",
+    "The cost and productivity advantages that arise when related activity concentrates in one place.",
   "Transaction costs":
-    "Beyond the price of a good lies the cost of striking the deal: searching, weighing, bargaining, enforcing. Lower it and exchanges not worth the trouble suddenly happen.",
+    "The costs of making an exchange beyond the price itself: searching, bargaining, measuring, and enforcing the bargain.",
   "Trade diversion":
-    "Traffic flows to whichever route is cheapest all in; raise your toll or neglect your road and the caravans quietly reckon their way to a rival.",
+    "The shift of trade from one route or partner to another in response to relative costs or barriers.",
 
   // --- Delayed-consequence chains (choices that echo years later) ---
   "Currency reform":
-    "Restoring a debased coin is itself costly: recoinage shrinks the money in circulation, prices and wages must grind down, and the pain falls on whoever still holds the bad coin.",
+    "A deliberate restructuring of a currency, such as recoinage to an honest standard weight, which is itself costly to carry out.",
   "Regulatory capture":
-    "A privilege granted to one house hardens into power over the throne that granted it; the holder comes to write the rules, and the gift cannot easily be taken back.",
+    "When a privilege or body meant to be controlled by the state comes instead to serve, and be controlled by, the interest it was to govern.",
   "Contestable markets":
-    "What disciplines a seller is not how many rivals exist but how easily a new one could enter; keep the door open and even a lone trader dares not gouge.",
+    "A market disciplined less by the number of incumbents than by the threat that new entrants would appear if prices rose.",
 };
 
 // Optional Codex enrichment, keyed by the same concept labels. `related` links
