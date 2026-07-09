@@ -6,7 +6,7 @@
     <title>Throne of Shirvan</title>
     <meta
       name="description"
-      content="A Reigns-style card game set in the medieval Shirvanshah court on the Caspian — balance five stats across twenty-five years, one micro-essay of Caspian economic history per choice."
+      content="A Reigns-style card game set in the medieval Shirvanshah court on the Caspian. Balance five stats across a reign; every choice teaches one piece of Caspian economic history."
     />
     <meta name="theme-color" content="#f3ebd9" />
     <link
@@ -105,17 +105,16 @@
         />
         <p class="intro-premise">
           You are the Shirvanshah, ruler of a Caspian-coast kingdom astride the Silk Road.
-          For twenty-five years petitioners will reach your throne. Each will ask for something.
-          Each decision will shift the kingdom. Keep five things in balance &mdash;
-          your Treasury, your People, your Military, your Faith, your Naphtha &mdash;
-          and your reign endures.
+          Year by year, petitioners will reach your throne. Each will ask for something,
+          and each decision will shift the kingdom. Keep five things in balance
+          and your reign endures. Lose any one of them and it ends.
         </p>
         <ul class="intro-stat-key">
-          <li><span class="key-stat">Treasury</span> &mdash; your dinars and trade revenue.</li>
-          <li><span class="key-stat">People</span> &mdash; welfare and loyalty.</li>
-          <li><span class="key-stat">Military</span> &mdash; garrison and walls.</li>
-          <li><span class="key-stat">Faith</span> &mdash; clerical favour and religious balance.</li>
-          <li><span class="key-stat">Naphtha</span> &mdash; the Absheron oil reserves, your wildcard resource.</li>
+          <li><span class="key-stat">Treasury</span>: your dinars and trade revenue.</li>
+          <li><span class="key-stat">People</span>: welfare and loyalty.</li>
+          <li><span class="key-stat">Military</span>: garrison and walls.</li>
+          <li><span class="key-stat">Faith</span>: clerical favour and religious balance.</li>
+          <li><span class="key-stat">Naphtha</span>: the Absheron oil; high reserves pay the treasury rent.</li>
         </ul>
         <div class="intro-setup" id="intro-setup">
           <fieldset class="setup-group" id="reign-length-group">
@@ -139,13 +138,13 @@
           </fieldset>
 
           <fieldset class="setup-group modifiers" id="modifiers">
-            <legend>Modifiers &mdash; optional</legend>
+            <legend>Modifiers (optional)</legend>
             <label title="Guess which stat shifts most before each result is revealed."><input type="checkbox" name="modifier" value="predict" /> Predict the outcome</label>
-            <label title="Danger zones arrive sooner — crises strike at 20 / 80 instead of 15 / 85."><input type="checkbox" name="modifier" value="crisisHeavy" /> Crisis-prone court</label>
+            <label title="Crises strike at 20/80 instead of 15/85."><input type="checkbox" name="modifier" value="crisisHeavy" /> Crisis-prone court</label>
             <label title="Every stat swing is amplified for a wilder reign."><input type="checkbox" name="modifier" value="volatile" /> Volatile fortunes</label>
           </fieldset>
 
-          <label class="daily-toggle"><input type="checkbox" id="daily-toggle" /> Daily reign &mdash; the same deck for every player today</label>
+          <label class="daily-toggle"><input type="checkbox" id="daily-toggle" /> Daily reign: the same deck for every player today</label>
         </div>
         <div class="intro-actions">
           <button class="intro-begin" type="button" id="intro-begin">Begin Reign</button>

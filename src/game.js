@@ -58,7 +58,7 @@ const STAT_DESCRIPTIONS = {
   people: "Welfare and loyalty.",
   military: "Garrison and walls.",
   faith: "Clerical favour and religious balance.",
-  naphtha: "The Absheron oil reserves, your wildcard resource.",
+  naphtha: "The Absheron oil. High reserves pay the treasury a little each year; dry seeps bleed it.",
 };
 
 // Display names for the five stats; STAT_DESCRIPTIONS is the single source of
@@ -95,25 +95,25 @@ const OVERFLOW_KIND = {
 
 const ENDING_FLAVOUR = {
   prosperity:
-    "Twenty-five years on the throne, the granaries full and the customs books in order. The Genoese still anchor at Shamakhi; the mosque you funded carries your name. Later chroniclers measure their Shirvanshahs against your reign, in the way every Shirvanshah after Khalilullah was measured against his.",
+    "The full term served, the granaries full and the customs books in order. The Genoese still anchor at Shamakhi, and the mosque you funded carries your name. Later chroniclers measure their Shirvanshahs against your reign, the way every Shirvanshah after Khalilullah was measured against his.",
   survival:
-    "Twenty-five years and you put the throne down in one piece. The realm is thinner than your father's, the silk trade reduced, the tribute to whatever suzerain is current a fixed line in the books. Ibrahim I survived Timur and the Qara Yusuf ransom by exactly this kind of careful diminishment, and the next Shirvanshah inherits a kingdom rather than a ruin.",
+    "The full term served, and the throne set down in one piece. The realm is thinner than your father's, the silk trade reduced, the tribute to whatever suzerain is current a fixed line in the books. Ibrahim I survived Timur and the Qara Yusuf ransom by exactly this kind of careful diminishment, and the next Shirvanshah inherits a kingdom rather than a ruin.",
   conquest:
-    "The walls failed before the year was out. The treasury had been empty for months when the cavalry appeared at the western gate, and the garrison had no reason to die for a court that could not pay them. Your reign joins the brief Caucasus entries from the 1240s — the realms that emptied themselves before the rider arrived.",
+    "The walls failed before the year was out. The treasury had been empty for months when the cavalry appeared at the western gate, and the garrison had no reason to die for a court that could not pay them. The chronicles of the 1240s keep short entries for realms like yours, the ones that emptied themselves before the rider arrived.",
   revolt:
-    "The Qadi led the procession to the palace gate. The household guard neither opened the doors nor barred them. The chronicler is uncertain whether you died, fled, or ruled in name for another year in someone else's hand, and the dynasty resumes under your nephew, the way it resumed after Vizier Rashid al-Din's execution in 1318.",
+    "The Qadi led the procession to the palace gate. The household guard neither opened the doors nor barred them. The chronicler is not sure whether you died, fled, or ruled in name for another year in someone else's hand. The dynasty resumes under your nephew, the way it resumed after the vizier Rashid al-Din's execution in 1318.",
   darkness:
-    "The last of the seeps gave out, the lamps of Baku went dark, and the customs books that the white oil had filled fell silent. A wealth that is spent and never renewed is a wealth that ends. Yours did, quietly, in one cold and unlit winter.",
+    "The last of the seeps gave out, the lamps of Baku went dark, and the customs books the white oil had filled fell silent. Nothing replaced it. The reign ended quietly, in one cold and unlit winter.",
   gilded:
-    "The vaults could not be shut for the weight of silver in them, and every chief from the Daghestan passes to the Volga mouth heard the count. Wealth without walls is a standing invitation, and the invitation was accepted. You held the richest court in the Caucasus for exactly as long as it took the riders to reach it.",
+    "The vaults could not be shut for the weight of silver in them, and every chief from the Daghestan passes to the Volga mouth heard the count. You held the richest court in the Caucasus for exactly as long as it took the riders to reach it.",
   praetorian:
-    "An army with nothing left to fight stops asking the throne what to do and starts telling it. The garrison was better paid, better drilled, and more numerous than anything that could check it, and one morning the household guard simply took its orders from the barracks. The Shirvanshahs who lasted kept their soldiers loyal by keeping them a little hungry.",
+    "The garrison was better paid, better drilled, and more numerous than anything that could check it, and one morning the household guard simply took its orders from the barracks. An army with nothing left to fight had stopped asking the throne what to do. The Shirvanshahs who lasted kept their soldiers a little hungry.",
   tribune:
-    "Adoration is a current, and a current needs no channel. The crowds that filled the maidan to bless your name found they could fill it for any reason at all, and a Shah beloved past all restraint is a Shah the city no longer thinks it requires. They carried someone else through the gate on their shoulders and scarcely noticed you were gone.",
+    "The crowds that filled the maidan to bless your name found they could fill it for any reason at all, and a Shah beloved past restraint is one the city no longer thinks it needs. They carried someone else through the gate on their shoulders and scarcely noticed you were gone.",
   theocracy:
-    "You gave the mosque everything it asked and a little more, and authority, once given, is rarely returned. The Qadi's word came to carry further than the Shah's; the rulings issued from the great mosque and the palace only sealed them. You reigned, at the last, as the most pious clerk in your own court.",
+    "You gave the mosque everything it asked and a little more, and authority once given is rarely returned. The Qadi's word came to carry further than the Shah's; the palace only sealed what the great mosque had already ruled. You reigned, at the last, as the most pious clerk in your own court.",
   inferno:
-    "The seeps were stocked past anything the trenches could safely hold, and the Absheron night turned to noon when they caught. The fire walked from pool to pool faster than men could run from it, and the smoke stood visible from Derbent. A kingdom that hoards fire learns, in the end, what fire is for.",
+    "The seeps were stocked past anything the trenches could safely hold, and the Absheron night turned to noon when they caught. The fire walked from pool to pool faster than men could run, and the smoke stood visible from Derbent.",
 };
 
 const ROMAN_NUMERALS = [
@@ -150,7 +150,10 @@ function classifyEnding(ending) {
 
 function reignSummary() {
   const { treasury, people, military, faith, naphtha } = state.stats;
-  return `Year ${toRoman(state.cardsPlayed)}. Treasury ${treasury}, People ${people}, Military ${military}, Faith ${faith}, Naphtha ${naphtha}.`;
+  return (
+    `Year ${toRoman(state.cardsPlayed)} · ` +
+    `Treasury ${treasury} · People ${people} · Military ${military} · Faith ${faith} · Naphtha ${naphtha}`
+  );
 }
 
 const CRISIS_LOW = 15;
@@ -630,9 +633,9 @@ function renderAffinity(card) {
   els.affinity.dataset.character = card.speakerType;
   els.affinity.setAttribute(
     "aria-label",
-    `Your standing with the ${card.speakerType}: ${word}, ${sign}${value} of 10`
+    `Your standing with ${card.speaker}: ${word}, ${sign}${value} of 10`
   );
-  els.affinity.title = `Your standing with the ${card.speakerType}: ${word} (${sign}${value})`;
+  els.affinity.title = `Your standing with ${card.speaker}: ${word} (${sign}${value})`;
   els.affinity.hidden = false;
 }
 
@@ -1164,7 +1167,7 @@ function renderPredictionPrompt(index) {
   els.options.innerHTML = "";
   const q = document.createElement("p");
   q.className = "predict-q";
-  q.textContent = "Before the result — which stat will this move the most?";
+  q.textContent = "Which stat will this move the most?";
   els.options.appendChild(q);
   const row = document.createElement("div");
   row.className = "predict-choices";
@@ -1213,8 +1216,8 @@ function renderPredictFeedback() {
   el.className = "predict-feedback";
   el.dataset.correct = String(p.correct);
   el.textContent = p.correct
-    ? `✓ You foresaw it — ${STAT_LABELS[p.actual]} moved the most.`
-    : `✗ You guessed ${STAT_LABELS[p.predicted]}; ${STAT_LABELS[p.actual]} moved the most.`;
+    ? `You foresaw it: ${STAT_LABELS[p.actual]} moved the most.`
+    : `You guessed ${STAT_LABELS[p.predicted]}; ${STAT_LABELS[p.actual]} moved the most.`;
   if (!existing) els.conceptChip.parentNode.insertBefore(el, els.conceptChip);
 }
 
@@ -1376,15 +1379,15 @@ function showTutorial() {
   const tipDefs = [
     {
       target: "stats",
-      text: "Your five stats. Keep each off 0 and 100 — either extreme ends your reign. Drift to the edge and a crisis strikes.",
+      text: "Your five stats. If any reaches 0 or 100, the reign ends. Near the edges, crises strike.",
     },
     {
       target: "reign",
-      text: `Your reign runs ${state.reignLength} years. Survive them all, or fall early — each ending tells a different story.`,
+      text: `Your reign runs ${state.reignLength} years. Survive all of them or fall early; each ending tells its own story.`,
     },
     {
       target: "options",
-      text: "Two choices, both with costs (shown beneath each). Tap one, or swipe the card left or right.",
+      text: "Two choices, each with its costs shown beneath it. Tap one, or swipe the card left or right.",
     },
   ];
 
@@ -1969,7 +1972,7 @@ function renderReignReport(kind, firstTime) {
   };
 
   if (firstTime) {
-    addLine(`✦ New ending discovered — ${ENDING_TITLES[kind]}`, "report-banner");
+    addLine(`New ending: ${ENDING_TITLES[kind]}`, "report-banner");
   }
 
   // Earned titles (meta-progression).
@@ -1982,21 +1985,23 @@ function renderReignReport(kind, firstTime) {
     predictHits: state.predictHits,
   };
   for (const a of checkAchievements(ctx)) {
-    addLine(`★ Title earned — ${a.name}`, "report-banner report-title");
+    addLine(`Title earned: ${a.name}`, "report-banner report-title");
   }
 
   addLine(`Reign score: ${reignScore(years, kind)}`, "report-score");
   addLine(dominantPolicyLine());
 
   const totalConcepts = Object.keys(CONCEPT_DEFS).length;
+  const seen = state.conceptsSeen.length;
+  const reignsWord = progress.reigns === 1 ? "reign" : "reigns";
   addLine(
-    `${state.conceptsSeen.length} concepts encountered this reign. ` +
-      `Collected ${progress.concepts.length}/${totalConcepts} concepts and ` +
-      `${progress.endings.length}/${ENDING_KINDS.length} endings across ${progress.reigns} reigns.`
+    `${seen} ${seen === 1 ? "concept" : "concepts"} encountered this reign. ` +
+      `The Codex holds ${progress.concepts.length} of ${totalConcepts} concepts and ` +
+      `${progress.endings.length} of ${ENDING_KINDS.length} endings across ${progress.reigns} ${reignsWord}.`
   );
 
   if (state.predictTotal > 0) {
-    addLine(`Foresight: ${state.predictHits}/${state.predictTotal} predictions correct.`);
+    addLine(`Foresight: ${state.predictHits} of ${state.predictTotal} predictions correct.`);
   }
   if (state.daily) {
     addLine(`Daily reign · ${dailyDateStr()}`);
@@ -2208,7 +2213,7 @@ function buildCodex() {
     .map((name) => {
       const found = progress.concepts.includes(name);
       if (!found) {
-        return `<li class="codex-item locked"><span class="codex-name">？？？</span><span class="codex-def">Encountered when you play the card that teaches it.</span></li>`;
+        return `<li class="codex-item locked"><span class="codex-name">???</span><span class="codex-def">Encountered when you play the card that teaches it.</span></li>`;
       }
       const meta = CONCEPT_META[name];
       let extra = "";
@@ -2234,12 +2239,12 @@ function buildCodex() {
 
   const endingItems = ENDING_KINDS.map((kind) => {
     const found = progress.endings.includes(kind);
-    return `<li class="codex-item ${found ? "found" : "locked"}"><span class="codex-name">${found ? escHtml(ENDING_TITLES[kind]) : "？？？"}</span></li>`;
+    return `<li class="codex-item ${found ? "found" : "locked"}"><span class="codex-name">${found ? escHtml(ENDING_TITLES[kind]) : "???"}</span></li>`;
   }).join("");
 
   const titleItems = ACHIEVEMENTS.map((a) => {
     const got = progress.unlocked.includes(a.id);
-    return `<li class="codex-item ${got ? "found" : "locked"}"><span class="codex-name">${got ? escHtml(a.name) : "？？？"}</span><span class="codex-def">${escHtml(a.desc)}</span></li>`;
+    return `<li class="codex-item ${got ? "found" : "locked"}"><span class="codex-name">${got ? escHtml(a.name) : "???"}</span><span class="codex-def">${escHtml(a.desc)}</span></li>`;
   }).join("");
 
   els.codexBody.innerHTML = `
