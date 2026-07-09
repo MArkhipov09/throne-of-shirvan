@@ -18,6 +18,28 @@ const CHARACTER_KEYS = [
   "caravan",
 ];
 
+// Display names for the recurring characters (dashboard court roster).
+const CHARACTER_NAMES = {
+  vizier: "Vizier Farrukh",
+  qadi: "Qadi Mahmud",
+  tahmina: "Tahmina of Shamakhi",
+  general: "General Farrukhzad",
+  envoy: "Envoy Toghan",
+  astronomer: "Astronomer Bahram",
+  spymaster: "The Spymaster",
+  queenmother: "Dowager Banu",
+  caravan: "Caravan-Master Eldar",
+};
+
+// Player-readable descriptions of the delayed-consequence flags, shown in the
+// dashboard under "Matters standing" once set. Keys match option.flag values.
+const FLAG_LABELS = {
+  "sold-genoese": "<b>The Genoese</b> hold the Absheron naphtha concession.",
+  "debased-coin": "<b>The dinar</b> runs light; the bazaar weighs your coin.",
+  "granted-monopoly": "<b>Tahmina's house</b> holds the sole carriage of the silk.",
+  "kept-market-open": "<b>The Baku wharf</b> stays open to all buyers.",
+};
+
 const SPEAKER_CATEGORY = {
   "genoese-naphtha": "foreign",
   "village-mulberry": "peasant",
@@ -178,6 +200,7 @@ const SAVE_KEY = "throne-of-shirvan-save";
 const AUDIO_KEY = "throne-of-shirvan-audio";
 const PROGRESS_KEY = "throne-of-shirvan-progress";
 const SETTINGS_KEY = "throne-of-shirvan-settings";
+const THEME_KEY = "throne-of-shirvan-theme";
 
 const MUSIC_PATH = "assets/sounds/music.mp3";
 
@@ -639,6 +662,44 @@ function renderAffinity(card) {
   els.affinity.hidden = false;
 }
 
+// --- Theme (basalt / sandstone) ---
+
+function storedTheme() {
+  const v = safeStorageGet(THEME_KEY);
+  return v === "light" || v === "dark" ? v : null;
+}
+
+function effectiveTheme() {
+  const pref = storedTheme();
+  if (pref) return pref;
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+    ? "light"
+    : "dark";
+}
+
+function applyTheme() {
+  const pref = storedTheme();
+  const root = document.documentElement;
+  if (pref) root.dataset.theme = pref;
+  else delete root.dataset.theme;
+  const effective = effectiveTheme();
+  const toggle = document.getElementById("theme-toggle");
+  if (toggle) {
+    toggle.setAttribute(
+      "aria-label",
+      effective === "dark" ? "Switch to light" : "Switch to dark"
+    );
+  }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", effective === "dark" ? "#211c16" : "#e9e0ca");
+}
+
+function toggleTheme() {
+  const next = effectiveTheme() === "dark" ? "light" : "dark";
+  safeStorageSet(THEME_KEY, next);
+  applyTheme();
+}
+
 // --- Stat bars ---
 
 function buildStatBars() {
@@ -674,6 +735,7 @@ function renderStats() {
     state.cardsPlayed >= state.reignLength - 1;
   els.reign?.classList.toggle("final-year", finalYear);
   updateTimeline();
+  renderDashboard();
 }
 
 function buildTimeline() {
@@ -693,6 +755,74 @@ function updateTimeline() {
   if (!els.timeline) return;
   const notches = els.timeline.querySelectorAll(".tl-notch");
   notches.forEach((n, i) => n.classList.toggle("filled", i < state.cardsPlayed));
+}
+
+// --- Dashboard: court roster, standing matters, last chronicle line ---
+
+// Characters appear on the roster once their affinity has moved off zero.
+function renderCourt() {
+  const wrap = document.getElementById("court");
+  const list = document.getElementById("court-list");
+  if (!wrap || !list) return;
+  const known = CHARACTER_KEYS.filter((k) => (state.affinity[k] ?? 0) !== 0);
+  if (!state.reignStarted || known.length === 0) {
+    wrap.hidden = true;
+    list.innerHTML = "";
+    return;
+  }
+  list.innerHTML = known
+    .map((k) => {
+      const v = state.affinity[k] ?? 0;
+      const filled = Math.min(5, Math.ceil(Math.abs(v) / 2));
+      const cls = v > 0 ? "on" : "off";
+      const pips = Array.from(
+        { length: 5 },
+        (_, i) => `<i class="${i < filled ? cls : ""}"></i>`
+      ).join("");
+      const word = affinityWord(v);
+      return (
+        `<li class="court-row" title="${word} (${v > 0 ? "+" : ""}${v})">` +
+        `<img src="assets/portraits/${k}-256.png" alt="" loading="lazy" />` +
+        `<span class="court-name">${CHARACTER_NAMES[k] ?? k}</span>` +
+        `<span class="court-pips" aria-label="${word}">${pips}</span></li>`
+      );
+    })
+    .join("");
+  wrap.hidden = false;
+}
+
+function renderMatters() {
+  const wrap = document.getElementById("matters");
+  const list = document.getElementById("matters-list");
+  if (!wrap || !list) return;
+  const known = (state.flags || []).filter((f) => FLAG_LABELS[f]);
+  if (!state.reignStarted || known.length === 0) {
+    wrap.hidden = true;
+    list.innerHTML = "";
+    return;
+  }
+  list.innerHTML = known.map((f) => `<li>${FLAG_LABELS[f]}</li>`).join("");
+  wrap.hidden = false;
+}
+
+function renderLastEntry() {
+  const el = document.getElementById("last-entry");
+  if (!el) return;
+  const history = state.cardHistory || [];
+  const last = history[history.length - 1];
+  if (!state.reignStarted || !last || state.view === "ending") {
+    el.hidden = true;
+    el.textContent = "";
+    return;
+  }
+  el.textContent = `Last year: ${last.optionLabel}`;
+  el.hidden = false;
+}
+
+function renderDashboard() {
+  renderCourt();
+  renderMatters();
+  renderLastEntry();
 }
 
 // --- Deck / next-card logic ---
@@ -891,6 +1021,7 @@ function cardTypeOf(card) {
 
 function renderCardImmediate(card) {
   removeChronicle();
+  document.querySelector(".reign-report")?.remove();
   state.activeCard = card;
   state.view = "question";
   state.viewExplanation = "";
@@ -1391,26 +1522,43 @@ function showTutorial() {
     },
   ];
 
-  for (const def of tipDefs) {
+  // One anchored callout at a time; the advance button lives inside the tip.
+  const tips = tipDefs.map((def, i) => {
     const tip = document.createElement("div");
     tip.className = "tutorial-tip";
     tip.dataset.target = def.target;
-    tip.textContent = def.text;
+    const step = document.createElement("span");
+    step.className = "tutorial-step";
+    step.textContent = `${i + 1} of ${tipDefs.length}`;
+    tip.appendChild(step);
+    tip.appendChild(document.createTextNode(def.text));
     overlay.appendChild(tip);
-  }
+    return tip;
+  });
 
+  let stepIndex = 0;
   const dismiss = document.createElement("button");
   dismiss.type = "button";
   dismiss.className = "tutorial-dismiss";
-  dismiss.textContent = "Got it";
-  dismiss.addEventListener("click", hideTutorial);
-  overlay.appendChild(dismiss);
+
+  function showStep(i) {
+    stepIndex = i;
+    tips.forEach((tip, n) => tip.classList.toggle("active", n === i));
+    dismiss.textContent = i < tips.length - 1 ? "Next" : "Begin";
+    tips[i].appendChild(dismiss);
+    positionTutorialTips();
+    dismiss.focus();
+  }
+
+  dismiss.addEventListener("click", () => {
+    if (stepIndex < tips.length - 1) showStep(stepIndex + 1);
+    else hideTutorial();
+  });
 
   document.body.appendChild(overlay);
   els.tutorial = overlay;
 
-  positionTutorialTips();
-  dismiss.focus();
+  showStep(0);
   window.addEventListener("resize", positionTutorialTips);
   window.addEventListener("scroll", positionTutorialTips, true);
 }
@@ -1435,13 +1583,13 @@ function positionTutorialTips() {
     options: els.options,
   };
 
-  const tips = els.tutorial.querySelectorAll(".tutorial-tip");
+  const tips = els.tutorial.querySelectorAll(".tutorial-tip.active");
   tips.forEach((tip) => {
     const target = targets[tip.dataset.target];
     if (!target) return;
 
     const rect = target.getBoundingClientRect();
-    const tipWidth = Math.min(tip.offsetWidth || 200, 220);
+    const tipWidth = Math.min(tip.offsetWidth || 220, 250);
     const tipHeight = tip.offsetHeight || 60;
     const viewWidth = window.innerWidth;
     const viewHeight = window.innerHeight;
@@ -1624,7 +1772,7 @@ function populateStatKey() {
   const lowerFirst = (s) => (s ? s.charAt(0).toLowerCase() + s.slice(1) : s);
   ul.innerHTML = STAT_NAMES.map(
     (s) =>
-      `<li><span class="key-stat">${STAT_LABELS[s]}</span> &mdash; ${lowerFirst(
+      `<li><span class="key-stat">${STAT_LABELS[s]}</span>: ${lowerFirst(
         STAT_DESCRIPTIONS[s]
       )}</li>`
   ).join("");
@@ -1683,6 +1831,14 @@ function init() {
   state.audioEnabled = safeStorageGet(AUDIO_KEY) === "1";
   applyAudioPref();
   els.audioToggle.addEventListener("click", toggleAudio);
+  document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
+  applyTheme();
+  // Track the OS preference while the player hasn't chosen explicitly.
+  window
+    .matchMedia?.("(prefers-color-scheme: light)")
+    ?.addEventListener?.("change", () => {
+      if (!storedTheme()) applyTheme();
+    });
   els.conceptChip?.addEventListener("click", toggleConceptDef);
   if (state.audioEnabled) startMusic();
 

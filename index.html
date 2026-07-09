@@ -8,15 +8,15 @@
       name="description"
       content="A Reigns-style card game set in the medieval Shirvanshah court on the Caspian. Balance five stats across a reign; every choice teaches one piece of Caspian economic history."
     />
-    <meta name="theme-color" content="#f3ebd9" />
+    <meta name="theme-color" content="#211c16" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231e3a5f'/%3E%3Cpath d='M16 5l7 11-7 11-7-11z' fill='%23c89b3c'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23211c16'/%3E%3Cpath d='M16 5l7 11-7 11-7-11z' fill='%23b08d3f'/%3E%3C/svg%3E"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Marcellus&family=Marcellus+SC&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
@@ -24,6 +24,7 @@
   <body>
     <main id="app">
       <header class="hud">
+        <div class="hud-toggles">
         <button
           type="button"
           class="audio-toggle"
@@ -62,6 +63,37 @@
             />
           </svg>
         </button>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Switch to light"
+          title="Light or dark"
+        >
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="12" y1="2.5" x2="12" y2="5" />
+              <line x1="12" y1="19" x2="12" y2="21.5" />
+              <line x1="2.5" y1="12" x2="5" y2="12" />
+              <line x1="19" y1="12" x2="21.5" y2="12" />
+              <line x1="5.4" y1="5.4" x2="7.2" y2="7.2" />
+              <line x1="16.8" y1="16.8" x2="18.6" y2="18.6" />
+              <line x1="5.4" y1="18.6" x2="7.2" y2="16.8" />
+              <line x1="16.8" y1="7.2" x2="18.6" y2="5.4" />
+            </g>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19.5 14.2A8 8 0 0 1 9.8 4.5 8 8 0 1 0 19.5 14.2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        </div>
         <h1>Throne of Shirvan</h1>
         <div class="hud-corner">
           <button type="button" class="about-link" id="about-link">About / How to play</button>
@@ -72,6 +104,15 @@
           <div class="timeline" id="timeline" aria-hidden="true"></div>
           <p class="reign-label">Year <span id="cards-played">0</span> of <span id="reign-length">25</span></p>
         </div>
+        <section class="court" id="court" hidden aria-label="The court">
+          <h2>The Court</h2>
+          <ul class="court-list" id="court-list"></ul>
+        </section>
+        <section class="matters" id="matters" hidden aria-label="Matters standing">
+          <h2>Matters standing</h2>
+          <ul class="matters-list" id="matters-list"></ul>
+        </section>
+        <p class="last-entry" id="last-entry" hidden></p>
       </header>
 
       <section class="card" id="card">
