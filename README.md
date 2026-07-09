@@ -36,6 +36,7 @@ Then visit <http://localhost:8000>.
 - **Save is automatic.** Close the tab mid-reign; reopen and the game offers Continue Reign or Begin a New Reign.
 - **Keyboard**: `1` / `2` pick options, `Enter` / `Space` continue, `Esc` closes the Codex or tutorial.
 - **Music toggle** in the top-left corner. One looping ambient track; the toggle state persists.
+- **Light and dark.** The game follows the system preference; the sun/moon toggle beside the music control overrides it, persisted like the music setting.
 
 ## File structure
 
@@ -46,9 +47,10 @@ throne-of-shirvan/
 │   ├── style.css       # design tokens + layout
 │   └── game.js         # state, deck, save/load, audio, tutorial, chronicle, codex, swipe
 ├── content/
-│   ├── cards.js        # 38 decision + 10 arc cards
+│   ├── cards.js        # 49 decision + 18 arc cards
 │   ├── crises.js       # 7 crisis cards
-│   └── concepts.js     # one-line Codex definition per concept
+│   ├── concepts.js     # Codex definitions + cross-links per concept
+│   └── glossary.js     # historical-term tooltip definitions
 ├── assets/
 │   ├── portraits/      # character portraits (5) — PNG used in-game; SVG drafts kept
 │   ├── icons/          # speaker-category icons (6) — PNG used in-game; SVG drafts kept
@@ -122,4 +124,5 @@ The block is gated on `location.hostname` and won't ship in production.
 - The design audit lives in [POLISH_REPORT.md](./POLISH_REPORT.md): stat balance, explanation length, speaker distribution, concept duplication, accessibility, code health. Read it before making structural changes.
 - The "casual returner" use case is the load-bearing assumption: someone playing for the first time, interrupted, comes back later expecting to continue. The save-on-every-state-change in `src/game.js` exists to make that experience seamless rather than punishing.
 - The music file (`assets/sounds/music.mp3`) ships with the game. The runtime fails gracefully if it is ever absent, and it loads lazily (`preload="none"`) only once the player turns music on. The track is large (~12 MB); a smaller mono ambient loop would be friendlier on metered connections.
-- The CSS palette is six tokens (`--ink`, `--parchment`, `--caspian`, `--saffron`, `--naphtha`, `--stone`) plus accents (`--moss`, `--brick`, `--silk`). Adding new colours should be rare and considered.
+- The visual direction is "Stone & Brass": basalt or sandstone ground (two full themes, switched by system preference or the HUD toggle), hairline brass rules instead of boxes, notched stat gauges, octagonal portrait frames, and red-ink drop caps. Tokens live at the top of `src/style.css` and are defined four times (dark, light, and the two `data-theme` overrides) — a new colour must be added to all four blocks. Type is Marcellus (display), Marcellus SC (labels), Crimson Pro (text).
+- The prose register is pinned in [VOICE.md](./VOICE.md); the tell-linter that enforces it lives in `../qa/_tells.mjs`.
