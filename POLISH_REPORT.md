@@ -1,5 +1,19 @@
 # Polish Report — Throne of Shirvan
 
+> **⚠️ Partially superseded (2026-05-29).** This report audited a 35-card build
+> (26 decision + 6 arc + 3 crisis). The deck is now **54 cards** (37 decision +
+> 10 arc + 7 crisis). Most of §6's accessibility findings are **fixed** (brick
+> warning hue, stat `aria-label`s + focus ring, `aria-live`, `prefers-reduced-motion`,
+> speaker accent colours, focus-after-Continue). The naphtha-inertness finding
+> (§2) and the `general-debasement` fake-choice (§1) drove a balance pass: naphtha
+> now has live up/down sources and a reachable shortage crisis, the high-naphtha
+> fire crisis is now reachable, every character's arc is reachable in both
+> directions, and the explanation essays were rewritten away from the uniform
+> 3-act template. The per-card balance *table* below is still roughly valid for
+> unedited decision cards; the counts, aggregates, arc/crisis tables, and
+> envoy/naphtha quick-wins are stale. Re-run against the current 54-card corpus
+> before trusting any aggregate here.
+
 Analytical pass on `content/cards.js`, `content/crises.js`, `src/game.js`, `src/style.css`, and `index.html`. No files modified except this report.
 
 ## 0. Inventory note (read first)

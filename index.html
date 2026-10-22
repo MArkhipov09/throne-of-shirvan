@@ -4,10 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Throne of Shirvan</title>
+    <meta
+      name="description"
+      content="A Reigns-style card game set in the medieval Shirvanshah court on the Caspian. Balance five stats across a reign; every choice teaches one piece of Caspian economic history."
+    />
+    <meta name="theme-color" content="#211c16" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23211c16'/%3E%3Cpath d='M16 5l7 11-7 11-7-11z' fill='%23b08d3f'/%3E%3C/svg%3E"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Marcellus&family=Marcellus+SC&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
@@ -15,12 +24,44 @@
   <body>
     <main id="app">
       <header class="hud">
+        <div class="hud-toggles">
         <button
           type="button"
           class="audio-toggle"
           id="audio-toggle"
           aria-pressed="false"
-          aria-label="Sound effects: off"
+          aria-label="Music: off"
+          title="Music"
+        >
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M9 18V6l10-2v12"
+              stroke="currentColor"
+              stroke-width="1.6"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="6.5" cy="18" r="2.5" fill="currentColor" />
+            <circle cx="16.5" cy="16" r="2.5" fill="currentColor" />
+            <line
+              class="audio-mute"
+              x1="3"
+              y1="3"
+              x2="22"
+              y2="22"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="audio-toggle"
+          id="sfx-toggle"
+          aria-pressed="true"
+          aria-label="Sound effects: on"
           title="Sound effects"
         >
           <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -53,13 +94,64 @@
             />
           </svg>
         </button>
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Switch to light"
+          title="Light or dark"
+        >
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <line x1="12" y1="2.5" x2="12" y2="5" />
+              <line x1="12" y1="19" x2="12" y2="21.5" />
+              <line x1="2.5" y1="12" x2="5" y2="12" />
+              <line x1="19" y1="12" x2="21.5" y2="12" />
+              <line x1="5.4" y1="5.4" x2="7.2" y2="7.2" />
+              <line x1="16.8" y1="16.8" x2="18.6" y2="18.6" />
+              <line x1="5.4" y1="18.6" x2="7.2" y2="16.8" />
+              <line x1="16.8" y1="7.2" x2="18.6" y2="5.4" />
+            </g>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19.5 14.2A8 8 0 0 1 9.8 4.5 8 8 0 1 0 19.5 14.2z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        </div>
         <h1>Throne of Shirvan</h1>
-        <button type="button" class="about-link" id="about-link">About / How to play</button>
-        <ul class="stats" id="stats"></ul>
-        <p class="reign">Cards played: <span id="cards-played">0</span></p>
+        <div class="hud-corner">
+          <button type="button" class="about-link" id="about-link" aria-haspopup="dialog">How to play</button>
+          <button type="button" class="about-link codex-link" id="codex-link" aria-haspopup="dialog">Codex <span class="codex-count" id="codex-count"></span></button>
+        </div>
+        <ul class="stats" id="stats" aria-label="Kingdom stats"></ul>
+        <p class="counsel" id="counsel" role="status" hidden></p>
+        <div class="reign" id="reign">
+          <div class="timeline" id="timeline" aria-hidden="true"></div>
+          <p class="reign-label">Year <span id="cards-played">1</span> of <span id="reign-length">25</span></p>
+        </div>
+        <section class="ambitions" id="ambitions" hidden aria-label="Ambitions for this reign">
+          <h2>Ambitions</h2>
+          <ul class="ambitions-list" id="ambitions-list"></ul>
+        </section>
+        <section class="court" id="court" hidden aria-label="The court">
+          <h2>The Court</h2>
+          <ul class="court-list" id="court-list"></ul>
+        </section>
+        <section class="matters" id="matters" hidden aria-label="Matters standing">
+          <h2>Matters standing</h2>
+          <ul class="matters-list" id="matters-list"></ul>
+        </section>
+        <p class="last-entry" id="last-entry" hidden></p>
       </header>
 
-      <section class="card" id="card">
+      <section class="card" id="card" tabindex="-1" aria-labelledby="speaker">
         <header class="card-header">
           <div class="card-emblem" id="card-emblem" aria-hidden="true" hidden></div>
           <div class="speaker-block">
@@ -67,7 +159,11 @@
             <div class="affinity" id="affinity" hidden></div>
           </div>
         </header>
+        <p class="card-cause" id="card-cause" hidden></p>
         <p class="scenario" id="scenario" aria-live="polite" aria-atomic="true"></p>
+        <div class="outcome" id="outcome" aria-live="polite" hidden></div>
+        <button type="button" class="concept-chip" id="concept-chip" hidden aria-expanded="false" aria-controls="concept-def"></button>
+        <p class="concept-def" id="concept-def" hidden></p>
         <p class="explanation" id="explanation" aria-live="polite" aria-atomic="true" hidden></p>
         <div class="options" id="options"></div>
       </section>
@@ -77,28 +173,143 @@
       <div class="intro-content">
         <h1 class="intro-title">Throne of Shirvan</h1>
         <p class="intro-subtitle">A medieval Caspian economics game, c. 1100&ndash;1500</p>
-        <img class="intro-scene" src="assets/intro-scene.svg" alt="A Caspian coast scene with city walls, a tower, and a galley on the water" />
+        <img
+          class="intro-scene"
+          src="assets/intro-scene-960.png"
+          srcset="assets/intro-scene-640.png 640w, assets/intro-scene-960.png 960w, assets/intro-scene.png 1536w"
+          sizes="(max-width: 30rem) 90vw, 30rem"
+          width="1536"
+          height="1024"
+          alt="A Caspian coast scene with city walls, a tower, and a galley on the water"
+        />
         <p class="intro-premise">
           You are the Shirvanshah, ruler of a Caspian-coast kingdom astride the Silk Road.
-          For twenty-five years petitioners will reach your throne. Each will ask for something.
-          Each decision will shift the kingdom. Keep five things in balance &mdash;
-          your Treasury, your People, your Military, your Faith, your Naphtha &mdash;
-          and your reign endures.
+          Year by year, petitioners will reach your throne. Each will ask for something,
+          and each decision will shift the kingdom. Keep five things in balance
+          and your reign endures. Lose any one of them and it ends.
         </p>
-        <ul class="intro-stat-key">
-          <li><span class="key-stat">Treasury</span> &mdash; your dinars and trade revenue.</li>
-          <li><span class="key-stat">People</span> &mdash; welfare and loyalty.</li>
-          <li><span class="key-stat">Military</span> &mdash; garrison and walls.</li>
-          <li><span class="key-stat">Faith</span> &mdash; clerical favour and religious balance.</li>
-          <li><span class="key-stat">Naphtha</span> &mdash; the Absheron oil reserves, your wildcard resource.</li>
-        </ul>
+        <p class="intro-file-note" id="file-note" role="alert" hidden>
+          The game cannot run from a file opened straight off the disk. Close this tab and
+          double-click <b>play.cmd</b> in the game's folder.
+        </p>
         <div class="intro-actions">
           <button class="intro-begin" type="button" id="intro-begin">Begin Reign</button>
           <button class="intro-secondary" type="button" id="intro-secondary" hidden>Begin a New Reign</button>
         </div>
+        <details class="intro-options" id="intro-options">
+          <summary><span class="intro-options-label">Reign options</span><span class="intro-options-summary" id="intro-summary"></span></summary>
+          <div class="intro-setup" id="intro-setup">
+            <fieldset class="setup-group" id="reign-length-group">
+              <legend>Reign length</legend>
+              <label><input type="radio" name="reign-length" value="15" /> Short &middot; 15</label>
+              <label><input type="radio" name="reign-length" value="25" checked /> Standard &middot; 25</label>
+              <label><input type="radio" name="reign-length" value="40" /> Long &middot; 40</label>
+            </fieldset>
+
+            <fieldset class="setup-group difficulty" id="difficulty">
+              <legend>Difficulty</legend>
+              <label><input type="radio" name="difficulty" value="lenient" /> Lenient</label>
+              <label><input type="radio" name="difficulty" value="normal" checked /> Normal</label>
+              <label><input type="radio" name="difficulty" value="hard" /> Hard</label>
+              <label><input type="radio" name="difficulty" value="custom" /> Custom</label>
+            </fieldset>
+
+            <fieldset class="setup-group custom-stats" id="custom-stats" hidden>
+              <legend>Starting stats</legend>
+              <!-- sliders injected by populateCustomStats() -->
+            </fieldset>
+
+            <fieldset class="setup-group modifiers" id="modifiers">
+              <legend>Modifiers</legend>
+              <label><input type="checkbox" name="modifier" value="predict" /><span><b>Predict the outcome.</b> Guess which stat moves most before each result.</span></label>
+              <label><input type="checkbox" name="modifier" value="crisisHeavy" /><span><b>Crisis-prone court.</b> Crises strike at 20 and 80 instead of 15 and 85.</span></label>
+              <label><input type="checkbox" name="modifier" value="volatile" /><span><b>Volatile fortunes.</b> Every stat swing is half again as large.</span></label>
+            </fieldset>
+
+            <label class="daily-toggle"><input type="checkbox" id="daily-toggle" /> Daily reign: the same deck for every player today</label>
+          </div>
+        </details>
+        <div class="intro-links">
+          <button class="intro-secondary" type="button" id="intro-help" aria-haspopup="dialog">How to play</button>
+          <button class="intro-secondary" type="button" id="intro-codex" aria-haspopup="dialog">The Codex</button>
+        </div>
       </div>
     </section>
 
+    <div class="codex-overlay" id="help" hidden role="dialog" aria-modal="true" aria-label="How to play">
+      <div class="codex-panel help-panel">
+        <button type="button" class="codex-close" id="help-close" aria-label="Close">&times;</button>
+        <h2 class="codex-heading">How to play</h2>
+        <div class="help-body">
+          <h3 class="codex-section">The reign</h3>
+          <p>
+            Each card is one year. A petitioner asks, you give one of two answers, and the
+            five stats move. Reach the final year and the reign ends on your terms.
+          </p>
+          <h3 class="codex-section">The five stats</h3>
+          <ul class="stat-key" id="stat-key"></ul>
+          <p>
+            A stat at 0 ends the reign. So does a stat at 100: a vault too full draws
+            raiders, and an army too strong stops taking orders. Below 15 or above 85 a
+            crisis can interrupt the year.
+          </p>
+          <h3 class="codex-section">The court</h3>
+          <p>
+            Nine courtiers remember how you answer them. After each choice the card says
+            who approved and who did not. Carry one of them far enough either way and they
+            come back with something larger.
+          </p>
+          <h3 class="codex-section">Ambitions</h3>
+          <p>
+            Each reign opens with three ambitions. They are optional. Each one met adds
+            to the reign score.
+          </p>
+          <h3 class="codex-section">The Codex</h3>
+          <p>
+            Every card teaches one idea from economics. The Codex keeps the ideas you have
+            met and the endings you have reached, from one reign to the next.
+          </p>
+          <h3 class="codex-section">Controls</h3>
+          <dl class="help-keys">
+            <dt><kbd>1</kbd> or <kbd>&larr;</kbd></dt>
+            <dd>Give the first answer</dd>
+            <dt><kbd>2</kbd> or <kbd>&rarr;</kbd></dt>
+            <dd>Give the second answer</dd>
+            <dt><kbd>Enter</kbd></dt>
+            <dd>Continue</dd>
+            <dt><kbd>H</kbd> &middot; <kbd>C</kbd></dt>
+            <dd>Open this page &middot; open the Codex</dd>
+            <dt>Touch</dt>
+            <dd>Swipe the card toward an answer, or tap it</dd>
+            <dt>Underlined words</dt>
+            <dd>Hover or tap for a definition</dd>
+          </dl>
+          <div class="help-actions">
+            <button type="button" class="report-share" id="help-tour">Show the walkthrough</button>
+            <button type="button" class="report-share" id="help-title">Title screen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="codex-overlay" id="codex" hidden role="dialog" aria-modal="true" aria-label="The Codex">
+      <div class="codex-panel">
+        <button type="button" class="codex-close" id="codex-close" aria-label="Close the Codex">&times;</button>
+        <h2 class="codex-heading">The Codex</h2>
+        <div class="codex-body" id="codex-body"></div>
+      </div>
+    </div>
+
+    <script>
+      // The game is an ES module, and browsers will not load one from file://.
+      // Without this the title screen would sit there with buttons that do nothing.
+      if (location.protocol === "file:") {
+        document.getElementById("file-note").hidden = false;
+        document.querySelectorAll("#intro button").forEach(function (b) {
+          b.disabled = true;
+        });
+      }
+    </script>
     <script type="module" src="src/game.js" defer></script>
   </body>
 </html>

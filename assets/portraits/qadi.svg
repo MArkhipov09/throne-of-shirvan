@@ -29,13 +29,11 @@
 
   <!-- White-grey beard: longer, fuller (stone color with hatching) -->
   <path d="M 94 144 Q 90 200 128 218 Q 166 200 162 144 Q 156 184 144 192 Q 128 200 112 192 Q 100 184 94 144 Z" fill="#e6dcc4" stroke="#2c1810" stroke-width="1.2"/>
-  <!-- Beard hatching to suggest white hair texture -->
-  <g stroke="#2c1810" stroke-width="0.5" fill="none">
-    <path d="M 102 160 Q 104 174 110 188"/>
-    <path d="M 114 152 Q 114 178 122 200"/>
-    <path d="M 128 150 L 128 210"/>
-    <path d="M 142 152 Q 142 178 134 200"/>
-    <path d="M 154 160 Q 152 174 146 188"/>
+  <!-- A few clean strokes for the grey beard (no scribble) -->
+  <g stroke="#2c1810" stroke-width="0.9" fill="none" stroke-linecap="round">
+    <path d="M 116 168 Q 116 190 124 206"/>
+    <path d="M 128 166 L 128 210"/>
+    <path d="M 140 168 Q 140 190 132 206"/>
   </g>
 
   <!-- Face -->

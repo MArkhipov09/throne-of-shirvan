@@ -1,39 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Religious — mosque dome">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Religious — mosque dome and crescent">
   <rect width="128" height="128" fill="#e6dcc4"/>
-
-  <!-- Base / podium -->
-  <rect x="20" y="96" width="88" height="10" fill="#2c1810"/>
-
-  <!-- Drum (cylindrical base of dome) -->
-  <rect x="36" y="80" width="56" height="16" fill="#2c1810"/>
-
-  <!-- Onion dome -->
-  <path d="M 36 80 Q 26 64 36 50 Q 38 38 64 28 Q 90 38 92 50 Q 102 64 92 80 Z" fill="#2c1810"/>
-
-  <!-- Finial / spire -->
-  <rect x="62" y="14" width="4" height="14" fill="#2c1810"/>
-  <!-- Crescent -->
-  <path d="M 64 14 A 6 6 0 1 0 64 2 A 4.5 4.5 0 1 1 64 14 Z" fill="#2c1810"/>
-
-  <!-- Two smaller flanking minaret-cap shapes -->
-  <rect x="18" y="86" width="6" height="20" fill="#2c1810"/>
-  <path d="M 18 86 L 24 86 L 21 78 Z" fill="#2c1810"/>
-  <circle cx="21" cy="76" r="1.5" fill="#2c1810"/>
-
-  <rect x="104" y="86" width="6" height="20" fill="#2c1810"/>
-  <path d="M 104 86 L 110 86 L 107 78 Z" fill="#2c1810"/>
-  <circle cx="107" cy="76" r="1.5" fill="#2c1810"/>
-
-  <!-- Arched doorway under dome (negative space) -->
-  <path d="M 56 96 Q 56 84 64 84 Q 72 84 72 96 Z" fill="#e6dcc4"/>
-
-  <!-- Dome accent line (curve following inner contour) -->
-  <path d="M 42 70 Q 42 58 50 50" fill="none" stroke="#e6dcc4" stroke-width="0.8"/>
-  <path d="M 86 70 Q 86 58 78 50" fill="none" stroke="#e6dcc4" stroke-width="0.8"/>
-
-  <!-- Frame -->
+  <!-- base -->
+  <rect x="32" y="98" width="64" height="10" fill="#2c1810"/>
+  <!-- drum -->
+  <rect x="44" y="84" width="40" height="14" fill="#2c1810"/>
+  <!-- onion dome -->
+  <path d="M44 84 Q34 66 46 52 Q48 40 64 34 Q80 40 82 52 Q94 66 84 84 Z" fill="#2c1810"/>
+  <!-- arched doorway (accent) -->
+  <path d="M58 98 Q58 86 64 86 Q70 86 70 98 Z" fill="#c89b3c"/>
+  <!-- finial + crescent -->
+  <line x1="64" y1="34" x2="64" y2="24" stroke="#2c1810" stroke-width="3"/>
+  <path d="M66 8 a9 9 0 1 0 5 16 a7 7 0 1 1 -5 -16 Z" fill="#c89b3c" stroke="#2c1810" stroke-width="1.5"/>
+  <!-- frame -->
   <g fill="none" stroke="#c89b3c">
-    <rect x="4" y="4" width="120" height="120" stroke-width="1"/>
-    <rect x="9" y="9" width="110" height="110" stroke-width="0.4"/>
+    <rect x="6" y="6" width="116" height="116" stroke-width="1.5"/>
+    <rect x="13" y="13" width="102" height="102" stroke-width="0.6"/>
   </g>
 </svg>
