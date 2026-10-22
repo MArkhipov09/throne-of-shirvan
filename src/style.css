@@ -283,6 +283,7 @@ button {
 
 /* Panel headings shared by the dashboard sections */
 .panel-heading,
+.ambitions > h2,
 .court > h2,
 .matters > h2 {
   display: flex;
@@ -296,6 +297,7 @@ button {
 }
 
 .panel-heading::after,
+.ambitions > h2::after,
 .court > h2::after,
 .matters > h2::after {
   content: "";
@@ -379,11 +381,11 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
-.stat[data-stat="treasury"] { --stat-color: var(--stat-treasury); }
-.stat[data-stat="people"]   { --stat-color: var(--stat-people); }
-.stat[data-stat="military"] { --stat-color: var(--stat-military); }
-.stat[data-stat="faith"]    { --stat-color: var(--stat-faith); }
-.stat[data-stat="naphtha"]  { --stat-color: var(--stat-naphtha); }
+[data-stat="treasury"] { --stat-color: var(--stat-treasury); }
+[data-stat="people"]   { --stat-color: var(--stat-people); }
+[data-stat="military"] { --stat-color: var(--stat-military); }
+[data-stat="faith"]    { --stat-color: var(--stat-faith); }
+[data-stat="naphtha"]  { --stat-color: var(--stat-naphtha); }
 
 .stat.warning .stat-name,
 .stat.warning .stat-value {
@@ -424,15 +426,17 @@ button {
 
 .stat-delta {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 3.05rem;
+  bottom: -0.15rem;
+  padding: 0 0.35rem;
+  background: var(--ground);
   font-family: "Marcellus SC", Georgia, serif;
   font-size: 0.9rem;
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
   z-index: 30;
-  animation: float-delta 1500ms ease-out forwards;
+  animation: float-delta 1400ms ease-out forwards;
 }
 
 .stat-delta.positive { color: var(--moss); }
@@ -441,7 +445,8 @@ button {
 @keyframes float-delta {
   0%   { opacity: 0; transform: translate(0, 0.2rem); }
   15%  { opacity: 1; transform: translate(0, 0); }
-  100% { opacity: 0; transform: translate(0, -1.6rem); }
+  70%  { opacity: 1; transform: translate(0, -0.35rem); }
+  100% { opacity: 0; transform: translate(0, -0.7rem); }
 }
 
 .stat-delta-note {
@@ -461,6 +466,14 @@ button {
 @keyframes stat-pulse {
   0% { box-shadow: none; }
   30% { box-shadow: 0 0 0 2px var(--brass); }
+  100% { box-shadow: none; }
+}
+.stat.pulse.pulse-down .stat-track {
+  animation-name: stat-pulse-down;
+}
+@keyframes stat-pulse-down {
+  0% { box-shadow: none; }
+  30% { box-shadow: 0 0 0 2px var(--ember); }
   100% { box-shadow: none; }
 }
 
@@ -485,6 +498,10 @@ button {
 .tl-notch.filled {
   background: var(--brass);
 }
+.tl-notch.current {
+  background: var(--brass-bright);
+  opacity: 0.5;
+}
 .tl-notch.act-start {
   margin-left: 8px;
 }
@@ -505,12 +522,15 @@ button {
 
 /* --- The court (dashboard roster) --- */
 
+.ambitions,
 .court,
 .matters {
   margin-top: 1.1rem;
 }
+.ambitions[hidden],
 .court[hidden],
 .matters[hidden],
+.counsel[hidden],
 .last-entry[hidden] {
   display: none;
 }
@@ -596,6 +616,10 @@ button {
   transition: opacity 150ms ease, transform 180ms ease;
   transform-origin: center center;
   touch-action: pan-y;
+}
+
+.card:focus {
+  outline: none;
 }
 
 .card.fading {
@@ -845,6 +869,7 @@ button {
 
 .options button:hover {
   border-color: var(--brass);
+  background-color: var(--tint);
 }
 
 .options button:active {
@@ -923,6 +948,11 @@ button {
 }
 .option-preview-chip.positive { color: var(--moss); }
 .option-preview-chip.negative { color: var(--ember); }
+.option-preview-chip.fatal {
+  color: var(--ember);
+  border: 1px solid var(--ember);
+  padding: 0 0.45rem;
+}
 
 @media (hover: none), (pointer: coarse) {
   .option-preview {
@@ -1251,22 +1281,20 @@ button {
   font-size: 1.1rem;
 }
 
-.intro-stat-key {
+.stat-key {
   list-style: none;
   text-align: left;
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-  padding: 0.8rem 0.2rem;
-  margin: 0 0 1.6rem;
+  padding: 0;
+  margin: 0 0 0.7rem;
   font-size: 0.98rem;
   line-height: 1.55;
 }
 
-.intro-stat-key li {
+.stat-key li {
   margin: 0.15rem 0;
 }
 
-.intro-stat-key .key-stat {
+.stat-key .key-stat {
   font-family: "Marcellus SC", Georgia, serif;
   font-size: 0.85rem;
   letter-spacing: 0.12em;
@@ -1278,7 +1306,8 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
-  margin: 0 0 1.5rem;
+  margin: 0;
+  padding: 0.9rem 0 1rem;
 }
 .intro-setup[hidden] {
   display: none;
@@ -1320,7 +1349,14 @@ button {
   align-items: flex-start;
 }
 .intro-setup .modifiers label {
-  font-style: italic;
+  align-items: baseline;
+  gap: 0.5rem;
+  text-align: left;
+  line-height: 1.35;
+}
+.intro-setup .modifiers b {
+  font-weight: 500;
+  color: var(--text-bright);
 }
 .intro-setup .custom-stats {
   flex-direction: column;
@@ -1353,7 +1389,6 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-style: italic;
   font-size: 0.92rem;
   color: var(--text-dim);
   cursor: pointer;
@@ -1364,6 +1399,7 @@ button {
   flex-direction: column;
   gap: 0.6rem;
   align-items: center;
+  margin: 0 0 1.4rem;
 }
 
 .intro-begin {
@@ -1423,10 +1459,12 @@ button {
   display: none;
 }
 
-.tutorial-backdrop {
+.tutorial-spot {
   position: absolute;
-  inset: 0;
-  background: var(--scrim);
+  border: 1px solid var(--brass);
+  box-shadow: 0 0 0 200vmax var(--scrim);
+  pointer-events: none;
+  transition: left 220ms ease, top 220ms ease, width 220ms ease, height 220ms ease;
 }
 
 .tutorial-tip {
@@ -1437,7 +1475,7 @@ button {
   padding: 0.65rem 0.85rem;
   font-size: 0.98rem;
   line-height: 1.4;
-  max-width: 15.5rem;
+  max-width: 17.5rem;
   pointer-events: auto;
 }
 
@@ -1527,9 +1565,34 @@ button {
   border-top: 7px solid var(--ground-2);
 }
 
+.tutorial-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.tutorial-skip {
+  background: none;
+  border: none;
+  padding: 0.2rem 0;
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.tutorial-skip[hidden] {
+  display: none;
+}
+.tutorial-skip:hover,
+.tutorial-skip:focus-visible {
+  color: var(--brass-bright);
+  outline: none;
+}
+
 .tutorial-dismiss {
   display: block;
-  margin-top: 0.55rem;
   font-family: "Marcellus SC", Georgia, serif;
   font-size: 0.74rem;
   letter-spacing: 0.16em;
@@ -1661,15 +1724,42 @@ button {
   color: var(--text-bright);
 }
 .codex-stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem 1.1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
   font-family: "Marcellus SC", Georgia, serif;
   font-size: 0.78rem;
   letter-spacing: 0.1em;
-  color: var(--brass);
+  color: var(--text-dim);
+  margin: 0 0 0.6rem;
+}
+.codex-meter-count {
+  font-family: "Marcellus", Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--text-bright);
+  font-variant-numeric: tabular-nums;
+}
+.codex-meter-track {
+  display: block;
+  height: 4px;
+  margin-top: 0.3rem;
+  background: var(--gauge-bg);
+}
+.codex-meter-track > span {
+  display: block;
+  height: 100%;
+  background: var(--brass);
+}
+.codex-records {
   margin: 0 0 1.2rem;
+  font-size: 0.92rem;
+  color: var(--text-dim);
+}
+.codex-locked-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-dim);
 }
 .codex-section {
   font-family: "Marcellus SC", Georgia, serif;
@@ -1854,8 +1944,16 @@ button {
     transform: none;
   }
   .card.dealing,
-  .explanation:not([hidden]) {
+  .card[data-card-type="crisis"].dealing,
+  .explanation:not([hidden]),
+  .outcome:not([hidden]),
+  .outcome-stats li {
     animation: none;
+  }
+  .tutorial-spot,
+  .stat-ghost,
+  .stat {
+    transition: none;
   }
   .stat-delta {
     animation: none;
@@ -1888,8 +1986,28 @@ button {
   .theme-toggle:focus-visible,
   .intro-secondary:focus-visible,
   .tutorial-dismiss:focus-visible,
+  .tutorial-skip:focus-visible,
+  .options-secondary:focus-visible,
+  .intro-options > summary:focus-visible,
   .chronicle > summary:focus-visible {
     outline: 2px solid Highlight;
+  }
+  .tutorial-spot {
+    border: 2px solid Highlight;
+  }
+  .stat-ghost {
+    background: Highlight;
+    opacity: 0.5;
+  }
+  .stat-mark {
+    background: CanvasText;
+  }
+  .traj-line,
+  .traj-end {
+    stroke: CanvasText;
+  }
+  .codex-meter-track > span {
+    background: Highlight;
   }
   .gloss {
     text-decoration-color: LinkText;
@@ -1919,14 +2037,6 @@ button {
   .intro {
     padding: 1.2rem 0.8rem;
   }
-  .stat {
-    grid-template-columns: 4.4rem 1fr 2rem;
-    gap: 0.45rem;
-  }
-  .stat-name {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-  }
   .card-emblem[data-kind="portrait"] img {
     width: 80px;
     height: 80px;
@@ -1945,10 +2055,9 @@ button {
   .card.ending .speaker {
     font-size: 1.5rem;
   }
-  /* the mid-reign dashboard extras stay out of the way on a phone */
-  .court,
-  .matters {
-    margin-top: 0.8rem;
+  .codex-stats {
+    gap: 0.6rem;
+    font-size: 0.68rem;
   }
 }
 
@@ -1976,6 +2085,15 @@ button {
     position: sticky;
     top: 2rem;
     display: block;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--hairline) transparent;
+  }
+  .stat[data-tooltip]:hover::after,
+  .stat[data-tooltip]:focus-within::after {
+    max-width: 17rem;
   }
   .hud-toggles {
     float: left;
@@ -2004,4 +2122,717 @@ button {
   .card.ending .speaker {
     font-size: 2.3rem;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Readable play: previews, outcomes, causes, ambitions                */
+/* ------------------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.codex-count {
+  font-family: "Marcellus", Georgia, serif;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Gauge preview: where the answer under the pointer would leave you --- */
+
+.stat {
+  transition: opacity 140ms ease;
+}
+
+.stat-ghost {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  pointer-events: none;
+  transition: left 120ms ease-out, width 120ms ease-out;
+}
+
+/* a gain: a paler run of the stat's own colour beyond the fill */
+.stat.preview-up .stat-ghost {
+  background: var(--stat-color, var(--brass));
+  opacity: 0.5;
+}
+
+/* the needle: exactly where the stat would come to rest */
+.stat-mark {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  z-index: 3;
+  background: var(--text-bright);
+  opacity: 0;
+  pointer-events: none;
+}
+.stat.previewing .stat-mark {
+  opacity: 1;
+}
+.stat.preview-fatal .stat-mark {
+  background: var(--ember);
+}
+
+/* a loss: the part of the fill that would go, hatched out */
+.stat.preview-down .stat-ghost {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--ground) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+.stats.previewing .stat:not(.previewing) {
+  opacity: 0.5;
+}
+
+.stat.preview-up .stat-value {
+  color: var(--moss);
+}
+.stat.preview-down .stat-value,
+.stat.preview-fatal .stat-name {
+  color: var(--ember);
+}
+.stat.preview-fatal .stat-track {
+  box-shadow: 0 0 0 1px var(--ember);
+}
+
+/* --- Counsel --- */
+
+.counsel {
+  margin: 0 0 0.55rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--ember);
+}
+
+/* --- Ambitions --- */
+
+.ambitions-list,
+.report-ambitions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ambition {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.22rem 0 0.22rem 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--text-dim);
+}
+
+/* an open diamond that fills when the ambition is met */
+.ambition::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 0.68rem;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  border: 1px solid var(--brass);
+}
+.ambition[data-status="met"]::before {
+  background: var(--brass);
+}
+.ambition[data-status="met"] .ambition-text {
+  color: var(--text);
+}
+.ambition[data-status="failed"]::before {
+  border-color: var(--text-dim);
+  opacity: 0.6;
+}
+.ambition[data-status="failed"] .ambition-text {
+  text-decoration: line-through;
+  text-decoration-color: var(--hairline);
+}
+
+.ambition-note {
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  color: var(--text-dim);
+}
+.ambition[data-status="met"] .ambition-note {
+  color: var(--brass-bright);
+}
+
+/* --- Why this card --- */
+
+.card-cause {
+  margin: -0.35rem 0 0.95rem;
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.card-cause[hidden] {
+  display: none;
+}
+.card[data-card-type="crisis"] .card-cause {
+  color: var(--ember);
+}
+
+/* --- Result view: the petition steps back, the outcome steps forward --- */
+
+.card[data-view="result"] .scenario {
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin-bottom: 1.1rem;
+}
+.card[data-view="result"] .scenario::first-letter {
+  font: inherit;
+  float: none;
+  padding: 0;
+  color: inherit;
+}
+
+.outcome {
+  max-width: 62ch;
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 0 0.8rem;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  animation: explain-in 300ms ease-out both;
+}
+.outcome[hidden] {
+  display: none;
+}
+
+.outcome-line {
+  display: grid;
+  grid-template-columns: 8.4rem 1fr;
+  column-gap: 0.6rem;
+  align-items: baseline;
+  margin: 0.14rem 0;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.outcome-label {
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--brass);
+}
+
+.outcome-decree .outcome-text {
+  font-size: 1.06rem;
+  color: var(--text-bright);
+}
+
+.outcome-text b {
+  font-weight: 500;
+  color: var(--text-bright);
+}
+
+.outcome-line.ambition-met .outcome-label {
+  color: var(--moss);
+}
+.outcome-line.ambition-failed .outcome-label {
+  color: var(--ember);
+}
+
+.outcome-stats {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 0.5rem 0 0.55rem;
+  padding: 0;
+  font-variant-numeric: tabular-nums;
+}
+.outcome-stats li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  animation: explain-in 320ms ease-out both;
+}
+.outcome-stats li:nth-child(2) { animation-delay: 60ms; }
+.outcome-stats li:nth-child(3) { animation-delay: 120ms; }
+.outcome-stats li:nth-child(4) { animation-delay: 180ms; }
+.outcome-stats li:nth-child(5) { animation-delay: 240ms; }
+
+.os-name {
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+.os-from,
+.os-arrow {
+  color: var(--text-dim);
+}
+.os-to {
+  font-family: "Marcellus", Georgia, serif;
+  font-size: 1.1rem;
+}
+.outcome-stats .gain .os-to { color: var(--moss); }
+.outcome-stats .loss .os-to { color: var(--ember); }
+
+.concept-chip.is-new::after {
+  content: "New in the Codex";
+  margin-left: 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--hairline);
+  color: var(--moss);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+}
+
+/* --- Answers: first on the left, second on the right --- */
+
+.key-hint-swipe {
+  display: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .key-hint-key {
+    display: none;
+  }
+  .key-hint-swipe {
+    display: inline;
+  }
+}
+
+.option-preview-chip.rent {
+  color: var(--text-dim);
+}
+
+@media (min-width: 40rem) {
+  .options[data-layout="pair"] {
+    flex-direction: row;
+    align-items: stretch;
+    max-width: 76ch;
+  }
+  .options[data-layout="pair"] button {
+    flex: 1 1 0;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+  .options[data-layout="pair"] .key-hint {
+    margin-top: 0.15rem;
+  }
+}
+
+.options button.options-secondary {
+  justify-content: center;
+  background: none;
+  border-color: transparent;
+  padding: 0.35rem 0.6rem;
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+.options button.options-secondary:hover,
+.options button.options-secondary:focus-visible {
+  color: var(--brass-bright);
+  background: none;
+  border-color: transparent;
+}
+
+/* a crisis does not arrive quietly */
+@keyframes card-crisis {
+  0%   { opacity: 0; transform: translateX(0); }
+  20%  { opacity: 1; transform: translateX(-7px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(2px); }
+  100% { transform: none; }
+}
+.card[data-card-type="crisis"].dealing {
+  animation: card-crisis 420ms ease-out;
+}
+
+/* ------------------------------------------------------------------ */
+/* Title screen options, How to play                                   */
+/* ------------------------------------------------------------------ */
+
+.intro-options {
+  max-width: 28rem;
+  margin: 0 auto 1rem;
+  text-align: left;
+  border-top: 1px solid var(--hairline-soft);
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.intro-options > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+.intro-options > summary::-webkit-details-marker {
+  display: none;
+}
+.intro-options > summary:focus-visible {
+  outline: 2px solid var(--brass-bright);
+  outline-offset: 2px;
+}
+.intro-options-label {
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  color: var(--brass);
+}
+.intro-options-label::before {
+  content: "+ ";
+  color: var(--text-dim);
+}
+.intro-options[open] .intro-options-label::before {
+  content: "− ";
+}
+.intro-options-summary {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+.intro-options > summary:hover .intro-options-label {
+  color: var(--brass-bright);
+}
+.intro-options[open] > summary {
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.intro-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.help-body p {
+  margin: 0 0 0.7rem;
+  line-height: 1.5;
+}
+
+.help-keys {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 1.1rem;
+  margin: 0 0 1.3rem;
+}
+.help-keys dt {
+  color: var(--text-bright);
+}
+.help-keys dd {
+  margin: 0;
+  color: var(--text);
+}
+.help-keys kbd {
+  display: inline-block;
+  min-width: 1.5rem;
+  padding: 0.02rem 0.35rem;
+  border: 1px solid var(--hairline);
+  font-family: "Marcellus", Georgia, serif;
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--brass-bright);
+}
+
+.help-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ending recap                                                        */
+/* ------------------------------------------------------------------ */
+
+.report-epithet {
+  margin: 0 0 0.6rem;
+}
+.report-kicker {
+  display: block;
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--brass);
+}
+.report-name {
+  font-family: "Marcellus", Georgia, serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.05em;
+  color: var(--text-bright);
+}
+
+.report-ambitions {
+  max-width: 31rem;
+  margin: 0.3rem auto 1.2rem;
+  text-align: left;
+}
+
+/* One small line per stat, all on the same 0 to 100 scale. */
+.trajectories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin: 0 0 1.3rem;
+  text-align: left;
+}
+.traj {
+  margin: 0;
+  min-width: 0;
+}
+.traj figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+.traj-name {
+  font-family: "Marcellus SC", Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.traj-range {
+  font-size: 0.84rem;
+  color: var(--text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.traj svg {
+  display: block;
+  width: 100%;
+  height: 46px;
+  overflow: visible;
+  cursor: crosshair;
+  touch-action: pan-y;
+  background: var(--tint);
+}
+.traj-line {
+  fill: none;
+  stroke: var(--stat-color, var(--brass));
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.traj-edge {
+  stroke: var(--ember);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.45;
+  vector-effect: non-scaling-stroke;
+}
+.traj-end {
+  stroke: var(--stat-color, var(--brass));
+  stroke-width: 7;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.traj-cursor {
+  stroke: var(--text-dim);
+  stroke-width: 1;
+  opacity: 0;
+  vector-effect: non-scaling-stroke;
+}
+.traj.reading .traj-cursor {
+  opacity: 1;
+}
+
+@media (max-width: 40rem) {
+  .trajectories {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  .traj {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    column-gap: 0.8rem;
+    align-items: center;
+  }
+  .traj figcaption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin: 0;
+  }
+  .traj svg {
+    height: 34px;
+  }
+  .outcome-line {
+    grid-template-columns: 1fr;
+  }
+  .outcome-stats {
+    gap: 0.2rem 1.1rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Single column (phones, narrow windows): gauges in one strip, the    */
+/* card straight after them, the rest of the dashboard below the card  */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 63.99rem) {
+  #app {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+  /* the HUD's parts become rows of the page, so the card can sit between them */
+  .hud {
+    display: contents;
+  }
+  .hud > h1,
+  .stats,
+  .counsel,
+  .reign,
+  .card,
+  .ambitions,
+  .court,
+  .matters,
+  .last-entry {
+    grid-column: 1 / -1;
+  }
+  .card {
+    order: 1;
+    margin-top: 1.1rem;
+  }
+  .ambitions,
+  .court,
+  .matters,
+  .last-entry {
+    order: 2;
+  }
+  .ambitions {
+    margin-top: 2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.9rem;
+    padding: 0.7rem 0 0.5rem;
+  }
+  .stat {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "name value" "track track";
+    gap: 0.25rem 0.3rem;
+    min-width: 0;
+  }
+  .stat-name {
+    grid-area: name;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .stat-value {
+    grid-area: value;
+    font-size: 0.9rem;
+  }
+  .stat-track {
+    grid-area: track;
+    height: 7px;
+  }
+  /* at this width the 5% notches would swallow the fill */
+  .stat-track::after {
+    display: none;
+  }
+  /* under the gauge, clear of the stat's name and value */
+  .stat-delta {
+    right: 0;
+    top: calc(100% + 0.5rem);
+    bottom: auto;
+    padding: 0 0.2rem;
+    font-size: 0.82rem;
+  }
+  .stat[data-tooltip]:hover::after,
+  .stat[data-tooltip]:focus-within::after {
+    width: max-content;
+    max-width: min(17rem, 80vw);
+  }
+  .stat:nth-child(3)[data-tooltip]::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .stat:nth-child(n + 4)[data-tooltip]::after {
+    left: auto;
+    right: 0;
+  }
+}
+
+@media (max-width: 30rem) {
+  .stats {
+    gap: 0.55rem;
+  }
+  .stat {
+    grid-template-areas: "name name" "track value";
+    gap: 0.2rem 0.3rem;
+  }
+  .stat-name {
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+  }
+  .stat-value {
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .hud-corner {
+    gap: 0.8rem;
+  }
+}
+
+/* Short windows: keep Begin on the first screen by letting the picture shrink. */
+@media (max-height: 44rem) {
+  .intro {
+    padding-top: 1.2rem;
+  }
+  .intro-scene {
+    width: auto;
+    max-width: 100%;
+    max-height: 30vh;
+    margin-bottom: 1.1rem;
+  }
+  .intro-subtitle {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Shown only when index.html is opened from disk, where the game cannot load. */
+.intro-file-note {
+  max-width: 28rem;
+  margin: 0 auto 1.2rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--ember);
+  color: var(--text-bright);
+  text-align: left;
+  line-height: 1.45;
+}
+.intro-file-note[hidden] {
+  display: none;
+}
+.intro-file-note b {
+  color: var(--ember);
+  font-weight: 600;
+}
+.intro button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }

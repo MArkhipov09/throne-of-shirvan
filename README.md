@@ -6,7 +6,9 @@ The game is built around teaching one micro-essay of medieval Caspian economic h
 
 ## Play
 
-Local only for now. The game uses ES modules, so it needs to be served over HTTP (opening `index.html` via `file://` will fail with a CORS error). Any static server works:
+**On Windows, double-click `play.cmd`.** It starts a small local server and opens the game in your browser. Leave its window open while you play and close it when you are done.
+
+By hand, from this folder:
 
 ```powershell
 # Python (ships with most systems)
@@ -20,39 +22,46 @@ npx serve .
 
 Then visit <http://localhost:8000>.
 
+The server is needed because the game uses ES modules, and browsers refuse to load those from a `file://` path. Opened directly, `index.html` shows the title screen with its buttons disabled and a note pointing at `play.cmd`.
+
 ## How it plays
 
-- **Five stats**, clamped 0–100, starting at 50 on Normal (Lenient and Hard shift the start). Drop any to 0 **or** push any to 100 and the reign ends.
-- **Twenty-five years.** Each decision card counts as one year; crisis cards do not.
-- **Two choices per card.** Hover, focus, or begin dragging an option to preview its stat deltas; on touch the deltas always show. Pick by clicking, by the `1` / `2` keys, or by **swiping the card** left or right.
-- **The concept, named.** Every card teaches one economics idea, shown as a labelled chip (`Laffer curve`, `Public good`) above the outcome essay and recorded in the Codex.
-- **Five recurring characters** — the Vizier, the Qadi, Tahmina the silk-merchant, the General, the foreign Envoy. Each tracks an affinity score from −10 to +10, shown as dots beside their portrait. Push affinity to ±7 and a **character arc card** queues up — the moment they trust you enough to ask for something large, or distrust you enough to move against you.
-- **Crises** fire when a stat crosses 15 (low) or 85 (high). They jump the queue; their outcomes are usually expensive.
-- **Ten endings.** Last twenty-five years and you get Prosperity or Survival (by your average stat). Let a stat hit **0** and the reign collapses into Conquest, Revolt, or — for naphtha — the Dark. Push a stat to **100** and it ruins you a different way: the Gilded Cage (treasury), the Sword Ascendant (military), the People's Tide (people), the Pulpit Throne (faith), or the Burning Shore (naphtha). Each pulls flavour from a real Shirvanshah-era parallel.
-- **The Codex** (top-right) collects every concept you encounter and every ending you reach, with progress counts and your longest reign.
-- **Year timeline** across the top tracks your progress toward twenty-five years.
-- **Difficulty** (Lenient / Normal / Hard) and **Daily reign** (the same deck order for every player that day) are chosen on the title screen. The ending screen offers a shareable result.
+- **Five stats**, clamped 0–100, starting at 50 on Normal (Lenient and Hard shift the start). Drop any to 0 **or** push any to 100 and the reign ends. When a stat nears either end, a line under the gauges says so.
+- **Twenty-five years** by default (15 and 40 are in the reign options). Each decision card counts as one year; crisis cards do not.
+- **Two answers per card**, first on the left, second on the right. Each lists its stat changes. Point at one and the gauges preview where it would leave every stat, with a needle at the landing point; an answer that would end the reign is tagged. Pick by clicking, with `1` / `2` or `←` / `→`, or by **swiping the card** toward the answer.
+- **What a choice did.** The result opens with the decree you gave, each stat's before and after, which courtiers approved or disapproved, and any matter now standing. The essay follows.
+- **The concept, named.** Every card teaches one economics idea, shown as a labelled chip (`Laffer curve`, `Public good`) above the outcome essay and recorded in the Codex. A concept met for the first time is marked as new.
+- **Nine recurring characters**: the Vizier, the Qadi, Tahmina the silk-merchant, the General, the foreign Envoy, the Astronomer, the Spymaster, the Dowager, and the Caravan-Master. Each tracks an affinity score from −10 to +10. Push affinity to ±7 and a **character arc card** queues up.
+- **Crises** fire when a stat crosses 15 (low) or 85 (high). They jump the queue, and the card says which stat brought them.
+- **Delayed consequences.** Some choices leave a matter standing (selling the naphtha concession, debasing the coin). The card that answers it is scheduled four to six cards later and says what it follows from.
+- **Ambitions.** Each reign opens with three optional goals drawn from a pool of twelve ("Finish the reign with Treasury at 65 or more", "Reach the final year without a crisis"). Each one met adds 25 to the reign score. A Daily reign sets every player the same three.
+- **Ten endings.** Last the full term and you get Prosperity or Survival (by your average stat). Let a stat hit **0** and the reign collapses into Conquest, Revolt, or, for naphtha, the Dark. Push a stat to **100** and it ruins you a different way: the Gilded Cage (treasury), the Sword Ascendant (military), the People's Tide (people), the Pulpit Throne (faith), or the Burning Shore (naphtha). Each pulls flavour from a real Shirvanshah-era parallel.
+- **The ending recap** names you (the Wall-Builder, the Unready), gives the reign score against your best, settles the ambitions, and draws each stat's path across the reign. Hover a path to read any year.
+- **The Codex** (top-right, or `C`) collects every concept you encounter, every ending you reach, and the titles you earn. Cards teaching a concept you have not met are dealt first, so a second reign is not a rerun of the first.
+- **Difficulty** (Lenient / Normal / Hard / Custom), reign length, modifiers, and **Daily reign** (the same deck for every player that day) sit under "Reign options" on the title screen. The ending screen offers a shareable result.
 - **Naphtha pays rent.** Keep the Absheron reserves high and the treasury gains a little each year; let them run dry and it bleeds.
 - **Save is automatic.** Close the tab mid-reign; reopen and the game offers Continue Reign or Begin a New Reign.
-- **Keyboard**: `1` / `2` pick options, `Enter` / `Space` continue, `Esc` closes the Codex or tutorial.
-- **Music toggle** in the top-left corner. One looping ambient track; the toggle state persists.
-- **Light and dark.** The game follows the system preference; the sun/moon toggle beside the music control overrides it, persisted like the music setting.
+- **Keyboard**: `1` / `2` or `←` / `→` answer, `Enter` / `Space` continue, `H` opens How to play, `C` opens the Codex, `Esc` closes either.
+- **Sound.** Two toggles in the top-left corner: music (one looping ambient track, off until you turn it on) and sound effects (short synthesised cues, on until you turn them off). Both are remembered.
+- **Light and dark.** The game follows the system preference; the sun/moon toggle beside the sound controls overrides it.
+- **How to play** (top-right, or `H`) holds the rules and the controls, and can replay the first-reign walkthrough.
 
 ## File structure
 
 ```
 throne-of-shirvan/
-├── index.html          # HUD, intro, card region, audio toggle
+├── play.cmd            # Windows launcher: serves the folder, opens the browser
+├── index.html          # HUD, title screen, card region, How to play, Codex
 ├── src/
 │   ├── style.css       # design tokens + layout
-│   └── game.js         # state, deck, save/load, audio, tutorial, chronicle, codex, swipe
+│   └── game.js         # state, deck, save/load, audio, tutorial, ambitions, outcome, codex, swipe
 ├── content/
 │   ├── cards.js        # 49 decision + 18 arc cards
 │   ├── crises.js       # 7 crisis cards
 │   ├── concepts.js     # Codex definitions + cross-links per concept
 │   └── glossary.js     # historical-term tooltip definitions
 ├── assets/
-│   ├── portraits/      # character portraits (5) — PNG used in-game; SVG drafts kept
+│   ├── portraits/      # character portraits (9) — PNG used in-game; SVG drafts kept
 │   ├── icons/          # speaker-category icons (6) — PNG used in-game; SVG drafts kept
 │   ├── sounds/         # optional; game runs silent if absent
 │   ├── intro-scene.png # Caspian coast title illustration
@@ -98,7 +107,9 @@ Every card carries a `concept` (the chip text) that must match a key in `content
 
 **Crisis cards** live in `content/crises.js` and add `triggerStat` and `triggerDirection`. They interrupt the deck when the trigger condition is met. Each stat × direction fires at most once per reign.
 
-**Delayed consequences.** An option may set a `flag` (a string). A card may then gate itself with `requires: "<flag>"` (appears only after the flag is set) or `excludes: "<flag>"` (appears only while it is not). `genoese-return` is the worked example: it appears only if you sold the Genoese the naphtha concession.
+**Delayed consequences.** An option may set a `flag` (a string). A card may then gate itself with `requires: "<flag>"` (appears only after the flag is set) or `excludes: "<flag>"` (appears only while it is not). `genoese-return` is the worked example: it appears only if you sold the Genoese the naphtha concession. When a flag is set, the cards that require it are moved to four to six cards ahead in the deck. A new chain card wants two one-line entries in `src/game.js`: `FLAG_LABELS[flag]` (the "Matters standing" line) and `CHAIN_CAUSES[cardId]` (the "This follows from…" line above the scenario).
+
+**Ambitions** live in the `AMBITIONS` array in `src/game.js`. Each has a `kind` (`end`, judged at a full term; `never`, lost the moment it breaks; `reach`, met the moment it holds), a `group` (no two in one reign share a group), and its sentence. `../qa/_sim_ambitions.mjs` plays a few thousand reigns per ambition and reports how often each is met by a coin-flip player, a play-it-safe player, and one working toward it; run it after changing a threshold.
 
 ## Adding a card
 
@@ -122,6 +133,7 @@ The block is gated on `location.hostname` and won't ship in production.
 ## Design notes
 
 - The design audit lives in [POLISH_REPORT.md](./POLISH_REPORT.md): stat balance, explanation length, speaker distribution, concept duplication, accessibility, code health. Read it before making structural changes.
+- **Balance, measured.** `../qa/_sim.mjs` plays 20,000 headless reigns per policy. On Normal a coin-flip player reaches the full term about 86% of the time, and a player who simply keeps every gauge near the middle never falls and never meets a crisis. The ambitions exist to pull play away from that safe middle: the same play-it-safe policy meets the "finish with a stat at 65" ambitions under 10% of the time on a standard reign. The base stat effects have not been retuned.
 - The "casual returner" use case is the load-bearing assumption: someone playing for the first time, interrupted, comes back later expecting to continue. The save-on-every-state-change in `src/game.js` exists to make that experience seamless rather than punishing.
 - The music file (`assets/sounds/music.mp3`) ships with the game. The runtime fails gracefully if it is ever absent, and it loads lazily (`preload="none"`) only once the player turns music on. The track is large (~12 MB); a smaller mono ambient loop would be friendlier on metered connections.
 - The visual direction is "Stone & Brass": basalt or sandstone ground (two full themes, switched by system preference or the HUD toggle), hairline brass rules instead of boxes, notched stat gauges, octagonal portrait frames, and red-ink drop caps. Tokens live at the top of `src/style.css` and are defined four times (dark, light, and the two `data-theme` overrides) — a new colour must be added to all four blocks. Type is Marcellus (display), Marcellus SC (labels), Crimson Pro (text).
