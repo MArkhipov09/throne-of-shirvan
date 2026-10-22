@@ -995,7 +995,7 @@ function renderCounsel() {
     }
   }
   const named = (list, word) =>
-    `${list.length > 1 ? `${list.slice(0, -1).join(", ")} and ${list.at(-1)} are` : `${list[0]} is`} ${word}`;
+    `${list.length > 1 ? `${list.slice(0, -1).join(", ")} and ${list[list.length - 1]} are` : `${list[0]} is`} ${word}`;
   const parts = [];
   if (low.length) parts.push(named(low, "low"));
   if (high.length) parts.push(named(high, "high"));

@@ -15,9 +15,15 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Browsers hold back the game's script until every ordinary stylesheet has
+         loaded, so on a network that stalls Google Fonts the title screen would
+         show with buttons that do nothing. Loading it as "print" and switching it
+         on when it arrives keeps the fonts from ever blocking the game. -->
     <link
       href="https://fonts.googleapis.com/css2?family=Marcellus&family=Marcellus+SC&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media = 'all'"
     />
     <link rel="stylesheet" href="src/style.css" />
   </head>
