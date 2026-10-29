@@ -2,6 +2,7 @@ import { cards } from "../content/cards.js";
 import { crises } from "../content/crises.js";
 import { concepts as CONCEPT_DEFS, conceptMeta as CONCEPT_META } from "../content/concepts.js";
 import { glossary, glossaryAliases } from "../content/glossary.js";
+import { conceptDiagram, htmlLabel } from "./diagrams.js";
 
 const decisionCards = cards.filter((c) => !c.arcCharacter);
 
@@ -714,6 +715,7 @@ const els = {
   app: document.getElementById("app"),
   conceptChip: document.getElementById("concept-chip"),
   conceptDef: document.getElementById("concept-def"),
+  conceptFigure: document.getElementById("concept-figure"),
   timeline: document.getElementById("timeline"),
   introSetup: document.getElementById("intro-setup"),
   dailyToggle: document.getElementById("daily-toggle"),
@@ -2558,6 +2560,10 @@ function setConceptChip(card, isNew = false) {
       els.conceptDef.hidden = true;
       els.conceptDef.textContent = "";
     }
+    if (els.conceptFigure) {
+      els.conceptFigure.hidden = true;
+      els.conceptFigure.innerHTML = "";
+    }
     return;
   }
   els.conceptChip.textContent = concept;
@@ -2571,6 +2577,17 @@ function setConceptChip(card, isNew = false) {
     els.conceptDef.textContent = def;
     els.conceptDef.hidden = false;
   }
+  if (els.conceptFigure) {
+    const figure = conceptFigureHtml(concept);
+    els.conceptFigure.innerHTML = figure;
+    els.conceptFigure.hidden = !figure;
+  }
+}
+
+// The diagram and its caption for a concept that has one, else "".
+function conceptFigureHtml(concept) {
+  const d = conceptDiagram(concept);
+  return d ? `${d.svg}<figcaption>${htmlLabel(d.caption)}</figcaption>` : "";
 }
 
 // Tap/click the concept chip to reveal its plain-language definition inline
@@ -2579,6 +2596,7 @@ function toggleConceptDef() {
   if (!els.conceptDef || !els.conceptDef.textContent) return;
   const show = els.conceptDef.hidden;
   els.conceptDef.hidden = !show;
+  if (els.conceptFigure?.innerHTML) els.conceptFigure.hidden = !show;
   els.conceptChip.setAttribute("aria-expanded", String(show));
 }
 
@@ -3157,6 +3175,10 @@ function buildCodex() {
           const sep = relFound.length && relLocked ? " · " : "";
           extra += `<span class="codex-related"><span class="codex-related-label">Related:</span> ${chips}${sep}${hint}</span>`;
         }
+      }
+      const figure = conceptFigureHtml(name);
+      if (figure) {
+        extra += `<details class="codex-diagram"><summary>Diagram</summary><figure class="concept-figure">${figure}</figure></details>`;
       }
       return `<li class="codex-item found" id="codex-c-${conceptSlug(name)}"><span class="codex-name">${escHtml(name)}</span><span class="codex-def">${escHtml(CONCEPT_DEFS[name])}</span>${extra}</li>`;
     })
